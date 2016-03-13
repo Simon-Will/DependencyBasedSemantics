@@ -87,6 +87,7 @@ class Condition():
             attribute obj. Applied to a subject, it evaluates to True or
             False, depending on the function and the fixed object.
     """
+    # TODO: Describe better what transeunda are used for.
 
     # Regular expression for the condition
     conditionPat = re.compile(r"""

@@ -96,7 +96,7 @@ class Condition():
             (?P<rel>[^^]+)              # relation string
             (?:                         # optional: part for transeunda
                 \^                      # separating circumflex
-                (?P<transeunda>{[^}]+})   # transeunda string
+                (?P<transeunda>{[^}]+}) # transeunda string
             )?                          # end of optional part
             \s+                         # separating whitespace
             (?P<obj>{[^}]+})            # object string

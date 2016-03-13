@@ -179,7 +179,7 @@ def test():
                     r'rel element {SB}'
                 ],
                 r'\P. P({[lemma]})',
-                {'P':'<e,<e,t>>'}
+                {'P':'<e,t>', '{[lemma]}':'e'}
                 ),
             SemRepRule(
                 [
@@ -245,6 +245,7 @@ def test():
     ass.assignToDependencyGraph(dgTaube)
     print(dgTaube)
     print(dgTaube.get_by_address(3)['semrep'].type)
+    print(dgTaube.get_by_address(2)['semrep'].type)
 
 if __name__ == '__main__':
     test()

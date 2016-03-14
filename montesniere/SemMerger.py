@@ -3,6 +3,7 @@
 
 from nltk.grammar import DependencyGrammar
 import nltk.parse as nlp
+import nltk.sem.logic as nll
 
 class SemMerger:
     """ Combines the logical expressions of each node and returns
@@ -84,12 +85,15 @@ class SemMerger:
             return semdep['semrep']
             
         # better solution woulb be truly appreciated!
+        # FIXME: This needs to pay attention to types.
         try:
             if semdep['rel'] == 'SB' or semdep['rel'] == 'NK':
                 return semdep['semrep'].applyto(semhead['semrep']).simplify()
         
             else:
                 return semhead['semrep'].applyto(semdep['semrep']).simplify()
+        # Proposed 'better solution':
+        #    applyCorrectly(semhead['semrep'], semdep['semrep'])
         
         except KeyError:
             #in case of no logical representation
@@ -100,11 +104,44 @@ class SemMerger:
         self.getDependencies()
         return self.getSemRepresentation()
     
+def isApplicableTo(expr1, expr2):
+    """Test whether expr1 can be applied to expr2.
     
-    
-    
-    
-    
+    Args:
+        expr1: An nltk.sem.logic.Expression object with resolved type.
+        expr2: An nltk.sem.logic.Expression object with resolved type.
+
+    Returns:
+        True if expr1 can be applied to expr2; False otherwise.
+    """
+    return expr1.type.first == expr2.type
+
+def applyCorrectly(expr1, expr2):
+    """Try to correctly apply one expression to the other.
+
+    Args:
+        expr1: An nltk.sem.logic.Expression object with resolved type.
+        expr2: An nltk.sem.logic.Expression object with resolved type.
+
+    Returns:
+        An nltk.sem.logic.Expression object resulting from the
+            application of one expression to the other.
+
+    Raises:
+        nltk.sem.logic.TypeResolutionException if none of the
+            expressions can be applied to the other.
+    """
+    if isApplicableTo(expr1, expr2):
+        return expr1.applyto(expr2).simplify()
+    elif isApplicableTo(expr2, expr1):
+        return expr2.applyto(expr1).simplify()
+    else:
+        # Raising TypeResolutionException may not be the correct choice,
+        # because we're trying to apply both ways, not only expr1 to expr2.
+        # Maybe a generic nltk.sem.logic.TypeException with a descriptive error
+        # message should be raised.
+        raise nll.TypeResolutionException(expr1, expr2)
+
 def testUsualCase():
     import nltk.sem.logic as nll
     tlk = nll.LogicParser()

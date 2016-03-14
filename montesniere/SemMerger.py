@@ -2,16 +2,36 @@
 # -*- coding: utf-8
 
 from nltk.grammar import DependencyGrammar
-import nltk.sem.logic as nll
 import nltk.parse as nlp
-tlk = nll.LogicParser()
-read_expr = tlk.parse
 
 class SemMerger:
-
+    """ Combines the logical expressions of each node and returns
+        al logical expression of the entire sentence.
+        A SemMerger object consitst of a dependencygraph, that will be 
+        updated continously.
+        For each node, its own original logical expression is combined
+        with those of its children and updated accordingly.
+        Attributes:
+            dg: a nltk.parse.dependencygraph.DependencyGraph 
+                object with logical expression assigned to each node.
+            dependencies: a list of nodes being currenlty processed
+        """
+        
     def __init__(self, dependencyGraph):
+        """Initializes SemMerger with given values. 
+        dependencyGraph has to be an preprocessed DependencyGraph object
+        with each node having a logical expression (semrep)
+        An ordinary DependencyGraph will not lead to a sensible result.
+        Args:
+            depedencyGraph: a nltk.parse.dependencygraph.DependencyGraph 
+                that has been preprocessed by a SemRepAssigner object
+        Returns:
+            the initialized SemMerger object
+        Raises:
+            TypeError: dg is not a DependencyGraph object
+        """
         self.dg = dependencyGraph
-        self.relations = []
+        self.dependencies = []
         # check type
         if isinstance(self.dg, nlp.dependencygraph.DependencyGraph):
             pass
@@ -22,61 +42,58 @@ class SemMerger:
         
     def getDependencies(self):
         """
-        Reads head, rel, dep triples from the given DependencyGraph and 
-        reverses their order
+        find bottom of depedencytree and store those nodes in 
+        self.dependencies
         """
-        for (head, rel, dep) in self.dg.triples():
-            self.relations.append((head, rel, dep))
-        self.relations = list(reversed(self.relations))
+        for node in self.dg.nodes:
+            
+            if self.dg.nodes[node]['deps'] == {}:
+                self.dependencies.append(node)
         
     def getSemRepresentation(self):
-        """ Sort semantic representations to each triple """
-        # apply each node to a triple
-        for triple in self.relations:
-            self.sortSemantics(triple)
-        sentence = self.dg.nodes[self.dg.nodes[0]['deps']['ROOT'][0]]
-        return sentence['semrep']    
+        """ return logical expression of the entire sentence"""
+        for node in self.dependencies:
+            self.sortSemantics(node)
+        return self.dg.nodes[self.dg.nodes[0]['deps']['ROOT'][0]]['semrep']
             
             
-    def sortSemantics(self, triple):
+    def sortSemantics(self, node):
         """gives each node the correct logical expression"""
-        # store each represenation
-        semRep = {}
-        semRep['dep'] = None
-        semRep['head'] = None
-        for node in self.dg.nodes:
-            word = self.dg.nodes[node]['word']
-                
-            if word == triple[0][0]:
-                semRep['head'] = self.dg.nodes[node]['semrep']
-                processedNode = node
-                    
-            elif word == triple[2][0]:
-                semRep['dep'] = self.dg.nodes[node]['semrep']
-                
-            if (semRep['head'] != None and semRep['dep'] != None):
-                # relation is needed in order to apply correctly
-                self.dg.nodes[processedNode]['semrep'] = self.mergeSemantics(
-                                                            semRep['dep'], 
-                                                            triple[1], 
-                                                            semRep['head']
-                                                            )
-                break
+        self.dependencies.remove(node)
+        head = self.dg.nodes[node]['head']
+        
+        # stops the loop once the top of the tree has been reached
+        if self.dg.nodes[node]['address'] == 0:
+            return
+        
+        self.dg.nodes[head]['semrep'] = self.mergeSemantics(
+                                            self.dg.nodes[head],
+                                            self.dg.nodes[node]
+                                            )
+                                            
+        if self.dg.nodes[head]['address'] != None:
+            self.dependencies.append(self.dg.nodes[head]['address'])
+        
+        # starts not quite a loop
+        self.getSemRepresentation()
     
-    
-    def mergeSemantics(self, semdep, relation, semhead):
+    def mergeSemantics(self, semhead, semdep):
         """merges logical expressions"""
+        # store final logical expression in Top-Node
+        if semhead['address'] == 0:
+            return semdep['semrep']
+            
         # better solution woulb be truly appreciated!
         try:
-            if (relation == 'NK' or relation == 'SB') and \
-                (type(semdep) != nll.ConstantExpression):
-                return semdep.applyto(semhead).simplify()
+            if semdep['rel'] == 'SB' or semdep['rel'] == 'NK':
+                return semdep['semrep'].applyto(semhead['semrep']).simplify()
         
             else:
-                return semhead.applyto(semdep).simplify()
+                return semhead['semrep'].applyto(semdep['semrep']).simplify()
         
-        except AssertionError:
-            return "semantic representation must be a logical expression!"
+        except KeyError:
+            #in case of no logical representation
+            return semhead['semrep']
     
     def getSemantics(self):
         """ returns logical expression of the entire sentence """
@@ -89,6 +106,10 @@ class SemMerger:
     
     
 def testUsualCase():
+    import nltk.sem.logic as nll
+    tlk = nll.LogicParser()
+    read_expr = tlk.parse
+
     treebank_data = open('../test/beissende_taube.conll').read()
     dg = nlp.DependencyGraph(treebank_data)
     # this will soon be replaced by an automatic representation
@@ -96,7 +117,6 @@ def testUsualCase():
     dg.nodes[2]['semrep'] = read_expr(r'\x. taube(x)')
     dg.nodes[3]['semrep'] = read_expr(r'\y\x. beissen(x, y)')
     dg.nodes[4]['semrep'] = read_expr(r'peter')
-    dg.nodes[5]['semrep'] = None
     semantics = SemMerger(dg)
     return semantics.getSemantics()
     

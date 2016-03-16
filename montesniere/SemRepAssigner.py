@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-#from nltk.grammar import DependencyGrammar
-#import nltk.sem.logic as nll
-#import nltk.parse as nlp
-
 from Condition import Condition
 import nltk.sem.logic as nll
+import json
 
 tlp = nll.LogicParser(type_check=True)
 
@@ -135,10 +132,34 @@ class SemRepAssigner:
         self.rules = rules
 
     @classmethod
-    def fromfile(cls, f):
-        """Read a SemRepAssigner from a file and return it."""
-        # TODO: Implement this.
-        pass
+    def fromfile(cls, filename):
+        """Read a SemRepAssigner from a json file and return it.
+
+        The json file has to hold an array of objects (the rules).
+        The rules have to contain three keys: 'condition', 'semRepPat'
+        and 'semSig'. The value of the 'conditions' key has to be an
+        array of strings, each denoting one condition. The value of 
+        'semRepPat' has to be a string holding a semRepPat meeting the
+        requirements imposed by SemRepRule. The value of 'semSig' has to
+        be an object (i. e. a python dict) meeting the requirements
+        imposed by SemRepRule.
+        
+        Args:
+            filename: The name of json file.
+
+        Returns:
+            A SemRepAssigner object with the rules from the json file.
+        Raises:
+            ValueError if filename does not denote a valid json file.
+        """
+        with open(filename) as f:
+            try:
+                json_rules = json.load(f)
+            except ValueError:
+                raise
+        rules = [SemRepRule(r['conditions'], r['semRepPat'], r['semSig'])
+                for r in json_rules]
+        return cls(rules)
 
     def assignToDependencyGraph(self, depGraph):
         """Assign semantic representations to DependencyGraph nodes.

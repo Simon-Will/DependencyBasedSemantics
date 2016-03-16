@@ -6,7 +6,7 @@ import nltk.parse as nlp
 import nltk.sem.logic as nll
 
 class SemMerger:
-    """ Combines the logical expressions of each node and returns
+    ''' Combines the logical expressions of each node and returns
         al logical expression of the entire sentence.
         A SemMerger object consitst of a dependencygraph, that will be 
         updated continously.
@@ -16,10 +16,10 @@ class SemMerger:
             dg: a nltk.parse.dependencygraph.DependencyGraph 
                 object with logical expression assigned to each node.
             dependencies: a list of nodes being currenlty processed
-        """
+        '''
         
     def __init__(self, dependencyGraph):
-        """Initializes SemMerger with given values. 
+        '''Initializes SemMerger with given values. 
         dependencyGraph has to be an preprocessed DependencyGraph object
         with each node having a logical expression (semrep)
         An ordinary DependencyGraph will not lead to a sensible result.
@@ -30,7 +30,7 @@ class SemMerger:
             the initialized SemMerger object
         Raises:
             TypeError: dg is not a DependencyGraph object
-        """
+        '''
         self.dg = dependencyGraph
         self.dependencies = []
         # check type
@@ -42,10 +42,9 @@ class SemMerger:
             
         
     def getDependencies(self):
-        """
-        find bottom of depedencytree and store those nodes in 
+        '''find bottom of depedencytree and store those nodes in 
         self.dependencies
-        """
+        '''
         for node in self.dg.nodes:
             
             if self.dg.nodes[node]['deps'] == {}:
@@ -55,7 +54,7 @@ class SemMerger:
         self.dependencies = list(reversed(self.dependencies))
         
     def getSemRepresentation(self):
-        """ return logical expression of the entire sentence"""
+        ''' return logical expression of the entire sentence'''
         # ensure that entire sentence is resolved
         while len(self.dependencies) != 0:
        
@@ -66,13 +65,21 @@ class SemMerger:
             
             
     def sortSemantics(self, node):
-        """gives each node the correct logical expression"""
+        '''gives each node the correct logical expression'''
         self.dependencies.remove(node)
         head = self.dg.nodes[node]['head']
         
         # stops the loop once the top of the tree has been reached
         if self.dg.nodes[node]['address'] == 0:
             return
+        
+        # fuses two representations of one entity (NE: first and last name)
+        elif (self.dg.nodes[node]['rel'] == 'PNC' 
+            and self.dg.nodes[node]['ctag'] == 'NOUN'):
+            return self.doubleNamedEntity(self.dg.nodes[head], 
+                                            self.dg.nodes[node])
+                                            
+    
         
         # subject-verb has to be last
         elif(
@@ -95,7 +102,7 @@ class SemMerger:
         self.getSemRepresentation()
     
     def mergeSemantics(self, semhead, semdep):
-        """merges logical expressions"""
+        '''merges logical expressions'''
         # store final logical expression in Top-Node
         if semhead['address'] == 0:
             return semdep['semrep']
@@ -107,9 +114,38 @@ class SemMerger:
             #in case of no logical representation
             return semhead['semrep']
 
+
+    def doubleNamedEntity(self, head_node, node):
+        tlp = nll.LogicParser(type_check=True)
+        '''Fuse representations of first and last name of one entity 
+            into one
+            
+        Args:
+            head_node   :   last name of NE
+            node        :   first name of NE
+        Returns:
+            fused expression
+        '''
+        self.dependencies.append(head_node['address'])
+        head_node['lemma'] = node['lemma'] + "_" + head_node['lemma']
+        
+        # new representation: subject
+        if (head_node['rel'] == 'SB'):
+            rule = r'\P. P({[lemma]})'
+            sig = {'P':'<e,t>', 'lemma':'e'}
+            
+        # new representation: object
+        else:
+            rule = r'{[lemma]}'
+            sig = {'{[lemma]}' : 'e'}
+            
+        new_expr = rule.format(head_node)
+        exprSig = {key.format(head_node): val for key, val in sig.items()}
+        head_node['semrep'] = tlp.parse(new_expr, signature=exprSig)
+    
     
     def isApplicableTo(self, expr1, expr2):
-        """Test whether expr1 can be applied to expr2.
+        '''Test whether expr1 can be applied to expr2.
     
         Args:
             expr1: An nltk.sem.logic.Expression object with resolved type.
@@ -117,7 +153,7 @@ class SemMerger:
 
         Returns:
             True if expr1 can be applied to expr2; False otherwise.
-        """
+        '''
         if expr1.type.first == expr2.type:
             return True
         
@@ -129,7 +165,7 @@ class SemMerger:
 
 
     def applyCorrectly(self, expr1, expr2):
-        """Try to correctly apply one expression to the other.
+        '''Try to correctly apply one expression to the other.
 
         Args:
             expr1: An nltk.sem.logic.Expression object with resolved type.
@@ -142,7 +178,7 @@ class SemMerger:
         Raises:
             nltk.sem.logic.TypeResolutionException if none of the
                 expressions can be applied to the other.
-        """ 
+        ''' 
         if self.isApplicableTo(expr1, expr2):
             return expr1.applyto(expr2).simplify()
         elif self.isApplicableTo(expr2, expr1):
@@ -155,7 +191,7 @@ class SemMerger:
 
     
     def getSemantics(self):
-        """ returns logical expression of the entire sentence """
+        ''' returns logical expression of the entire sentence '''
         self.getDependencies()
         return self.getSemRepresentation()
 
@@ -163,11 +199,11 @@ def testUsualCase():
     import nltk.sem.logic as nll
     tlk = nll.LogicParser()
     read_expr = tlk.parse
-    treebank_data = open('../test/beissende_taube.conll').read()
+    treebank_data = open('../test/conll/beissende_taube.conll').read()
     dg = nlp.DependencyGraph(treebank_data)
     #this will soon be replaced by an automatic representation
     dg.nodes[1]['semrep'] = read_expr(r'\P\Q. exists x.(P(x) & Q(x))')
-    dg.nodes[2]['semrep'] = read_expr(r'\x. taube(x)')
+    dg.nodes[1]['semrep'] = read_expr(r'\x. taube(x)')
     dg.nodes[3]['semrep'] = read_expr(r'\y\x. beissen(x, y)')
     dg.nodes[4]['semrep'] = read_expr(r'peter')
     semantics = SemMerger(dg)

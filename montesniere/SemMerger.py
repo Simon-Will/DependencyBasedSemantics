@@ -50,12 +50,19 @@ class SemMerger:
             
             if self.dg.nodes[node]['deps'] == {}:
                 self.dependencies.append(node)
+                
+        # solve object-verb dependencies first
+        self.dependencies = list(reversed(self.dependencies))
         
     def getSemRepresentation(self):
         """ return logical expression of the entire sentence"""
-        for node in self.dependencies:
-            self.sortSemantics(node)
-        return self.dg.nodes[self.dg.nodes[0]['deps']['ROOT'][0]]['semrep']
+        # ensure that entire sentence is resolved
+        while len(self.dependencies) != 0:
+       
+            for node in self.dependencies:
+                self.sortSemantics(node)
+       
+        return self.dg.root['semrep']
             
             
     def sortSemantics(self, node):
@@ -67,6 +74,15 @@ class SemMerger:
         if self.dg.nodes[node]['address'] == 0:
             return
         
+        # subject-verb has to be last
+        elif(
+            self.dg.nodes[node]['rel'] == 'SB'
+            and len(self.dependencies) > 0
+            ):
+                self.dependencies.append(self.dg.nodes[node]['address'])
+                return
+        
+        # merge logical expressions
         self.dg.nodes[head]['semrep'] = self.mergeSemantics(
                                             self.dg.nodes[head],
                                             self.dg.nodes[node]
@@ -75,7 +91,7 @@ class SemMerger:
         if self.dg.nodes[head]['address'] != None:
             self.dependencies.append(self.dg.nodes[head]['address'])
         
-        # starts not quite a loop
+        # starts (not quite) a loop
         self.getSemRepresentation()
     
     def mergeSemantics(self, semhead, semdep):
@@ -84,78 +100,81 @@ class SemMerger:
         if semhead['address'] == 0:
             return semdep['semrep']
             
-        # better solution woulb be truly appreciated!
-        # FIXME: This needs to pay attention to types.
         try:
-            if semdep['rel'] == 'SB' or semdep['rel'] == 'NK':
-                return semdep['semrep'].applyto(semhead['semrep']).simplify()
-        
-            else:
-                return semhead['semrep'].applyto(semdep['semrep']).simplify()
-        # Proposed 'better solution':
-        #    applyCorrectly(semhead['semrep'], semdep['semrep'])
+            return self.applyCorrectly(semhead['semrep'], semdep['semrep'])
         
         except KeyError:
             #in case of no logical representation
             return semhead['semrep']
+
+    
+    def isApplicableTo(self, expr1, expr2):
+        """Test whether expr1 can be applied to expr2.
+    
+        Args:
+            expr1: An nltk.sem.logic.Expression object with resolved type.
+            expr2: An nltk.sem.logic.Expression object with resolved type.
+
+        Returns:
+            True if expr1 can be applied to expr2; False otherwise.
+        """
+        if expr1.type.first == expr2.type:
+            return True
+        
+        elif expr1.type.first.matches(expr2.type):
+            print("Warning: Type is not definite, application may be incorrect!")
+            return True
+        
+        return False
+
+
+    def applyCorrectly(self, expr1, expr2):
+        """Try to correctly apply one expression to the other.
+
+        Args:
+            expr1: An nltk.sem.logic.Expression object with resolved type.
+            expr2: An nltk.sem.logic.Expression object with resolved type.
+
+        Returns:
+            An nltk.sem.logic.Expression object resulting from the
+                application of one expression to the other.
+    
+        Raises:
+            nltk.sem.logic.TypeResolutionException if none of the
+                expressions can be applied to the other.
+        """ 
+        if self.isApplicableTo(expr1, expr2):
+            return expr1.applyto(expr2).simplify()
+        elif self.isApplicableTo(expr2, expr1):
+            return expr2.applyto(expr1).simplify()
+        else:
+            # either deps are wrong or types are not accurate
+            raise nll.TypeException(expr1, expr2, "are not compatible,\
+                                    wrong types?")
+
+
     
     def getSemantics(self):
         """ returns logical expression of the entire sentence """
         self.getDependencies()
         return self.getSemRepresentation()
-    
-def isApplicableTo(expr1, expr2):
-    """Test whether expr1 can be applied to expr2.
-    
-    Args:
-        expr1: An nltk.sem.logic.Expression object with resolved type.
-        expr2: An nltk.sem.logic.Expression object with resolved type.
-
-    Returns:
-        True if expr1 can be applied to expr2; False otherwise.
-    """
-    return expr1.type.first == expr2.type
-
-def applyCorrectly(expr1, expr2):
-    """Try to correctly apply one expression to the other.
-
-    Args:
-        expr1: An nltk.sem.logic.Expression object with resolved type.
-        expr2: An nltk.sem.logic.Expression object with resolved type.
-
-    Returns:
-        An nltk.sem.logic.Expression object resulting from the
-            application of one expression to the other.
-
-    Raises:
-        nltk.sem.logic.TypeResolutionException if none of the
-            expressions can be applied to the other.
-    """
-    if isApplicableTo(expr1, expr2):
-        return expr1.applyto(expr2).simplify()
-    elif isApplicableTo(expr2, expr1):
-        return expr2.applyto(expr1).simplify()
-    else:
-        # Raising TypeResolutionException may not be the correct choice,
-        # because we're trying to apply both ways, not only expr1 to expr2.
-        # Maybe a generic nltk.sem.logic.TypeException with a descriptive error
-        # message should be raised.
-        raise nll.TypeResolutionException(expr1, expr2)
 
 def testUsualCase():
     import nltk.sem.logic as nll
     tlk = nll.LogicParser()
     read_expr = tlk.parse
-
     treebank_data = open('../test/beissende_taube.conll').read()
     dg = nlp.DependencyGraph(treebank_data)
-    # this will soon be replaced by an automatic representation
-    dg.nodes[1]['semrep'] = read_expr(r'\P\Q. exists x. (P(x) & Q(x))')
+    #this will soon be replaced by an automatic representation
+    dg.nodes[1]['semrep'] = read_expr(r'\P\Q. exists x.(P(x) & Q(x))')
     dg.nodes[2]['semrep'] = read_expr(r'\x. taube(x)')
     dg.nodes[3]['semrep'] = read_expr(r'\y\x. beissen(x, y)')
     dg.nodes[4]['semrep'] = read_expr(r'peter')
     semantics = SemMerger(dg)
     return semantics.getSemantics()
     
+def test():
+    return testUsualCase()
+    
 if __name__ == '__main__':
-    print(testUsualCase())
+    print(test())

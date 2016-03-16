@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from Condition import Condition
-import nltk.sem.logic as nll
 import json
+
+import nltk.sem.logic as nll
+
+from .Condition import Condition
 
 tlp = nll.LogicParser(type_check=True)
 

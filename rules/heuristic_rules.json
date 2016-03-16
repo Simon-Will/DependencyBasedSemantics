@@ -1,0 +1,142 @@
+[
+    {
+        "conditions": [
+            "tag element {NE}",
+            "rel element {SB}"
+        ],
+        "semrep": "\\P. P({[lemma]})",
+        "signature": {
+            "P": "<e,t>",
+            "{[lemma]}": "e"
+        }
+    },
+    {
+        "conditions": [
+            "tag element {NE}",
+            "rel notElement^{NK} {SB}"
+        ],
+        "semrep": "{[lemma]}",
+        "signature": {
+            "{[lemma]}": "e"
+        }
+    },
+    {
+        "conditions": [
+            "tag element {NN}"
+        ],
+        "semrep": "\\x. {[lemma]}(x)",
+        "signature": {
+            "{[lemma]}": "<e,t>"
+        }
+    },
+    {
+        "conditions": [
+            "tag element {ART}",
+            "lemma element {ein}",
+            "rel element^{NK} {SB}"
+        ],
+        "semrep": "\\P Q. exists x. (P(x) & Q(x))",
+        "signature": {
+            "P": "<e,t>",
+            "Q": "<e,t>"
+        }
+    },
+    {
+        "explanation": "'ein' in accusative object of monotransitive verbs.",
+        "conditions": [
+            "tag element {ART}",
+            "lemma element {ein}",
+            "rel element^{NK} {OA}",
+            "rel notElement^{NK, OA} {OD}"
+        ],
+        "semrep": "\\P R x. exists y. (P(y) & R(x,y))",
+        "signature": {
+            "P": "<e,t>",
+            "R": "<e,<e,t>>"
+        }
+    },
+    {
+        "explanation": "'ein' in accusative object of ditransitive verbs.",
+        "conditions": [
+            "tag element {ART}",
+            "lemma element {ein}",
+            "rel element^{NK} {OA}",
+            "rel element^{NK, OA} {OD}"
+        ],
+        "semrep": "\\P T y x. exists z. (P(z) & T(x,y,z))",
+        "signature": {
+            "P": "<e,t>",
+            "T": "<e,<e,<e,t>>>"
+        }
+    },
+    {
+        "explanation": "'ein' in dative object of ditransitive verbs.",
+        "conditions": [
+            "tag element {ART}",
+            "lemma element {ein}",
+            "rel element^{NK} {OD}"
+        ],
+        "semrep": "\\P R x. exists y. (P(y) & R(x,y))",
+        "signature": {
+            "P": "<e,t>",
+            "R": "<e,<e,t>>"
+        }
+    },
+    {
+        "explanation": "'ein' in second accusative object of ditransitive verbs.",
+        "conditions": [
+            "tag element {ART}",
+            "lemma element {ein}",
+            "rel element^{NK} {OA2}"
+        ],
+        "semrep": "\\P T y x. exists z. (P(z) & T(x,y,z))",
+        "signature": {
+            "P": "<e,t>",
+            "T": "<e,<e,<e,t>>>"
+        }
+    },
+    {
+        "conditions": [
+            "tag element {VVFIN}",
+            "deps superset {SB}",
+            "deps notSuperset {OA}"
+        ],
+        "semrep": "\\x. {[lemma]}(x)",
+        "signature": {
+            "{[lemma]}": "<e,t>"
+        }
+    },
+    {
+        "conditions": [
+            "tag element {VVFIN}",
+            "deps superset {SB, OA}",
+            "deps notSuperset {OD}"
+        ],
+        "semrep": "\\x y. {[lemma]}(y,x)",
+        "signature": {
+            "{[lemma]}": "<e,<e,t>>"
+        }
+    },
+    {
+        "conditions": [
+            "tag element {VVFIN}",
+            "deps superset {SB, OA, OD}"
+        ],
+        "semrep": "\\x y z. {[lemma]}(z,y,x)",
+        "signature": {
+            "{[lemma]}": "<e,<e,<e,t>>>"
+       
+        }
+    },
+    {
+        "conditions": [
+            "tag element {VVFIN}",
+            "deps superset {SB, OA, OA2}"
+        ],
+        "semrep": "\\x y z. {[lemma]}(z,y,x)",
+        "signature": {
+            "{[lemma]}": "<e,<e,<e,t>>>"
+       
+        }
+    }
+]

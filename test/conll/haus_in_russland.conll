@@ -1,0 +1,6 @@
+1	Ein	ein	DET	ART	_	2	NK	_	_
+2	Haus	haus	NOUN	NN	_	5	SB	_	_
+3	in	in	ADP	APPR	_	2	MNR	_	_
+4	Russland	russland	NOUN	NE	_	3	NK	_	_
+5	brennt	brennen	VERB	VVFIN	_	0	--	_	_
+6	.	--	.	$.	_	5	--	_	_

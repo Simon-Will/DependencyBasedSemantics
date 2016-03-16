@@ -91,11 +91,15 @@ class Condition():
 
     # Regular expression for the condition
     conditionPat = re.compile(r"""
-            \s*                         # Leading whitespace
+            \s*                         # leading whitespace
+            (?:                         # optional part for negation
+                (?P<neg>!)              # negation string (exclamation mark)
+                \s+                     # separating whitespace
+            )?                          # end of optional part
             (?P<subj>\S+)               # subject string
             \s+                         # separating whitespace
             (?P<rel>[^^]+)              # relation string
-            (?:                         # optional: part for transeunda
+            (?:                         # optional part for transeunda
                 \^                      # separating circumflex
                 (?P<transeunda>{[^}]+}) # transeunda string
             )?                          # end of optional part
@@ -116,7 +120,7 @@ class Condition():
             'notSuperset': makeNotSupersetFixedObj,
             }
 
-    def __init__(self, subj, rel, obj, transeunda=frozenset()):
+    def __init__(self, subj, rel, obj, transeunda=frozenset(), negated=False):
         """Initialize Condition with the given values.
 
         Args:
@@ -137,6 +141,7 @@ class Condition():
         self.rel = rel
         self.obj = obj
         self.transeunda = transeunda
+        self.negated = negated
         objFixer = Condition.relationDict[self.rel]
         self.relationFixedObj = objFixer(self.obj)
 
@@ -150,9 +155,9 @@ class Condition():
         Returns:
             The initialized SemRepRule.
         """
-        subj, rel, transeunda, obj = Condition.readConditionString(
+        negated, subj, rel, transeunda, obj = Condition.readConditionString(
                 conditionString)
-        return cls(subj, rel, obj, transeunda)
+        return cls(subj, rel, obj, transeunda, negated)
 
     def __str__(self):
         return '{0.subj} {0.rel}^{0.transeunda} {0.obj}'.format(self)
@@ -178,7 +183,10 @@ class Condition():
             satisfied = satisfied or self._testSubj(subj)
             if not satisfied:
                 return False
-        return satisfied
+        if self.negated:
+            return not satisfied
+        else:
+            return satisfied
             
     def _testSubj(self, subj):
         """Test if a set satisfies the condition.
@@ -210,14 +218,17 @@ class Condition():
 
         >>> cs = 'deps superset {SB}'
         >>> Condition.readConditionString(cs)
-        ('deps', 'superset', set(), {'SB'})
+        (False, 'deps', 'superset', set(), {'SB'})
         >>> cs2 = 'rel element^{NK} {SB, OA}'
-        >>> Condition.readConditionString(cs2)[0:3]
-        ('rel', 'element', {'NK'})
-        >>> sorted(Condition.readConditionString(cs2)[3])
+        >>> Condition.readConditionString(cs2)[0:-1]
+        (False, 'rel', 'element', {'NK'})
+        >>> sorted(Condition.readConditionString(cs2)[-1])
         ['OA', 'SB']
+        >>> cs3 = '! deps subset {DA}'
+        >>> Condition.readConditionString(cs3)
+        (True, 'deps', 'subset', set(), {'DA'})
         """
-        subj, rel, transeunda, obj = ('', '', set(), set())
+        negated, subj, rel, transeunda, obj = (False, '', '', set(), set())
         match = Condition.conditionPat.match(conditionString)
         if match:
             subj = match.group('subj')
@@ -225,10 +236,12 @@ class Condition():
             rel = match.group('rel')
             if match.group('transeunda'):
                 transeunda = buildSet(match.group('transeunda'))
+            if match.group('neg') == '!':
+                negated = True
         else:
             errMsg = '{} is not a valid conditionString.'
             raise ValueError(errMsg.format(conditionString))
-        return subj, rel, transeunda, obj
+        return negated, subj, rel, transeunda, obj
 
 def buildSet(setString):
     """Build a set of strings from a string representation of a set.

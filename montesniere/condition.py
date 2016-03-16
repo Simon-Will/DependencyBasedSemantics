@@ -181,8 +181,6 @@ class Condition():
             node = depGraph.get_by_address(node['head'])
             subj = node[self.subj]
             satisfied = satisfied or self._testSubj(subj)
-            if not satisfied:
-                return False
         if self.negated:
             return not satisfied
         else:

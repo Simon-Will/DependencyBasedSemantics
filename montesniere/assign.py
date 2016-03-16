@@ -5,7 +5,7 @@ import json
 
 import nltk.sem.logic as nll
 
-from .Condition import Condition
+from .condition import Condition
 
 tlp = nll.LogicParser(type_check=True)
 
@@ -192,83 +192,23 @@ class SemRepAssigner:
             # Assign default semrep here.
             pass
 
-def test():
-
+def demo():
     import nltk.parse as nlp
-    rules = [
-            SemRepRule(
-                [
-                    r'tag element {NE}',
-                    r'rel element {SB}'
-                ],
-                r'\P. P({[lemma]})',
-                {'P':'<e,t>', '{[lemma]}':'e'}
-                ),
-            SemRepRule(
-                [
-                    r'tag element {NE}',
-                    r'rel notElement^{NK} {SB}'
-                ],
-                r'{[lemma]}',
-                {'{[lemma]}':'e'}
-                ),
-            SemRepRule(
-                [
-                    r'tag element {NN}'
-                ],
-                r'\x. {[lemma]}(x)',
-                {'{[lemma]}':'<e,t>'}
-                ),
-            SemRepRule(
-                [
-                    r'tag element {ART}',
-                    r'lemma element {ein}',
-                    r'rel element^{NK} {SB}'
-                ],
-                r'\P Q. exists x. (P(x) & Q(x))',
-                {'P':'<e,t>', 'Q':'<e,t>'}
-                ),
-            SemRepRule(
-                [
-                    r'tag element {VVFIN}',
-                    r'deps superset {SB}',
-                    r'deps notSuperset {OA}'
-                ],
-                r'\x. {[lemma]}(x)',
-                {'{[lemma]}':'<e,t>'}
-                ),
-            SemRepRule(
-                [
-                    r'tag element {VVFIN}',
-                    r'deps superset {SB, OA}',
-                    r'deps notSuperset {OD}'
-                ],
-                r'\x y. {[lemma]}(y,x)',
-                {'{[lemma]}':'<e,<e,t>>'}
-                ),
-            SemRepRule(
-                [
-                    r'tag element {VVFIN}',
-                    r'deps superset {SB, OA, OD}'
-                ],
-                r'\x y z. {[lemma]}(z,y,x)',
-                {'{[lemma]}':'<e,<e,<e,t>>>'}
-                )
-            ]
 
-    sTaube = open('../test/beissende_taube.conll').read()
+    ass = SemRepAssigner.fromfile('rules/heuristic_rules.json')
+
+    sTaube = open('test/conll/beissende_taube.conll').read()
     dgTaube = nlp.DependencyGraph(sTaube)
-    beissen = dgTaube.nodes[3]
-    #for rule in rules:
-    #    print(rule)
-    #    print(rule.testConditions(dgTaube, 1))
-    #    print("---")
-    print(dgTaube)
-    ass = SemRepAssigner(rules)
+    sHase = open('test/conll/schenkender_hase.conll').read()
+    dgHase = nlp.DependencyGraph(sHase)
+
     ass.assignToDependencyGraph(dgTaube)
     print(dgTaube)
-    print(dgTaube.get_by_address(3)['semrep'].type)
-    print(dgTaube.get_by_address(2)['semrep'].type)
+    #print(dgTaube.get_by_address(3)['semrep'].type)
+    #print(dgTaube.get_by_address(2)['semrep'].type)
+
+    ass.assignToDependencyGraph(dgHase)
+    print(dgHase)
 
 if __name__ == '__main__':
-    test()
+    demo()

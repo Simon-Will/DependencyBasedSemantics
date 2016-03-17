@@ -160,7 +160,8 @@ class Condition():
         return cls(subj, rel, obj, transeunda, negated)
 
     def __str__(self):
-        return '{0.subj} {0.rel}^{0.transeunda} {0.obj}'.format(self)
+        neg = '! ' if self.negated else ''
+        return '{1}{0.subj} {0.rel}^{0.transeunda} {0.obj}'.format(self, neg)
     
     def __call__(self, depGraph, address):
         """Test if a node of a DependencyGraph satisfies this condition.
@@ -181,8 +182,6 @@ class Condition():
             node = depGraph.get_by_address(node['head'])
             subj = node[self.subj]
             satisfied = satisfied or self._testSubj(subj)
-            if not satisfied:
-                return False
         if self.negated:
             return not satisfied
         else:

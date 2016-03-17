@@ -1,7 +1,7 @@
-1	Der	der	DET	ART	_	2	NK	_	_
+1	Ein	ein	DET	ART	_	2	NK	_	_
 2	Lehrer	lehrer	NOUN	NN	_	3	SB	_	_
 3	lehrt	lehren	VERB	VVFIN	_	0	--	_	_
-4	die	der	DET	ART	_	5	NK	_	_
-5	Schüler	schüler	NOUN	NN	_	3	OA	_	_
-6	Latein	latein	PRT	PTKVZ	_	3	SVP	_	_
+4	Maria	maria	NOUN	NE	_	3	OA	_	_
+5	ein	ein	DET	ART	_	6	NK	_	_
+6	Musikstück	musikstück	NOUN	NN	_	3	OA2	_	_
 7	.	--	.	$.	_	3	--	_	_

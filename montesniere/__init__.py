@@ -1,2 +1,3 @@
-from .SemRepAssigner import SemRepAssigner, SemRepRule
-from .SemMerger import SemMerger
+from . import assign
+from . import condition
+from . import merge

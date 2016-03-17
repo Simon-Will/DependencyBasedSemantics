@@ -5,7 +5,7 @@ import json
 
 import nltk.sem.logic as nll
 
-from .Condition import Condition
+from .condition import Condition
 
 tlp = nll.LogicParser(type_check=True)
 
@@ -89,7 +89,7 @@ class SemRepRule:
             # All conditions are satisfied.
             return True
 
-    def assignSemRep(self, node):
+    def assignSemRep(self, node, ascii=False):
         """Assign the semantic representation of this rule to a node.
 
         Format this rule's semRepPat with the given node, do the same
@@ -100,9 +100,15 @@ class SemRepRule:
 
         Args:
             node: A node of an nltk.parse.DependencyGraph object.
+            ascii: A boolean indicating whether the assigned
+                representation should be ascii-compatible.
+                Default: False
         """
         expr = self.semRepPat.format(node)
-        exprSig = {key.format(node): val for key, val in self.semSig.items()}
+        exprSig = {k.format(node): v for k, v in self.semSig.items()}
+        if ascii:
+            expr = _toASCII(expr)
+            exprSig = {_toASCII(k): _toASCII(v) for k, v in exprSig.items()}
         node['semrep'] = tlp.parse(expr, signature=exprSig)
 
     def __str__(self):
@@ -120,21 +126,25 @@ class SemRepAssigner:
         rules: A list of SemRepRule objects.
     """
 
-    def __init__(self, rules):
+    def __init__(self, rules, ascii=False):
         """Initialize SemRepAssigner with the given rules.
 
         The rules should be a sorted iterable, e. g. a list.
 
         Args:
             rules: A list of SemRepRule objects.
+            ascii: A boolean indicating whether the assigned
+                representations should be ascii-compatible.
+                Default: False
 
         Returns:
             The initialized SemRepAssigner.
         """
         self.rules = rules
+        self.ascii = ascii
 
     @classmethod
-    def fromfile(cls, filename):
+    def fromfile(cls, filename, ascii=False):
         """Read a SemRepAssigner from a json file and return it.
 
         The json file has to hold an array of objects (the rules).
@@ -148,6 +158,9 @@ class SemRepAssigner:
         
         Args:
             filename: The name of json file.
+            ascii: A boolean indicating whether the assigned
+                representations should be ascii-compatible.
+                Default: False
 
         Returns:
             A SemRepAssigner object with the rules from the json file.
@@ -161,7 +174,7 @@ class SemRepAssigner:
                 raise
         rules = [SemRepRule(r['conditions'], r['semRepPat'], r['semSig'])
                 for r in json_rules]
-        return cls(rules)
+        return cls(rules, ascii)
 
     def assignToDependencyGraph(self, depGraph):
         """Assign semantic representations to DependencyGraph nodes.
@@ -185,90 +198,36 @@ class SemRepAssigner:
         """
         for r in self.rules:
             if r.testConditions(depGraph, address):
-                r.assignSemRep(depGraph.get_by_address(address))
+                r.assignSemRep(depGraph.get_by_address(address), self.ascii)
                 break
         else:
             # No rule's conditions are satisfied.
             # Assign default semrep here.
             pass
 
-def test():
+def _toASCII(s):
+    """Replace ß,ä,ö,ü to make a string ascii-compatible."""
+    # XXX: This is an ugly hack. There has to be a proper way to do this.
+    t = str.maketrans({'ß':'ss', 'ä': 'ae', 'ö': 'oe', 'ü': 'ue'})
+    return s.translate(t)
 
+def demo():
     import nltk.parse as nlp
-    rules = [
-            SemRepRule(
-                [
-                    r'tag element {NE}',
-                    r'rel element {SB}'
-                ],
-                r'\P. P({[lemma]})',
-                {'P':'<e,t>', '{[lemma]}':'e'}
-                ),
-            SemRepRule(
-                [
-                    r'tag element {NE}',
-                    r'rel notElement^{NK} {SB}'
-                ],
-                r'{[lemma]}',
-                {'{[lemma]}':'e'}
-                ),
-            SemRepRule(
-                [
-                    r'tag element {NN}'
-                ],
-                r'\x. {[lemma]}(x)',
-                {'{[lemma]}':'<e,t>'}
-                ),
-            SemRepRule(
-                [
-                    r'tag element {ART}',
-                    r'lemma element {ein}',
-                    r'rel element^{NK} {SB}'
-                ],
-                r'\P Q. exists x. (P(x) & Q(x))',
-                {'P':'<e,t>', 'Q':'<e,t>'}
-                ),
-            SemRepRule(
-                [
-                    r'tag element {VVFIN}',
-                    r'deps superset {SB}',
-                    r'deps notSuperset {OA}'
-                ],
-                r'\x. {[lemma]}(x)',
-                {'{[lemma]}':'<e,t>'}
-                ),
-            SemRepRule(
-                [
-                    r'tag element {VVFIN}',
-                    r'deps superset {SB, OA}',
-                    r'deps notSuperset {OD}'
-                ],
-                r'\x y. {[lemma]}(y,x)',
-                {'{[lemma]}':'<e,<e,t>>'}
-                ),
-            SemRepRule(
-                [
-                    r'tag element {VVFIN}',
-                    r'deps superset {SB, OA, OD}'
-                ],
-                r'\x y z. {[lemma]}(z,y,x)',
-                {'{[lemma]}':'<e,<e,<e,t>>>'}
-                )
-            ]
 
-    sTaube = open('../test/beissende_taube.conll').read()
+    ass = SemRepAssigner.fromfile('rules/heuristic_rules.json')
+
+    sTaube = open('test/conll/beissende_taube.conll').read()
     dgTaube = nlp.DependencyGraph(sTaube)
-    beissen = dgTaube.nodes[3]
-    #for rule in rules:
-    #    print(rule)
-    #    print(rule.testConditions(dgTaube, 1))
-    #    print("---")
-    print(dgTaube)
-    ass = SemRepAssigner(rules)
+    sHase = open('test/conll/schenkender_hase.conll').read()
+    dgHase = nlp.DependencyGraph(sHase)
+
     ass.assignToDependencyGraph(dgTaube)
     print(dgTaube)
-    print(dgTaube.get_by_address(3)['semrep'].type)
-    print(dgTaube.get_by_address(2)['semrep'].type)
+    #print(dgTaube.get_by_address(3)['semrep'].type)
+    #print(dgTaube.get_by_address(2)['semrep'].type)
+
+    ass.assignToDependencyGraph(dgHase)
+    print(dgHase)
 
 if __name__ == '__main__':
-    test()
+    demo()

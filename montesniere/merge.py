@@ -186,10 +186,8 @@ class SemMerger:
             return expr2.applyto(expr1).simplify()
         else:
             # either deps are wrong or types are not accurate
-            raise nll.TypeException(expr1, expr2, "are not compatible,\
-                                    wrong types?")
-
-
+            errMsg = 'The types {0} and {1} are incompatible.'
+            raise nll.TypeException(errMsg.format(expr1, expr2))
     
     def getSemantics(self):
         ''' returns logical expression of the entire sentence '''

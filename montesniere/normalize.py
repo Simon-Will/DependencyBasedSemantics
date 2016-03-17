@@ -38,8 +38,10 @@ class Normalizer:
     def check_SB_Verb(self):
         """checks if number of verbs is equal to number of subjects"""
         for word in self.word_parts:
+            
             if word[4] == "VVFIN":
                 self.verb.append(self.word_parts.index(word))
+            
             elif word[7] == "SB":
                 # checks modifiers
                 self.sb.append(self.checkAttributes(self.word_parts.index(word)))
@@ -72,8 +74,7 @@ class Normalizer:
         new_sentence_parts = self.sentence_parts[:self.verb[-1]]
         for s in self.sb[-1]:
             new_sentence_parts.append(self.sentence_parts[s])
-        for part in self.sentence_parts[self.verb[-1]:]:
-                new_sentence_parts.append(part)
+        new_sentence_parts.extend(self.sentence_parts[self.verb[-1]:])
         self.sentence_parts = new_sentence_parts
         return self.orderSentence()
 
@@ -86,9 +87,7 @@ class Normalizer:
             sentence_new = self.sentence_parts[:pron]
             for s in sb:
                 sentence_new.append(self.sentence_parts[s])
-            for word in self.sentence_parts[pron+1:]:
-                sentence_new.append(word)
-            
+            sentence_new.extend(self.sentence_parts[pron+1:])
             self.sentence_parts = sentence_new
             
 

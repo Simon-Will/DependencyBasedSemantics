@@ -7,16 +7,16 @@ import nltk.sem.logic as nll
 
 class SemMerger:
     ''' Combines the logical expressions of each node and returns
-        al logical expression of the entire sentence.
-        A SemMerger object consitst of a dependencygraph, that will be 
-        updated continously.
-        For each node, its own original logical expression is combined
-        with those of its children and updated accordingly.
-        Attributes:
-            dg: a nltk.parse.dependencygraph.DependencyGraph 
-                object with logical expression assigned to each node.
-            dependencies: a list of nodes being currenlty processed
-        '''
+    al logical expression of the entire sentence.
+    A SemMerger object consitst of a dependencygraph, that will be 
+    updated continously.
+    For each node, its own original logical expression is combined
+    with those of its children and updated accordingly.
+    Attributes:
+        dg: a nltk.parse.dependencygraph.DependencyGraph 
+            object with logical expression assigned to each node.
+        dependencies: a list of nodes being currenlty processed
+    '''
         
     def __init__(self, dependencyGraph):
         '''Initializes SemMerger with given values. 

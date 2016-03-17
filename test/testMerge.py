@@ -69,6 +69,20 @@ class LehrenderLehrer(unittest.TestCase):
         expected = tlp.parse(semRep, signature=semSig)
         self.assertEquivalent(assigned, expected)
 
+class LehrlingSein(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'lehrling_sein.conll')
+        cls.merged = getMergedRepresentation(conllFile, RULES)
+
+    def testLehrlingSein(self):
+        assigned = LehrlingSein.merged
+        semRep = r'all x. (stift(x) -> lehrling(x))'
+        semSig = {'stift': '<e,t>', 'lehrling': '<e,t>'}
+        expected = tlp.parse(semRep, signature=semSig)
+        self.assertEquivalent(assigned, expected)
+
 if __name__ == '__main__':
     unittest.TestCase.assertEquivalent = assertEquivalent
     global RULES

@@ -162,6 +162,51 @@ class LehrenderLehrer(unittest.TestCase):
         expected = tlp.parse(semRepPat, signature=semSig)
         self.assertEqual(assigned, expected)
 
+class LehrlingSein(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'lehrling_sein.conll')
+        with open(conllFile) as f:
+            cls.depGraph = nlp.DependencyGraph(f.read())
+        assigner = montesniere.assign.SemRepAssigner.fromfile(RULES)
+        assigner.assignToDependencyGraph(cls.depGraph)
+
+    def testJeder(self):
+        assigned = LehrlingSein.depGraph.get_by_address(1)['semrep']
+        semRepPat = r'\P Q. all x. (P(x) -> Q(x))'
+        semSig = {'P': '<e,t>', 'Q': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testStift(self):
+        assigned = LehrlingSein.depGraph.get_by_address(2)['semrep']
+        semRepPat = r'\x. stift(x)'
+        semSig = {'stift': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testIst(self):
+        assigned = LehrlingSein.depGraph.get_by_address(3)['semrep']
+        semRepPat = r'\P. P'
+        semSig = {'P': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testEin(self):
+        assigned = LehrlingSein.depGraph.get_by_address(4)['semrep']
+        semRepPat = r'\P. P'
+        semSig = {'P': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testLehrling(self):
+        assigned = LehrlingSein.depGraph.get_by_address(5)['semrep']
+        semRepPat = r'\x. lehrling(x)'
+        semSig = {'lehrling': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
 if __name__ == '__main__':
     global RULES
     global TEST_DIR

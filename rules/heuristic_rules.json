@@ -100,13 +100,105 @@
         }
     },
     {
+        "explanation": "'ein' in a predicative expression.",
+        "conditions": [
+            "tag element {ART}",
+            "lemma element {ein}",
+            "rel element^{NK} {PD}"
+        ],
+        "semRepPat": "\\P. P",
+        "semSig": {
+            "P": "<e,t>"
+        }
+    },
+    {
         "explanation": "'ein' under a preposition modifying a verb",
         "conditions": [
             "tag element {ART}",
             "lemma element {ein}",
             "rel element^{NK} {MO}"
         ],
-        "semRepPat": "\\P B. exists x. (B(x) & P(x))",
+        "semRepPat": "\\P B. exists x. (P(x) & B(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "B": "<e,<t,t>>"
+        }
+    },
+    {
+        "explanation": "'alle' in subject.",
+        "conditions": [
+            "tag element {PIAT}",
+            "lemma element {aller, jeder}",
+            "rel element^{NK} {SB}"
+        ],
+        "semRepPat": "\\P Q. all x. (P(x) -> Q(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "Q": "<e,t>"
+        }
+    },
+    {
+        "explanation": "'alle' in accusative object of monotransitive verbs and of ditransitive verbs with a second accusative object.",
+        "conditions": [
+            "tag element {PIAT}",
+            "lemma element {aller, jeder}",
+            "rel element^{NK} {OA}",
+            "! deps superset^{NK, OA} {DA}"
+        ],
+        "semRepPat": "\\P R x. all y. (P(y) -> R(y)(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "R": "<e,<e,t>>"
+        }
+    },
+    {
+        "explanation": "'alle' in accusative object of ditransitive verbs.",
+        "conditions": [
+            "tag element {PIAT}",
+            "lemma element {aller, jeder}",
+            "rel element^{NK} {OA}",
+            "deps superset^{NK, OA} {DA}"
+        ],
+        "semRepPat": "\\P T y x. all z. (P(z) -> T(z)(y)(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "T": "<e,<e,<e,t>>>"
+        }
+    },
+    {
+        "explanation": "'alle' in dative object of ditransitive verbs.",
+        "conditions": [
+            "tag element {PIAT}",
+            "lemma element {aller, jeder}",
+            "rel element^{NK} {DA}"
+        ],
+        "semRepPat": "\\P R x. all y. (P(y) -> R(y)(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "R": "<e,<e,t>>"
+        }
+    },
+    {
+        "explanation": "'alle' in second accusative object of ditransitive verbs.",
+        "conditions": [
+            "tag element {PIAT}",
+            "lemma element {aller, jeder}",
+            "rel element^{NK} {OA2}"
+        ],
+        "semRepPat": "\\P T y x. all z. (P(z) -> T(z)(y)(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "T": "<e,<e,<e,t>>>"
+        }
+    },
+    {
+        "explanation": "'alle' under a preposition modifying a verb",
+        "conditions": [
+            "tag element {PIAT}",
+            "lemma element {aller, jeder}",
+            "rel element^{NK} {MO}"
+        ],
+        "semRepPat": "\\P B. all x. (P(x) -> B(x))",
         "semSig": {
             "P": "<e,t>",
             "B": "<e,<t,t>>"
@@ -193,6 +285,17 @@
         "semSig": {
             "{[lemma]}": "<e,<e,<e,t>>>"
        
+        }
+    },
+    {
+        "explanation": "'sein' as a copula",
+        "conditions": [
+            "lemma element {sein}",
+            "deps superset {PD}"
+        ],
+        "semRepPat": "\\P. P",
+        "semSig": {
+            "P": "<e,t>"
         }
     }
 ]

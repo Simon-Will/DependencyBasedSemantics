@@ -206,6 +206,7 @@ class SemRepAssigner:
             pass
 
 def _toASCII(s):
+    """Replace ß,ä,ö,ü to make a string ascii-compatible."""
     # XXX: This is an ugly hack. There has to be a proper way to do this.
     t = str.maketrans({'ß':'ss', 'ä': 'ae', 'ö': 'oe', 'ü': 'ue'})
     return s.translate(t)

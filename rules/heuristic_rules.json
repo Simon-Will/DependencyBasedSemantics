@@ -1,56 +1,60 @@
 [
     {
+	"explanation": "proper name in subject position",
         "conditions": [
             "tag element {NE}",
             "rel element {SB}"
         ],
-        "semrep": "\\P. P({[lemma]})",
-        "signature": {
+        "semRepPat": "\\P. P({[lemma]})",
+        "semSig": {
             "P": "<e,t>",
             "{[lemma]}": "e"
         }
     },
     {
+	"explanation": "proper name not in subject position",
         "conditions": [
             "tag element {NE}",
             "rel notElement^{NK} {SB}"
         ],
-        "semrep": "{[lemma]}",
-        "signature": {
+        "semRepPat": "{[lemma]}",
+        "semSig": {
             "{[lemma]}": "e"
         }
     },
     {
+	"explanation": "normal nouns",
         "conditions": [
             "tag element {NN}"
         ],
-        "semrep": "\\x. {[lemma]}(x)",
-        "signature": {
+        "semRepPat": "\\x. {[lemma]}(x)",
+        "semSig": {
             "{[lemma]}": "<e,t>"
         }
     },
     {
+        "explanation": "'ein' in subject.",
         "conditions": [
             "tag element {ART}",
             "lemma element {ein}",
             "rel element^{NK} {SB}"
         ],
-        "semrep": "\\P Q. exists x. (P(x) & Q(x))",
-        "signature": {
+        "semRepPat": "\\P Q. exists x. (P(x) & Q(x))",
+        "semSig": {
             "P": "<e,t>",
             "Q": "<e,t>"
         }
     },
     {
-        "explanation": "'ein' in accusative object of monotransitive verbs.",
+        "explanation": "'ein' in accusative object of monotransitive verbs and of ditransitive verbs with a second accusative object.",
         "conditions": [
             "tag element {ART}",
             "lemma element {ein}",
             "rel element^{NK} {OA}",
-            "rel notElement^{NK, OA} {OD}"
+            "! deps superset^{NK, OA} {DA}"
         ],
-        "semrep": "\\P R x. exists y. (P(y) & R(x,y))",
-        "signature": {
+        "semRepPat": "\\P R x. exists y. (P(y) & R(y)(x))",
+        "semSig": {
             "P": "<e,t>",
             "R": "<e,<e,t>>"
         }
@@ -61,10 +65,10 @@
             "tag element {ART}",
             "lemma element {ein}",
             "rel element^{NK} {OA}",
-            "rel element^{NK, OA} {OD}"
+            "deps superset^{NK, OA} {DA}"
         ],
-        "semrep": "\\P T y x. exists z. (P(z) & T(x,y,z))",
-        "signature": {
+        "semRepPat": "\\P T y x. exists z. (P(z) & T(z)(y)(x))",
+        "semSig": {
             "P": "<e,t>",
             "T": "<e,<e,<e,t>>>"
         }
@@ -74,10 +78,10 @@
         "conditions": [
             "tag element {ART}",
             "lemma element {ein}",
-            "rel element^{NK} {OD}"
+            "rel element^{NK} {DA}"
         ],
-        "semrep": "\\P R x. exists y. (P(y) & R(x,y))",
-        "signature": {
+        "semRepPat": "\\P R x. exists y. (P(y) & R(y)(x))",
+        "semSig": {
             "P": "<e,t>",
             "R": "<e,<e,t>>"
         }
@@ -89,52 +93,104 @@
             "lemma element {ein}",
             "rel element^{NK} {OA2}"
         ],
-        "semrep": "\\P T y x. exists z. (P(z) & T(x,y,z))",
-        "signature": {
+        "semRepPat": "\\P T y x. exists z. (P(z) & T(z)(y)(x))",
+        "semSig": {
             "P": "<e,t>",
             "T": "<e,<e,<e,t>>>"
         }
     },
     {
+        "explanation": "'ein' under a preposition modifying a verb",
+        "conditions": [
+            "tag element {ART}",
+            "lemma element {ein}",
+            "rel element^{NK} {MO}"
+        ],
+        "semRepPat": "\\P B. exists x. (B(x) & P(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "B": "<e,<t,t>>"
+        }
+    },
+    {
+        "explanation": "real adverbs and adverbial adjectives",
+        "conditions": [
+            "tag element {ADV, ADJD}",
+            "rel element {MO}"
+        ],
+        "semRepPat": "\\v .{[lemma]}(v)",
+        "semSig": {
+            "v": "t"
+        }
+    },
+    {
+        "explanation": "prepositional phrase modifying a verb",
+        "conditions": [
+            "tag element {APPR, APPO, APZR}",
+            "rel element {MO}"
+        ],
+        "semRepPat": "\\x v.{[lemma]}(v,x)",
+        "semSig": {
+            "v": "t"
+        }
+    },
+    {
+        "explanation": "prepositional phrase modifying an NP",
+        "note": "It's not clear if APPO and APZR are needed.",
+        "conditions": [
+            "tag element {APPR, APPO, APZR}",
+            "rel element {MNR}"
+        ],
+        "semRepPat": "\\y x.{[lemma]}(x,y)",
+        "semSig": {
+            "{[lemma]}": "<e,<e,t>>"
+        }
+    },
+    {
+	"explanation": "intransitive verb",
         "conditions": [
             "tag element {VVFIN}",
             "deps superset {SB}",
             "deps notSuperset {OA}"
         ],
-        "semrep": "\\x. {[lemma]}(x)",
-        "signature": {
+        "semRepPat": "\\x. {[lemma]}(x)",
+        "semSig": {
             "{[lemma]}": "<e,t>"
         }
     },
     {
+	"explanation": "monotransitive verb",
         "conditions": [
             "tag element {VVFIN}",
             "deps superset {SB, OA}",
-            "deps notSuperset {OD}"
+            "deps notSuperset {DA}",
+            "deps notSuperset {OA2}"
         ],
-        "semrep": "\\x y. {[lemma]}(y,x)",
-        "signature": {
+        "semRepPat": "\\y x. {[lemma]}(x,y)",
+        "semSig": {
             "{[lemma]}": "<e,<e,t>>"
         }
     },
     {
+	"explanation": "ditransitive verb with dative object",
         "conditions": [
             "tag element {VVFIN}",
-            "deps superset {SB, OA, OD}"
+            "deps superset {SB, OA, DA}"
         ],
-        "semrep": "\\x y z. {[lemma]}(z,y,x)",
-        "signature": {
+        "semRepPat": "\\z y x. {[lemma]}(x,y,z)",
+        "semSig": {
             "{[lemma]}": "<e,<e,<e,t>>>"
        
         }
     },
     {
+	"explanation": "ditransitive verb with second accusative object",
         "conditions": [
             "tag element {VVFIN}",
             "deps superset {SB, OA, OA2}"
         ],
-        "semrep": "\\x y z. {[lemma]}(z,y,x)",
-        "signature": {
+        "semRepPat": "\\z y x. {[lemma]}(x,y,z)",
+        "semSig": {
             "{[lemma]}": "<e,<e,<e,t>>>"
        
         }

@@ -61,7 +61,8 @@ class SemMerger:
             for node in self.dependencies:
                 self.sortSemantics(node)
        
-        return self.dg.root['semrep']
+        root = ourGetRoot(self.dg)
+        return root['semrep']
             
             
     def sortSemantics(self, node):
@@ -194,6 +195,31 @@ class SemMerger:
         ''' returns logical expression of the entire sentence '''
         self.getDependencies()
         return self.getSemRepresentation()
+
+def ourGetRoot(dependencyGraph):
+    '''Get the root node of a dependencyGraph.
+    
+    Args:
+        dependencyGraph: A nltk.parse.DependencyGraph object.
+    Returns:
+        The root node of the dependencyGraph.
+    Raises:
+        ValueError if the dependencyGraph has less than or more than
+            root node.
+    '''
+    root_dict = dependencyGraph.nodes[0]['deps']
+    roots = []
+    for root_list in root_dict.values():
+        roots.extend([r for r in root_list])
+
+    if len(roots) == 1:
+        return dependencyGraph.nodes[roots[0]]
+    elif len(roots) > 1:
+        errMsg = 'The dependencyGraph has more than one root.'
+        raise ValueError(errMsg)
+    else:
+        errMsg = 'The dependencyGraph has no root.'
+        raise ValueError(errMsg)
 
 def testUsualCase():
     import nltk.sem.logic as nll

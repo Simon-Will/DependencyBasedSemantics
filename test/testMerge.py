@@ -83,6 +83,34 @@ class LehrlingSein(unittest.TestCase):
         expected = tlp.parse(semRep, signature=semSig)
         self.assertEquivalent(assigned, expected)
 
+class KeinMenschZahlt(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'kein_mensch_zahlt.conll')
+        cls.merged = getMergedRepresentation(conllFile, RULES)
+
+    def testKeinMenschZahlt(self):
+        assigned = KeinMenschZahlt.merged
+        semRep = r'! exists x. (mensch(x) & exists y. (rechnung(y) & zahlen(x,y)))'
+        semSig = {'mensch': '<e,t>', 'rechnung': '<e,t>'}
+        expected = tlp.parse(semRep, signature=semSig)
+        self.assertEquivalent(assigned, expected)
+
+class Waldgurken(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'waldgurken.conll')
+        cls.merged = getMergedRepresentation(conllFile, RULES)
+
+    def testWaldgurken(self):
+        assigned = Waldgurken.merged
+        semRep = r'exists x. (wald(x) & in(all y. (gurke(y) -> leben(y))),x)'
+        semSig = {'gurke': '<e,t>', 'leben': '<e,t>'}
+        expected = tlp.parse(semRep, signature=semSig)
+        self.assertEquivalent(assigned, expected)
+
 if __name__ == '__main__':
     unittest.TestCase.assertEquivalent = assertEquivalent
     global RULES

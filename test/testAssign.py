@@ -207,6 +207,105 @@ class LehrlingSein(unittest.TestCase):
         expected = tlp.parse(semRepPat, signature=semSig)
         self.assertEqual(assigned, expected)
 
+class KeinMenschZahlt(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'kein_mensch_zahlt.conll')
+        with open(conllFile) as f:
+            cls.depGraph = nlp.DependencyGraph(f.read())
+        assigner = montesniere.assign.SemRepAssigner.fromfile(RULES)
+        assigner.assignToDependencyGraph(cls.depGraph)
+
+    def testKein(self):
+        assigned = KeinMenschZahlt.depGraph.get_by_address(1)['semrep']
+        semRepPat = r'\P Q. ! exists x. (P(x) & Q(x))'
+        semSig = {'P': '<e,t>', 'Q': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testMensch(self):
+        assigned = KeinMenschZahlt.depGraph.get_by_address(2)['semrep']
+        semRepPat = r'\x. mensch(x)'
+        semSig = {'mensch': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testZahlt(self):
+        assigned = KeinMenschZahlt.depGraph.get_by_address(3)['semrep']
+        semRepPat = r'\y x. zahlen(x,y)'
+        semSig = {'zahlen': '<e,<e,t>>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testEine(self):
+        assigned = KeinMenschZahlt.depGraph.get_by_address(4)['semrep']
+        semRepPat = r'\P R x. exists y. (P(y) & R(y)(x))'
+        semSig = {'P': '<e,t>', 'R': '<e,<e,t>>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testRechnung(self):
+        assigned = KeinMenschZahlt.depGraph.get_by_address(5)['semrep']
+        semRepPat = r'\x. rechnung(x)'
+        semSig = {'rechnung': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+# This test can not work, because nltk does not seem to support type t in the
+# first part of a ComplexType
+#class WaldGurken(unittest.TestCase):
+#
+#    @classmethod
+#    def setUpClass(cls):
+#        conllFile = os.path.join(TEST_DIR, 'waldgurken.conll')
+#        with open(conllFile) as f:
+#            cls.depGraph = nlp.DependencyGraph(f.read())
+#        assigner = montesniere.assign.SemRepAssigner.fromfile(RULES)
+#        assigner.assignToDependencyGraph(cls.depGraph)
+#
+#    def testAlle(self):
+#        assigned = WaldGurken.depGraph.get_by_address(1)['semrep']
+#        semRepPat = r'\P Q. all x. (P(x) -> Q(x))'
+#        semSig = {'P': '<e,t>', 'Q': '<e,t>'}
+#        expected = tlp.parse(semRepPat, signature=semSig)
+#        self.assertEqual(assigned, expected)
+#
+#    def testGurken(self):
+#        assigned = WaldGurken.depGraph.get_by_address(2)['semrep']
+#        semRepPat = r'\x. gurke(x)'
+#        semSig = {'gurke': '<e,t>'}
+#        expected = tlp.parse(semRepPat, signature=semSig)
+#        self.assertEqual(assigned, expected)
+#
+#    def testLeben(self):
+#        assigned = WaldGurken.depGraph.get_by_address(3)['semrep']
+#        semRepPat = r'\x. leben(x)'
+#        semSig = {'leben': '<e,t>'}
+#        expected = tlp.parse(semRepPat, signature=semSig)
+#        self.assertEqual(assigned, expected)
+#
+#    def testIn(self):
+#        assigned = WaldGurken.depGraph.get_by_address(4)['semrep']
+#        semRepPat = r'\x v. in(V,x)'
+#        semSig = {'V': 't'}
+#        expected = tlp.parse(semRepPat, signature=semSig)
+#        self.assertEqual(assigned, expected)
+#
+#    def testEinem(self):
+#        assigned = WaldGurken.depGraph.get_by_address(5)['semrep']
+#        semRepPat = r'\P B. exists x. (P(x) & B(x))'
+#        semSig = {'P': '<e,t>', 'B': '<e,<t,t>>'}
+#        expected = tlp.parse(semRepPat, signature=semSig)
+#        self.assertEqual(assigned, expected)
+#
+#    def testWald(self):
+#        assigned = WaldGurken.depGraph.get_by_address(6)['semrep']
+#        semRepPat = r'\x. wald(x)'
+#        semSig = {'wald': '<e,t>'}
+#        expected = tlp.parse(semRepPat, signature=semSig)
+#        self.assertEqual(assigned, expected)
+
 if __name__ == '__main__':
     global RULES
     global TEST_DIR

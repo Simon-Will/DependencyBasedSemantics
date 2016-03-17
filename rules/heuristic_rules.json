@@ -113,6 +113,7 @@
     },
     {
         "explanation": "'ein' under a preposition modifying a verb",
+        "note": "In semSig, the type of B (<e,<t,t>>) should be specified. But nltk does not seem to allow the type t in the first part of a type",
         "conditions": [
             "tag element {ART}",
             "lemma element {ein}",
@@ -121,7 +122,86 @@
         "semRepPat": "\\P B. exists x. (P(x) & B(x))",
         "semSig": {
             "P": "<e,t>",
-            "B": "<e,<t,t>>"
+            "B": "<e,<?,t>>"
+        }
+    },
+    {
+        "explanation": "'kein' in subject.",
+        "conditions": [
+            "tag element {PIAT}",
+            "lemma element {kein}",
+            "rel element^{NK} {SB}"
+        ],
+        "semRepPat": "\\P Q. ! exists x. (P(x) & Q(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "Q": "<e,t>"
+        }
+    },
+    {
+        "explanation": "'kein' in accusative object of monotransitive verbs and of ditransitive verbs with a second accusative object.",
+        "conditions": [
+            "tag element {PIAT}",
+            "lemma element {kein}",
+            "rel element^{NK} {OA}",
+            "! deps superset^{NK, OA} {DA}"
+        ],
+        "semRepPat": "\\P R x. ! exists y. (P(y) & R(y)(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "R": "<e,<e,t>>"
+        }
+    },
+    {
+        "explanation": "'kein' in accusative object of ditransitive verbs.",
+        "conditions": [
+            "tag element {PIAT}",
+            "lemma element {kein}",
+            "rel element^{NK} {OA}",
+            "deps superset^{NK, OA} {DA}"
+        ],
+        "semRepPat": "\\P T y x. ! exists z. (P(z) & T(z)(y)(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "T": "<e,<e,<e,t>>>"
+        }
+    },
+    {
+        "explanation": "'kein' in dative object of ditransitive verbs.",
+        "conditions": [
+            "tag element {PIAT}",
+            "lemma element {kein}",
+            "rel element^{NK} {DA}"
+        ],
+        "semRepPat": "\\P R x. ! exists y. (P(y) & R(y)(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "R": "<e,<e,t>>"
+        }
+    },
+    {
+        "explanation": "'kein' in second accusative object of ditransitive verbs.",
+        "conditions": [
+            "tag element {PIAT}",
+            "lemma element {kein}",
+            "rel element^{NK} {OA2}"
+        ],
+        "semRepPat": "\\P T y x. ! exists z. (P(z) & T(z)(y)(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "T": "<e,<e,<e,t>>>"
+        }
+    },
+    {
+        "explanation": "'kein' in a predicative expression.",
+        "conditions": [
+            "tag element {PIAT}",
+            "lemma element {kein}",
+            "rel element^{NK} {PD}"
+        ],
+        "semRepPat": "\\P. P",
+        "semSig": {
+            "P": "<e,t>"
         }
     },
     {
@@ -193,6 +273,7 @@
     },
     {
         "explanation": "'alle' under a preposition modifying a verb",
+        "note": "In semSig, the type of B (<e,<t,t>>) should be specified. But nltk does not seem to allow the type t in the first part of a type",
         "conditions": [
             "tag element {PIAT}",
             "lemma element {aller, jeder}",
@@ -201,33 +282,35 @@
         "semRepPat": "\\P B. all x. (P(x) -> B(x))",
         "semSig": {
             "P": "<e,t>",
-            "B": "<e,<t,t>>"
+            "B": "<e,?>"
         }
     },
     {
         "explanation": "real adverbs and adverbial adjectives",
+        "note": "In semSig, the type of {[lemma]} (<t,t>) should be specified. But nltk does not seem to allow the type t in the first part of a type",
         "conditions": [
             "tag element {ADV, ADJD}",
             "rel element {MO}"
         ],
-        "semRepPat": "\\v .{[lemma]}(v)",
+        "semRepPat": "\\V . {[lemma]}(V)",
         "semSig": {
-            "v": "t"
+            "{[lemma]}": "<?,t>"
         }
     },
     {
-        "explanation": "prepositional phrase modifying a verb",
+        "explanation": "preposition of a PP modifying a verb",
+        "note": "In semSig, the type of {[lemma]} (<e,<t,t>>) should be specified. But nltk does not seem to allow the type t in the first part of a type",
         "conditions": [
             "tag element {APPR, APPO, APZR}",
             "rel element {MO}"
         ],
-        "semRepPat": "\\x v.{[lemma]}(v,x)",
+        "semRepPat": "\\x V. {[lemma]}(V,x)",
         "semSig": {
-            "v": "t"
+            "{[lemma]}": "<e,<?,t>>"
         }
     },
     {
-        "explanation": "prepositional phrase modifying an NP",
+        "explanation": "preposition of a PP modifying an NP",
         "note": "It's not clear if APPO and APZR are needed.",
         "conditions": [
             "tag element {APPR, APPO, APZR}",

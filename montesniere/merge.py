@@ -96,7 +96,11 @@ class SemMerger:
                                             self.dg.nodes[node]
                                             )
                                             
-        if self.dg.nodes[head]['address'] != None:
+        # if modified, continue branch
+        if (self.dg.nodes[node]['rel'] == 'NK'):
+            self.dependencies.insert(0, self.dg.nodes[head]['address'])
+                                            
+        elif self.dg.nodes[head]['address'] != None:
             self.dependencies.append(self.dg.nodes[head]['address'])
         
         # starts (not quite) a loop
@@ -227,7 +231,7 @@ def testUsualCase():
     dg = nlp.DependencyGraph(treebank_data)
     #this will soon be replaced by an automatic representation
     dg.nodes[1]['semrep'] = read_expr(r'\P\Q. exists x.(P(x) & Q(x))')
-    dg.nodes[1]['semrep'] = read_expr(r'\x. taube(x)')
+    dg.nodes[2]['semrep'] = read_expr(r'\x. taube(x)')
     dg.nodes[3]['semrep'] = read_expr(r'\y\x. beissen(x, y)')
     dg.nodes[4]['semrep'] = read_expr(r'peter')
     semantics = SemMerger(dg)

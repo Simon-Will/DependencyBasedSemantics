@@ -89,7 +89,7 @@ class SemRepRule:
             # All conditions are satisfied.
             return True
 
-    def assignSemRep(self, node):
+    def assignSemRep(self, node, ascii=False):
         """Assign the semantic representation of this rule to a node.
 
         Format this rule's semRepPat with the given node, do the same
@@ -100,9 +100,15 @@ class SemRepRule:
 
         Args:
             node: A node of an nltk.parse.DependencyGraph object.
+            ascii: A boolean indicating whether the assigned
+                representation should be ascii-compatible.
+                Default: False
         """
         expr = self.semRepPat.format(node)
-        exprSig = {key.format(node): val for key, val in self.semSig.items()}
+        exprSig = {k.format(node): v for k, v in self.semSig.items()}
+        if ascii:
+            expr = _toASCII(expr)
+            exprSig = {_toASCII(k): _toASCII(v) for k, v in exprSig.items()}
         node['semrep'] = tlp.parse(expr, signature=exprSig)
 
     def __str__(self):
@@ -120,21 +126,25 @@ class SemRepAssigner:
         rules: A list of SemRepRule objects.
     """
 
-    def __init__(self, rules):
+    def __init__(self, rules, ascii=False):
         """Initialize SemRepAssigner with the given rules.
 
         The rules should be a sorted iterable, e. g. a list.
 
         Args:
             rules: A list of SemRepRule objects.
+            ascii: A boolean indicating whether the assigned
+                representations should be ascii-compatible.
+                Default: False
 
         Returns:
             The initialized SemRepAssigner.
         """
         self.rules = rules
+        self.ascii = ascii
 
     @classmethod
-    def fromfile(cls, filename):
+    def fromfile(cls, filename, ascii=False):
         """Read a SemRepAssigner from a json file and return it.
 
         The json file has to hold an array of objects (the rules).
@@ -148,6 +158,9 @@ class SemRepAssigner:
         
         Args:
             filename: The name of json file.
+            ascii: A boolean indicating whether the assigned
+                representations should be ascii-compatible.
+                Default: False
 
         Returns:
             A SemRepAssigner object with the rules from the json file.
@@ -161,7 +174,7 @@ class SemRepAssigner:
                 raise
         rules = [SemRepRule(r['conditions'], r['semRepPat'], r['semSig'])
                 for r in json_rules]
-        return cls(rules)
+        return cls(rules, ascii)
 
     def assignToDependencyGraph(self, depGraph):
         """Assign semantic representations to DependencyGraph nodes.
@@ -185,12 +198,17 @@ class SemRepAssigner:
         """
         for r in self.rules:
             if r.testConditions(depGraph, address):
-                r.assignSemRep(depGraph.get_by_address(address))
+                r.assignSemRep(depGraph.get_by_address(address), self.ascii)
                 break
         else:
             # No rule's conditions are satisfied.
             # Assign default semrep here.
             pass
+
+def _toASCII(s):
+    # XXX: This is an ugly hack. There has to be a proper way to do this.
+    t = str.maketrans({'ß':'ss', 'ä': 'ae', 'ö': 'oe', 'ü': 'ue'})
+    return s.translate(t)
 
 def demo():
     import nltk.parse as nlp

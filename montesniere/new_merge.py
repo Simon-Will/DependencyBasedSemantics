@@ -96,11 +96,12 @@ class SemMerger:
                                             self.dg.nodes[node]
                                             )
         # checks modification
-        if(self.checkModifier(node)):
+        if(self.dg.nodes[node]['rel'] == 'NK':
+            self.dependencies.insert(0, self.dg.nodes[head]['address'])
             return
         
-     
-        self.checkAdress(head)
+        else:
+            self.checkAdress(head)
         
         # start recursion
         self.getSemRepresentation()
@@ -111,14 +112,7 @@ class SemMerger:
         if self.dg.nodes[head]['address'] != None:
             self.dependencies.append(self.dg.nodes[head]['address'])
         
-    def checkModifier(self, node):
-        """checks if node modifies a nomen """
-        if (self.dg.nodes[node]['rel'] == 'NK' ):
-            self.dependencies.insert(0, self.dg.nodes[node]['head'])
-            return True
-        
-        return False
-        
+    
                 
     def mergeNamedEntities(self, head_node, node_node):
         '''Fuse representations of first and last name of one entity 

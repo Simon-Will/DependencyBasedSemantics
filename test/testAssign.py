@@ -252,6 +252,89 @@ class KeinMenschZahlt(unittest.TestCase):
         expected = tlp.parse(semRepPat, signature=semSig)
         self.assertEqual(assigned, expected)
 
+class SchnelleJaegerin(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'schnelle_jägerin.conll')
+        with open(conllFile) as f:
+            cls.depGraph = nlp.DependencyGraph(f.read())
+        assigner = montesniere.assign.SemRepAssigner.fromfile(RULES)
+        assigner.assignToDependencyGraph(cls.depGraph)
+
+    def testEine(self):
+        assigned = SchnelleJaegerin.depGraph.get_by_address(1)['semrep']
+        semRepPat = r'\P Q. exists x. (P(x) & Q(x))'
+        semSig = {'P': '<e,t>', 'Q': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testSchnelle(self):
+        assigned = SchnelleJaegerin.depGraph.get_by_address(2)['semrep']
+        semRepPat = r'\P x. (schnell(x) & P(x))'
+        semSig = {'schnell': '<e,t>', 'P': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testJaegerin(self):
+        assigned = SchnelleJaegerin.depGraph.get_by_address(3)['semrep']
+        semRepPat = r'\x. jägerin(x)'
+        semSig = {'jägerin': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testErzuernen(self):
+        assigned = SchnelleJaegerin.depGraph.get_by_address(4)['semrep']
+        semRepPat = r'\y x. erzürnen(x,y)'
+        semSig = {'erzürnen': '<e,<e,t>>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testPlexippos(self):
+        assigned = SchnelleJaegerin.depGraph.get_by_address(5)['semrep']
+        semRepPat = r'plexippos'
+        semSig = {'plexippos': 'e'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+class SchuppigeBeine(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'schuppige_beine.conll')
+        with open(conllFile) as f:
+            cls.depGraph = nlp.DependencyGraph(f.read())
+        assigner = montesniere.assign.SemRepAssigner.fromfile(RULES)
+        assigner.assignToDependencyGraph(cls.depGraph)
+
+    def testSirenen(self):
+        assigned = SchuppigeBeine.depGraph.get_by_address(1)['semrep']
+        semRepPat = r'\P. all x. (sirene(x) -> P(x))'
+        semSig = {'P': '<e,t>', 'sirene': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testHaben(self):
+        assigned = SchuppigeBeine.depGraph.get_by_address(2)['semrep']
+        semRepPat = r'\y x. (haben(x,y))'
+        semSig = {'haben': '<e,<e,t>>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testSchuppige(self):
+        assigned = SchuppigeBeine.depGraph.get_by_address(3)['semrep']
+        semRepPat = r'\P x. (schuppig(x) & P(x))'
+        semSig = {'schuppig': '<e,t>', 'P': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testBeine(self):
+        assigned = SchuppigeBeine.depGraph.get_by_address(4)['semrep']
+        semRepPat = r'\x. bein(x)'
+        semSig = {'bein': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
 # This test can not work, because nltk does not seem to support type t in the
 # first part of a ComplexType
 #class WaldGurken(unittest.TestCase):

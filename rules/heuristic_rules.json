@@ -23,7 +23,20 @@
         }
     },
     {
-	"explanation": "normal nouns",
+	"explanation": "normal nouns without dependents (assume plural)",
+        "conditions": [
+            "tag element {NN}",
+            "deps subset {}"
+        ],
+        "semRepPat": "\\P. all x. ({[lemma]}(x) -> P(x))",
+        "semSig": {
+            "{[lemma]}": "<e,t>",
+            "P": "<e,t>"
+        }
+    },
+    {
+	"explanation": "normal nouns with article or modifier",
+        "note": "TODO: determine type of noun (with adjective, with article, …",
         "conditions": [
             "tag element {NN}"
         ],
@@ -123,6 +136,20 @@
         "semSig": {
             "P": "<e,t>",
             "B": "<e,<?,t>>"
+        }
+    },
+    {
+        "explanation": "'ein' under a preposition modifying an NP ('ein Kern in [einer] Traube')",
+        "conditions": [
+            "tag element {ART}",
+            "lemma element {ein}",
+            "rel element^{NK} {MNR}"
+        ],
+        "semRepPat": "\\P U Q x. exists y. (P(y) & U(y)(Q)(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "Q": "<e,t>",
+            "U": "<e,<<e,t>,<e,t>>>"
         }
     },
     {
@@ -286,8 +313,23 @@
         }
     },
     {
+        "explanation": "'alle' under a preposition modifying an NP ('ein Grinsen in [allen] Gesichtern')",
+        "conditions": [
+            "tag element {PIAT}",
+            "lemma element {aller, jeder}",
+            "rel element^{NK} {MNR}"
+        ],
+        "semRepPat": "\\P U Q x. all y. (P(y) -> U(y)(Q)(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "Q": "<e,t>",
+            "U": "<e,<<e,t>,<e,t>>>"
+        }
+    },
+    {
         "explanation": "real adverbs and adverbial adjectives",
         "note": "In semSig, the type of {[lemma]} (<t,t>) should be specified. But nltk does not seem to allow the type t in the first part of a type",
+        "note": "TODO: Think about adverbs modifying adjectives",
         "conditions": [
             "tag element {ADV, ADJD}",
             "rel element {MO}"
@@ -316,9 +358,23 @@
             "tag element {APPR, APPO, APZR}",
             "rel element {MNR}"
         ],
-        "semRepPat": "\\y x.{[lemma]}(x,y)",
+        "semRepPat": "\\y P x.({[lemma]}(x,y) & P(x))",
         "semSig": {
-            "{[lemma]}": "<e,<e,t>>"
+            "{[lemma]}": "<e,<e,t>>",
+            "P": "<e,t>"
+        }
+    },
+    {
+        "explanation": "attribute adjective",
+        "note": "All adjectives are treated as though being intersective",
+        "conditions": [
+            "tag element {ADJA}",
+            "rel element {NK}"
+        ],
+        "semRepPat": "\\P x.({[lemma]}(x) & P(x))",
+        "semSig": {
+            "{[lemma]}": "<e,t>",
+            "P": "<e,t>"
         }
     },
     {
@@ -334,9 +390,10 @@
         }
     },
     {
-	"explanation": "monotransitive verb",
+	"explanation": "monotransitive verb, VAFIN is accepted for verbs like 'haben'",
+        "note": "Maybe 'haben' should receive the VVFIN tag if it is not an auxiliary",
         "conditions": [
-            "tag element {VVFIN}",
+            "tag element {VVFIN, VAFIN}",
             "deps superset {SB, OA}",
             "deps notSuperset {DA}",
             "deps notSuperset {OA2}"

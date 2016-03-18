@@ -96,7 +96,7 @@ class SemMerger:
                                             self.dg.nodes[node]
                                             )
         # checks modification
-        if(self.dg.nodes[node]['rel'] == 'NK':
+        if(self.dg.nodes[node]['rel'] == 'NK'):
             self.dependencies.insert(0, self.dg.nodes[head]['address'])
             return
         

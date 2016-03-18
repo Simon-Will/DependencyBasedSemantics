@@ -1,5 +1,5 @@
-#!/bin/env/python3
-# coding: utf-8
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 class Normalizer:
     """Reads a parsed sentence out of a file and normalizes its structure

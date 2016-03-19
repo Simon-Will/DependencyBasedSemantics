@@ -3,7 +3,6 @@
 
 
 
-# TO-DO: ART and MO
 class Normalizer:
     """Reads a parsed sentence out of a file and normalizes its structure
     A Normalizer object consists of a parsed sentence
@@ -181,7 +180,7 @@ class Normalizer:
             
         
     def checkNoun(self, word):
-        return word[4] == "NN"
+        return word[4] == "NN" and word[7] != "NK"
         
         
     def assignVerb(self, word, relations, konj):
@@ -194,21 +193,41 @@ class Normalizer:
             
     
     def assignNK(self, word, relations, konj):
-        """nomina dependency"""
-        for n in relations["SB"]:
+        """nomina and mo dependency"""
+        for n in relations["NN"]:
             for konjunction in konj:
                 if (int(word[0]) < konjunction and n < konjunction):
                     if(int(word[0]) > n and word[3] == "DET"):
                         continue
+                    n =  self.checkMo(int(word[0]), n, relations["MO"])
                     self.changeWord(word, n)
+                    return word
+                    
                     
                 elif (int(word[0]) > konjunction and n > konjunction):
                     if(int(word[0]) > n and word[3] == "DET"):
                         continue
+                    n =  self.checkMo(int(word[0]), n, relations["MO"])
                     self.changeWord(word, n)
-                    
+                    self.changeWord(word, n)
+                    return word
         return word
             
+            
+    def checkMo(self, word, n, relations_mo):
+        """checks for nomen-nk relation"""
+        for mo in relations_mo:
+            if (self.getDistance(mo, word) < self.getDistance(n, word)):
+                #print(word[0], self.getDistance(n, int(word[0])), int(word[0])-mo)
+                return mo
+        return n
+        
+    def getDistance(self, n, m):
+        if n > m:
+            return n-m
+        else:
+            return m-n
+        
     def assignRelations(self, words, relations):
         """selects correct dependency"""
         for key in relations.keys():

@@ -9,7 +9,7 @@ class Normalizer:
     Each sentence is brought into a SB VB O (CONJ SB VB O form.
     
     Attributes:
-        sentence: sentence read out of file
+        sentence: sentence (read out of file)
         sentence_parts  : list of lines of splitted sentence
         self.word_parts: list of attributes of one sentence_part
         self.verb : list of verbs in the sentence
@@ -36,11 +36,11 @@ class Normalizer:
         self.sb = []
         self.pr = []
         
-        try:
-            self.sentence = open(parsedSentence).read()
-            self.word_parts = [part.split("\t") for part in 
+        
+        self.sentence = parsedSentence
+        self.word_parts = [part.split("\t") for part in 
                                 self.sentence.split("\n")][:-1]
-            
+        try:    
             #if spaces are used
             if len(self.word_parts[0]) < 2:
                 import re
@@ -49,6 +49,8 @@ class Normalizer:
                                     
         except IOError:
             raise IOError("Could not find file")
+            
+        
             
     def check_SB_Verb(self):
         """checks if number of verbs is equal to number of subjects"""
@@ -307,17 +309,12 @@ class Normalizer:
             self.checkPron()
             return self.orderSentence()
         
-        
         if len(self.sb) != 0:
             self.insertSubject()
         self.checkPron()
-        
-        
-        
+    
         if self.obj != []:
             self.insertObject()
-    
-    #    self.assignNodes()
             
         return self.orderSentence()
      
@@ -329,31 +326,31 @@ class Normalizer:
      
      
 def test():
-    gurken = Normalizer("../test/conll/tanzende_gurken.conll")
+    gurken = Normalizer(open("../test/conll/tanzende_gurken.conll").read())
     return gurken.getSentence() 
 
 def testPronomina():
-    gurken2 = Normalizer("../test/conll/tanzende_gurken2.conll")
+    gurken2 = Normalizer(open("../test/conll/tanzende_gurken2.conll").read())
     return gurken2.getSentence()
     
 def testObj():
-    hase = Normalizer("../test/conll/schenkender_hasen.conll")
+    hase = Normalizer(open("../test/conll/schenkender_hasen.conll").read())
     return hase.getSentence()
     
 def testpresidentens():
-    pres = Normalizer("../test/conll/presidents.conll")
+    pres = Normalizer(open("../test/conll/presidents.conll").read())
     return pres.getSentence()
    
 def testKeineAenderung():
-    ka = Normalizer("../test/conll/keine_aenderung.conll")
+    ka = Normalizer(open("../test/conll/keine_aenderung.conll").read())
     return ka.getSentence()
     
 def testDoppeltesObjekt():
-    do = Normalizer("../test/conll/doppelte_objekt.conll")
+    do = Normalizer(open("../test/conll/doppelte_objekt.conll").read())
     return do.getSentence()
     
 def testNurPronomen():
-    np = Normalizer("../test/conll/nur_pronomen.conll")
+    np = Normalizer(open("../test/conll/nur_pronomen.conll").read())
     return np.getSentence()
     
 if __name__ == '__main__':
@@ -369,4 +366,3 @@ if __name__ == '__main__':
     print(testDoppeltesObjekt())
     
     print(testNurPronomen())
-

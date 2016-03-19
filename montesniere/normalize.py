@@ -197,7 +197,7 @@ class Normalizer:
             
         
     def checkNoun(self, word):
-        return word[4] == "NN" and word[7] != "NK"
+        return (word[4] == "NN" or word[7] == "SB")and word[7] != "NK"
         
         
     def assignVerb(self, word, relations, konj):

@@ -1,0 +1,12 @@
+1       Heutzutage      heutzutage      ADV     ADV     _       2       MO      _       _
+2       hält    halten  VVFIN   VVFIN   _       0       --      _       _
+3       Perot   Perot   NE      NE      _       2       SB      _       _
+4       sein    sein    PPOSAT  PPOSAT  _       5       NK      _       _
+5       Vermögen        Vermögen        NN      NN      _       2       OA      _       _
+6       vor     vor     APPR    APPR    _       8       MO      _       _
+7       allem   alle    PIS     PIS     _       6       NK      _       _
+8       in      in      APPR    APPR    _       2       CVC     _       _
+9       Staatspapieren  Staatspapier    NN      NN      _       8       NK      _       _
+10      und     und     KON     KON     _       9       CD      _       _
+11      Immobilien      Immobilie       NN      NN      _       10      CJ      _       _
+12      .       --      $.      $.      _       2       --      _       _

@@ -216,7 +216,7 @@ class Normalizer:
         for n in relations["NN"]:
             for konjunction in konj:
                 if (int(word[0]) < konjunction and n < konjunction):
-                    if(int(word[0]) > n and word[3] == "DET"):
+                    if(int(word[0]) > n and word[4] == "ART"):
                         continue
                     n =  self.checkMo(int(word[0]), n, relations["MO"])
                     self.changeWord(word, n)
@@ -224,7 +224,7 @@ class Normalizer:
                     
                     
                 elif (int(word[0]) > konjunction and n > konjunction):
-                    if(int(word[0]) > n and word[3] == "DET"):
+                    if(int(word[0]) > n and word[4] == "ART"):
                         continue
                     n =  self.checkMo(int(word[0]), n, relations["MO"])
                     self.changeWord(word, n)
@@ -361,8 +361,12 @@ if __name__ == '__main__':
     print(testPronomina())
     print(testObj())
 
+    # FIX-ME in
     print(testpresidentens())
+    
     print(testKeineAenderung())
+    # FIX_ME in
     print(testDoppeltesObjekt())
+    
     print(testNurPronomen())
 

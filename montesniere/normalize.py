@@ -40,8 +40,13 @@ class Normalizer:
             self.sentence = open(parsedSentence).read()
             self.word_parts = [part.split("\t") for part in 
                                 self.sentence.split("\n")][:-1]
-            self.word_parts.pop()
-         
+            
+            #if spaces are used
+            if len(self.word_parts[0]) < 2:
+                import re
+                self.word_parts = [re.split("\\s+", part) for part in
+                                    self.sentence.split("\n")][:-1]
+                                    
         except IOError:
             raise IOError("Could not find file")
             
@@ -49,17 +54,17 @@ class Normalizer:
         """checks if number of verbs is equal to number of subjects"""
         for word in self.word_parts:
             
-            if word[4] == "VVFIN":
+            if (word[4] == "VVFIN" or word[4] == "VAFIN"):
                 self.verb.append(self.word_parts.index(word))
             
-            elif word[7] == "SB" and word[4] != "PPER":
+            elif word[7] == "SB":
                 # checks modifiers
                 self.sb.append(self.checkAttributes(
                                     self.word_parts.index(word))
                                     )
+                if word[4] == "PPER":
+                    self.pr.append(int(word[0])-1)
             
-            elif word[4] == "PPER":
-                self.pr.append(int(word[0]))
                 
             
         return len(self.verb) <= len(self.sb)
@@ -83,7 +88,7 @@ class Normalizer:
     def checkOB(self):
         """checks if objects are directly connected"""
         for word in self.word_parts:
-            
+
             if word[7] == "OA" or word[7] == "DA" or word[7] == "OA2":
                 obj = self.word_parts.index(word)
                 
@@ -105,7 +110,7 @@ class Normalizer:
             n += 1
         
         if (self.word_parts[n][7] == self.word_parts[obj][7] or
-            self.word_parts[n][7] == "OA2"):
+            self.word_parts[n][7] == "OA2" or self.word_parts[n][7] == "CJ"):
             nextObj.append(n)
         
         return nextObj
@@ -113,21 +118,31 @@ class Normalizer:
     
     
     def checkPron(self):
-        """ replaces pronomina in the sentence"""
+        """ replaces pronomina in the sentence, if possible"""
         pkonj = []
         for pron in self.pr:
-            pkonj.append(pron-1)
-            self.word_parts, words = self.word_parts[:pron-1], \
-                                        self.word_parts[pron:]
-            for i in range(pron,0,-1):
-                subj = [sub for sub in self.sb if i in sub]
-            self.word_parts.extend(self.addWords(subj))
-            self.word_parts.extend(words)
-            del subj[:]
+            if len(self.sb) > 1:
+                self.removePron(pron)
+                pkonj.append(pron-1)
+                self.word_parts, words = self.word_parts[:pron], \
+                                        self.word_parts[pron+1:]
+                for i in range(pron,0,-1):
+                    subj = [sub for sub in self.sb if i in sub]
+                    self.word_parts.extend(self.addWords(subj))
+                self.word_parts.extend(words)
+                del subj[:]
+            
+            else:
+                return
+        
         self.word_parts = self.mergenewSentence(self.word_parts)
         self.assignNodes(pkonj)
             
         
+    def removePron(self, pron):
+        for subj in self.sb:
+            if pron in subj:
+                subj.remove(pron)
         
     def addWords(self, words):
         """ add words to be inserted"""
@@ -135,16 +150,18 @@ class Normalizer:
         for word in words:
             for w in word:
                 appendedWords.append(self.word_parts[w])
+            break
         return appendedWords
     
     def insertSubject(self):
         """inserts subject before verb"""
         vkonj = []
         for verb in self.verb:
+            
             if self.word_parts[verb-1][7] != "SB":
                 vkonj.append(verb)
                 word_parts, words = self.word_parts[:verb], self.word_parts[verb:]
-                subj = [su for su in self.sb for i in range(verb,0,-1) 
+                subj = [su for su in self.sb for i in range(verb,-1,-1) 
                             if i in su]
                 word_parts.extend(self.addWords(subj))
                 word_parts.extend(words)
@@ -169,7 +186,7 @@ class Normalizer:
             
     def assignNodes(self, konj):
         """assign correct dependencies"""
-        relations = {"SB" : [], "VVFIN" : [], "NN" : [], "OA" : [], 
+        relations = {"SB" : [], "VV/AFIN" : [], "NN" : [], "OA" : [], 
                     "OA2" : [], "DA" : [], "MO": []}
         relations = self.assignRelations(self.word_parts, relations)
         for word in self.word_parts:
@@ -185,7 +202,7 @@ class Normalizer:
         
     def assignVerb(self, word, relations, konj):
         """assign verb dependency"""
-        for n in relations["VVFIN"]:
+        for n in relations["VV/AFIN"]:
             for konjunction in konj:
                 if (int(word[0]) > konjunction and n > konjunction):
                     self.changeWord(word, n)
@@ -218,7 +235,6 @@ class Normalizer:
         """checks for nomen-nk relation"""
         for mo in relations_mo:
             if (self.getDistance(mo, word) < self.getDistance(n, word)):
-                #print(word[0], self.getDistance(n, int(word[0])), int(word[0])-mo)
                 return mo
         return n
         
@@ -232,9 +248,12 @@ class Normalizer:
         """selects correct dependency"""
         for key in relations.keys():
             values = []
-            if key == "VVFIN" or key == "NN":
+            if key == "NN":
                 values.extend([int(word[0]) for word in words 
                                 if word[4] == key])
+            elif key == "VV/AFIN":
+                values.extend([int(word[0]) for word in words if (
+                            word[4] == "VVFIN" or word[4] == "VAFIN")])
             else:
                 values.extend([int(word[0]) for word in words 
                                 if word[7] == key])
@@ -277,6 +296,7 @@ class Normalizer:
     def getSentence(self):
         """returns normalized sentence"""
         self.checkOB()
+
         if self.check_SB_Verb():
         
             if self.obj != []:
@@ -288,9 +308,8 @@ class Normalizer:
         
         if len(self.sb) != 0:
             self.insertSubject()
-        
-        
         self.checkPron()
+        
         
         
         if self.obj != []:
@@ -318,9 +337,30 @@ def testPronomina():
 def testObj():
     hase = Normalizer("../test/conll/schenkender_hasen.conll")
     return hase.getSentence()
+    
+def testpresidentens():
+    pres = Normalizer("../test/conll/presidents.conll")
+    return pres.getSentence()
    
+def testKeineAenderung():
+    ka = Normalizer("../test/conll/keine_aenderung.conll")
+    return ka.getSentence()
+    
+def testDoppeltesObjekt():
+    do = Normalizer("../test/conll/doppelte_objekt.conll")
+    return do.getSentence()
+    
+def testNurPronomen():
+    np = Normalizer("../test/conll/nur_pronomen.conll")
+    return np.getSentence()
+    
 if __name__ == '__main__':
     print(test())
     print(testPronomina())
     print(testObj())
+
+    print(testpresidentens())
+    print(testKeineAenderung())
+    print(testDoppeltesObjekt())
+    print(testNurPronomen())
 

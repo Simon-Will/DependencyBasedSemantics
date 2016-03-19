@@ -205,6 +205,8 @@ class Normalizer:
         for n in relations["VV/AFIN"]:
             for konjunction in konj:
                 if (int(word[0]) > konjunction and n > konjunction):
+                    if(word[7] == "AG"):
+                        return self.assignNK(word, relations, konj)
                     self.changeWord(word, n)
         return word
             

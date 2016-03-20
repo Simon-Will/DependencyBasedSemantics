@@ -2,12 +2,12 @@
 2	tritt	treten	VVFIN	VVFIN	_	0	--	_	_
 3	in	in	APPR	APPR	_	2	MO	_	_
 4	die	der	ART	ART	_	5	NK	_	_
-5	GM-Verwaltung	GM-Verwaltung	NN	NN	_	5	NK	__
+5	GM-Verwaltung	GM-Verwaltung	NN	NN	_	5	NK	_	_
 6	ein	ein	PTKVZ	PTKVZ	_	2	SVP	_	_
 7	und	und	KON	KON	_	2	CD	_	_
 8	Er	er	PPER	PPER	_	9	SB	_	_
 9	wird	werden	VAFIN	VAFIN	_	7	CJ	_	_
-10	Großaktionär	Großaktionär	NN	NN	_	9	PD	__
+10	Großaktionär	Großaktionär	NN	NN	_	9	PD	_	_
 11	des	der	ART	ART	_	12	NK	_	_
-12	Autokonzerns	Autokonzern	NN	NN	_	10	AG	__
+12	Autokonzerns	Autokonzern	NN	NN	_	10	AG	_	_
 13	.	--	$.	$.	_	8	--	_	_

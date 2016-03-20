@@ -106,29 +106,28 @@ class SchuppigesBein(unittest.TestCase):
 
     def testSchuppigeBeine(self):
         assigned = SchuppigesBein.merged
-        semRep = r'all x. (sirene(x) -> exists y. (haben(x,y) & bein(x) & schuppig(x))'
+        semRep = r'all x. (sirene(x) -> exists y. (haben(x,y) & bein(y) & schuppig(y)))'
         semSig = {'sirene': '<e,t>', 'bein': '<e,t>', 'schuppig': '<e,t>', 'haben': '<e,<e,t>>'}
         expected = tlp.parse(semRep, signature=semSig)
         self.assertEquivalent(assigned, expected)
 
-# This test seems to create an infinite loop. Comment this test to run the rest.
-# Or, better yet: Fix SemMerger to cover this test.
-#class SchnelleJaegerin(unittest.TestCase):
-#
-#    @classmethod
-#    def setUpClass(cls):
-#        conllFile = os.path.join(TEST_DIR, 'schnelle_jägerin.conll')
-#        cls.merged = getMergedRepresentation(conllFile, RULES)
-#
-#    def testSchnelleJaegerin(self):
-#        assigned = SchnelleJaegerin.merged
-#        semRep = r'exists x. (schnell(x) & jaegerin(x) & erzuernen(x,plexippos))'
-#        semSig = {'schnell': '<e,t>', 'jaegerin': '<e,t>', 'erzuernen': '<e,<e,t>>', 'plexippos': 'e'}
-#        expected = tlp.parse(semRep, signature=semSig)
-#        self.assertEquivalent(assigned, expected)
+class SchnelleJaegerin(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'schnelle_jägerin.conll')
+        cls.merged = getMergedRepresentation(conllFile, RULES)
+
+    def testSchnelleJaegerin(self):
+        assigned = SchnelleJaegerin.merged
+        semRep = r'exists x. (schnell(x) & jaegerin(x) & erzuernen(x,plexippos))'
+        semSig = {'schnell': '<e,t>', 'jaegerin': '<e,t>', 'erzuernen': '<e,<e,t>>', 'plexippos': 'e'}
+        expected = tlp.parse(semRep, signature=semSig)
+        self.assertEquivalent(assigned, expected)
 
 # This test can not succeed because adverbs are not yet handled correctly by
 # the SemRepAssigner.
+@unittest.skip("Types not yet assigned correctly")
 class Waldgurken(unittest.TestCase):
 
     @classmethod

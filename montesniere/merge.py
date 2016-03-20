@@ -61,10 +61,8 @@ class SemMerger:
         # Collect the children from self.dg.
         children = self.getChildren(node)
 
-        print(node)
         if len(children) == 0:
             # If a node has no children, there is nothing to merge.
-            print(node)
             try:
                 node['mergedsemrep'] = node['semrep']
             except KeyError:
@@ -117,12 +115,15 @@ class SemMerger:
                             }
                     newMergeDict[t] = firstMerge
                     try:
-                        merged = self._merge(newMergeDict)
+                        merged = self._merge(newMergeDict).simplify()
                     except NoMergePossibleException:
                         continue
                     return merged
             else:
-                raise NoMergePossibleException
+                errMsg = "Could not merge the following types:"
+                for v in mergeDict.values():
+                    errMsg = "{0}\n{1}".format(errMsg, v)
+                raise NoMergePossibleException(errMsg)
 
     def isMerged(self, node):
         """Check if a node's semrep has been merged with its children."""
@@ -224,7 +225,10 @@ def isApplicableTo(expr1, expr2, strict=False):
     Returns:
         True if expr1 can be applied to expr2; False otherwise.
     '''
-    if expr1.type.first == expr2.type:
+    if not isinstance(expr1.type, nll.ComplexType):
+        return False
+
+    elif expr1.type.first == expr2.type:
         return True
     
     elif (not strict) and expr1.type.first.matches(expr2.type):

@@ -6,8 +6,7 @@ import sys
 import os
 import inspect
 
-import normalize
-
+from context import montesniere
 
 
 class TanzendeGurken(unittest.TestCase):
@@ -15,7 +14,7 @@ class TanzendeGurken(unittest.TestCase):
     def setUpClass(cls):
         conllFile = os.path.join(TEST_DIR, 'tanzende_gurken.conll')
         with open(conllFile) as f:
-            cls.normalized = normalize.Normalizer(f.read())
+            cls.normalized = montesniere.normalize.Normalizer(f.read())
         
     def testgetNormalizedSentence(self):
         normalized = TanzendeGurken.normalized.getSentence()
@@ -32,7 +31,7 @@ class TanzendeGurkenPronomen(unittest.TestCase):
     def setUpClass(cls):
         conllFile = os.path.join(TEST_DIR, 'tanzende_gurken2.conll')
         with open(conllFile) as f:
-            cls.normalized = normalize.Normalizer(f.read())
+            cls.normalized = montesniere.normalize.Normalizer(f.read())
         
     def testgetNormalizedSentence(self):
         normalized = TanzendeGurkenPronomen.normalized.getSentence()
@@ -48,7 +47,7 @@ class SchenkenderHase(unittest.TestCase):
     def setUpClass(cls):
         conllFile = os.path.join(TEST_DIR, 'schenkender_hasen.conll')
         with open(conllFile) as f:
-            cls.normalized = normalize.Normalizer(f.read())
+            cls.normalized = montesniere.normalize.Normalizer(f.read())
             
     def testNormalized(self):
         normalized = SchenkenderHase.normalized.getSentence()
@@ -62,7 +61,7 @@ class Presidents(unittest.TestCase):
     def setUpClass(cls):
         conllFile = os.path.join(TEST_DIR, 'presidents.conll')
         with open(conllFile) as f:
-            cls.normalized = normalize.Normalizer(f.read())
+            cls.normalized = montesniere.normalize.Normalizer(f.read())
             
     def testNormalized(self):
         normalized = Presidents.normalized.getSentence()
@@ -76,7 +75,7 @@ class NurPronomen(unittest.TestCase):
     def setUpClass(cls):
         conllFile = os.path.join(TEST_DIR, 'nur_pronomen.conll')
         with open(conllFile) as f:
-            cls.normalized = normalize.Normalizer(f.read())
+            cls.normalized = montesniere.normalize.Normalizer(f.read())
             
     def testNormalized(self):
         normalized = NurPronomen.normalized.getSentence()
@@ -108,7 +107,7 @@ if __name__ == '__main__':
     global TEST_DIR
     pathToHere = inspect.getfile(inspect.currentframe())
     pathToTop = os.path.dirname(os.path.dirname(pathToHere))
-    TEST_DIR = os.path.join(pathToTop, '../test/conll/')
+    TEST_DIR = os.path.join(pathToTop, 'test/conll/')
 
     unittest.main()
         

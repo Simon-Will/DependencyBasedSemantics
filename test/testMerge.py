@@ -37,7 +37,11 @@ class BeissendeTaube(unittest.TestCase):
     def testBeissendeTaube(self):
         assigned = BeissendeTaube.merged
         semRep = r'exists x. (Taube(x) & beissen(x,Peter))'
-        semSig = {'Peter': 'e', 'Taube': '<e,t>', 'beissen': '<e,<e,t>>'}
+        semSig = {
+                'Peter': 'e',
+                'Taube': '<e,t>',
+                'beissen': '<e,<e,t>>'
+                }
         expected = tlp.parse(semRep, signature=semSig)
         self.assertEquivalent(assigned, expected)
 
@@ -51,7 +55,12 @@ class SchenkenderHase(unittest.TestCase):
     def testSchenkenderHase(self):
         assigned = SchenkenderHase.merged
         semRep = r'exists x. (hase(x) & exists y. (igel(y) & exists z. (blume(z) & schenken(x,y,z))))'
-        semSig = {'hase': '<e,t>', 'igel': '<e,t>', 'blume': '<e,t>', 'schenken': '<e,<e,<e,t>>>'}
+        semSig = {
+                'hase': '<e,t>',
+                'igel': '<e,t>',
+                'blume': '<e,t>',
+                'schenken': '<e,<e,<e,t>>>'
+                }
         expected = tlp.parse(semRep, signature=semSig)
         self.assertEquivalent(assigned, expected)
 
@@ -65,7 +74,12 @@ class LehrenderLehrer(unittest.TestCase):
     def testLehrenderLehrer(self):
         assigned = LehrenderLehrer.merged
         semRep = r'exists x. (lehrer(x) & exists z. (musikstueck(z) & lehren(x,maria,z)))'
-        semSig = {'maria': 'e', 'lehrer': '<e,t>', 'musikstueck': '<e,t>', 'lehren': '<e,<e,<e,t>>>'}
+        semSig = {
+                'maria': 'e',
+                'lehrer': '<e,t>',
+                'musikstueck': '<e,t>',
+                'lehren': '<e,<e,<e,t>>>'
+                }
         expected = tlp.parse(semRep, signature=semSig)
         self.assertEquivalent(assigned, expected)
 
@@ -79,7 +93,10 @@ class LehrlingSein(unittest.TestCase):
     def testLehrlingSein(self):
         assigned = LehrlingSein.merged
         semRep = r'all x. (stift(x) -> lehrling(x))'
-        semSig = {'stift': '<e,t>', 'lehrling': '<e,t>'}
+        semSig = {
+                'stift': '<e,t>',
+                'lehrling': '<e,t>'
+                }
         expected = tlp.parse(semRep, signature=semSig)
         self.assertEquivalent(assigned, expected)
 
@@ -93,7 +110,10 @@ class KeinMenschZahlt(unittest.TestCase):
     def testKeinMenschZahlt(self):
         assigned = KeinMenschZahlt.merged
         semRep = r'! exists x. (mensch(x) & exists y. (rechnung(y) & zahlen(x,y)))'
-        semSig = {'mensch': '<e,t>', 'rechnung': '<e,t>'}
+        semSig = {
+                'mensch': '<e,t>',
+                'rechnung': '<e,t>'
+                }
         expected = tlp.parse(semRep, signature=semSig)
         self.assertEquivalent(assigned, expected)
 
@@ -107,7 +127,12 @@ class SchuppigesBein(unittest.TestCase):
     def testSchuppigeBeine(self):
         assigned = SchuppigesBein.merged
         semRep = r'all x. (sirene(x) -> exists y. (haben(x,y) & bein(y) & schuppig(y)))'
-        semSig = {'sirene': '<e,t>', 'bein': '<e,t>', 'schuppig': '<e,t>', 'haben': '<e,<e,t>>'}
+        semSig = {
+                'sirene': '<e,t>',
+                'bein': '<e,t>',
+                'schuppig': '<e,t>',
+                'haben': '<e,<e,t>>'
+                }
         expected = tlp.parse(semRep, signature=semSig)
         self.assertEquivalent(assigned, expected)
 
@@ -121,7 +146,92 @@ class SchnelleJaegerin(unittest.TestCase):
     def testSchnelleJaegerin(self):
         assigned = SchnelleJaegerin.merged
         semRep = r'exists x. (schnell(x) & jaegerin(x) & erzuernen(x,plexippos))'
-        semSig = {'schnell': '<e,t>', 'jaegerin': '<e,t>', 'erzuernen': '<e,<e,t>>', 'plexippos': 'e'}
+        semSig = {
+                'schnell': '<e,t>',
+                'jaegerin': '<e,t>',
+                'erzuernen': '<e,<e,t>>',
+                'plexippos': 'e'
+                }
+        expected = tlp.parse(semRep, signature=semSig)
+        self.assertEquivalent(assigned, expected)
+
+class HausInRussland(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'haus_in_russland.conll')
+        cls.merged = getMergedRepresentation(conllFile, RULES)
+
+    def testHausInRussland(self):
+        assigned = HausInRussland.merged
+        semRep = r'exists x. (haus(x) & in(x,russland) & brennen(x))'
+        semSig = {
+                'haus': '<e,t>',
+                'brennen': '<e,t>',
+                'russland': 'e'
+                }
+        expected = tlp.parse(semRep, signature=semSig)
+        self.assertEquivalent(assigned, expected)
+
+class TagInHaengematte(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'tag_in_hängematte.conll')
+        cls.merged = getMergedRepresentation(conllFile, RULES)
+
+    def testTagInHaengematte(self):
+        assigned = TagInHaengematte.merged
+        semRep = r'exists x. (tag(x) & schoen(x) & exists y. (haengematte(y) & weich(y) & in(x,y)) & geniessen(donald,x))'
+        semSig = {
+                'donald': 'e',
+                'tag': '<e,t>',
+                'schoen': '<e,t>',
+                'haengematte': '<e,t>',
+                'weich': '<e,t>',
+                'geniessen': '<e,<e,t>>',
+                'in': '<e,<e,t>>'
+                }
+        expected = tlp.parse(semRep, signature=semSig)
+        self.assertEquivalent(assigned, expected)
+
+class FurieInKleid(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'furie_in_kleid.conll')
+        cls.merged = getMergedRepresentation(conllFile, RULES)
+
+    def testFurieInKleid(self):
+        assigned = FurieInKleid.merged
+        semRep = r'exists x. (furie(x) & exists y. (kleid(y) & blutig(y) & in(x,y)) & exists z. (schlund(z) & bewachen(x,z)))'
+        semSig = {
+                'blutig': '<e,t>',
+                'kleid': '<e,t>',
+                'furie': '<e,t>',
+                'schlund': '<e,t>',
+                'bewachen': '<e,<e,t>>',
+                'in': '<e,<e,t>>'
+                }
+        expected = tlp.parse(semRep, signature=semSig)
+        self.assertEquivalent(assigned, expected)
+
+class SingtUndTanzt(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'singt_und_tanzt.conll')
+        cls.merged = getMergedRepresentation(conllFile, RULES)
+
+    def testSingtUndTanzt(self):
+        assigned = SingtUndTanzt.merged
+        semRep = r'singen(maria) & tanzen(peter)'
+        semSig = {
+                'singen': '<e,t>',
+                'tanzen': '<e,t>',
+                'maria': 'e',
+                'peter': 'e'
+                }
         expected = tlp.parse(semRep, signature=semSig)
         self.assertEquivalent(assigned, expected)
 
@@ -138,7 +248,10 @@ class Waldgurken(unittest.TestCase):
     def testWaldgurken(self):
         assigned = Waldgurken.merged
         semRep = r'exists x. (wald(x) & in(all y. (gurke(y) -> leben(y))),x)'
-        semSig = {'gurke': '<e,t>', 'leben': '<e,t>'}
+        semSig = {
+                'gurke': '<e,t>',
+                'leben': '<e,t>'
+                }
         expected = tlp.parse(semRep, signature=semSig)
         self.assertEquivalent(assigned, expected)
 

@@ -335,59 +335,340 @@ class SchuppigeBeine(unittest.TestCase):
         expected = tlp.parse(semRepPat, signature=semSig)
         self.assertEqual(assigned, expected)
 
-# This test can not work, because nltk does not seem to support type t in the
-# first part of a ComplexType
-#class WaldGurken(unittest.TestCase):
-#
-#    @classmethod
-#    def setUpClass(cls):
-#        conllFile = os.path.join(TEST_DIR, 'waldgurken.conll')
-#        with open(conllFile) as f:
-#            cls.depGraph = nlp.DependencyGraph(f.read())
-#        assigner = montesniere.assign.SemRepAssigner.fromfile(RULES)
-#        assigner.assignToDependencyGraph(cls.depGraph)
-#
-#    def testAlle(self):
-#        assigned = WaldGurken.depGraph.get_by_address(1)['semrep']
-#        semRepPat = r'\P Q. all x. (P(x) -> Q(x))'
-#        semSig = {'P': '<e,t>', 'Q': '<e,t>'}
-#        expected = tlp.parse(semRepPat, signature=semSig)
-#        self.assertEqual(assigned, expected)
-#
-#    def testGurken(self):
-#        assigned = WaldGurken.depGraph.get_by_address(2)['semrep']
-#        semRepPat = r'\x. gurke(x)'
-#        semSig = {'gurke': '<e,t>'}
-#        expected = tlp.parse(semRepPat, signature=semSig)
-#        self.assertEqual(assigned, expected)
-#
-#    def testLeben(self):
-#        assigned = WaldGurken.depGraph.get_by_address(3)['semrep']
-#        semRepPat = r'\x. leben(x)'
-#        semSig = {'leben': '<e,t>'}
-#        expected = tlp.parse(semRepPat, signature=semSig)
-#        self.assertEqual(assigned, expected)
-#
-#    def testIn(self):
-#        assigned = WaldGurken.depGraph.get_by_address(4)['semrep']
-#        semRepPat = r'\x v. in(V,x)'
-#        semSig = {'V': 't'}
-#        expected = tlp.parse(semRepPat, signature=semSig)
-#        self.assertEqual(assigned, expected)
-#
-#    def testEinem(self):
-#        assigned = WaldGurken.depGraph.get_by_address(5)['semrep']
-#        semRepPat = r'\P B. exists x. (P(x) & B(x))'
-#        semSig = {'P': '<e,t>', 'B': '<e,<t,t>>'}
-#        expected = tlp.parse(semRepPat, signature=semSig)
-#        self.assertEqual(assigned, expected)
-#
-#    def testWald(self):
-#        assigned = WaldGurken.depGraph.get_by_address(6)['semrep']
-#        semRepPat = r'\x. wald(x)'
-#        semSig = {'wald': '<e,t>'}
-#        expected = tlp.parse(semRepPat, signature=semSig)
-#        self.assertEqual(assigned, expected)
+class HausInRussland(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'haus_in_russland.conll')
+        with open(conllFile) as f:
+            cls.depGraph = nlp.DependencyGraph(f.read())
+        assigner = montesniere.assign.SemRepAssigner.fromfile(RULES)
+        assigner.assignToDependencyGraph(cls.depGraph)
+
+    def testEin(self):
+        assigned = HausInRussland.depGraph.get_by_address(1)['semrep']
+        semRepPat = r'\P Q. exists x. (P(x) & Q(x))'
+        semSig = {'P': '<e,t>', 'Q': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testHaus(self):
+        assigned = HausInRussland.depGraph.get_by_address(2)['semrep']
+        semRepPat = r'\x. haus(x)'
+        semSig = {'haus': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testIn(self):
+        assigned = HausInRussland.depGraph.get_by_address(3)['semrep']
+        semRepPat = r'\y P x.(in(x,y) & P(x))'
+        semSig = {'P': '<e,t>', 'in': '<e,<e,t>>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testRussland(self):
+        assigned = HausInRussland.depGraph.get_by_address(4)['semrep']
+        semRepPat = r'russland'
+        semSig = {'russland': 'e'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testBrennt(self):
+        assigned = HausInRussland.depGraph.get_by_address(5)['semrep']
+        semRepPat = r'\x. brennen(x)'
+        semSig = {'brennt': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+#@unittest.skip('problem with truth type in first part of ComplexType')
+class WaldGurken(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'waldgurken.conll')
+        with open(conllFile) as f:
+            cls.depGraph = nlp.DependencyGraph(f.read())
+        assigner = montesniere.assign.SemRepAssigner.fromfile(RULES)
+        assigner.assignToDependencyGraph(cls.depGraph)
+
+    def testAlle(self):
+        assigned = WaldGurken.depGraph.get_by_address(1)['semrep']
+        semRepPat = r'\P Q. all x. (P(x) -> Q(x))'
+        semSig = {'P': '<e,t>', 'Q': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testGurken(self):
+        assigned = WaldGurken.depGraph.get_by_address(2)['semrep']
+        semRepPat = r'\x. gurke(x)'
+        semSig = {'gurke': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testLeben(self):
+        assigned = WaldGurken.depGraph.get_by_address(3)['semrep']
+        semRepPat = r'\x. leben(x)'
+        semSig = {'leben': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testIn(self):
+        assigned = WaldGurken.depGraph.get_by_address(4)['semrep']
+        semRepPat = r'\x v. in(V,x)'
+        semSig = {'V': 't'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testEinem(self):
+        assigned = WaldGurken.depGraph.get_by_address(5)['semrep']
+        semRepPat = r'\P B. exists x. (P(x) & B(x))'
+        semSig = {'P': '<e,t>', 'B': '<e,<t,t>>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testWald(self):
+        assigned = WaldGurken.depGraph.get_by_address(6)['semrep']
+        semRepPat = r'\x. wald(x)'
+        semSig = {'wald': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+class FurieInKleid(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'furie_in_kleid.conll')
+        with open(conllFile) as f:
+            cls.depGraph = nlp.DependencyGraph(f.read())
+        assigner = montesniere.assign.SemRepAssigner.fromfile(RULES)
+        assigner.assignToDependencyGraph(cls.depGraph)
+
+    def testEine(self):
+        assigned = FurieInKleid.depGraph.get_by_address(1)['semrep']
+        semRepPat = r'\P Q. exists x. (P(x) & Q(x))'
+        semSig = {'P': '<e,t>', 'Q': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testFurie(self):
+        assigned = FurieInKleid.depGraph.get_by_address(2)['semrep']
+        semRepPat = r'\x. furie(x)'
+        semSig = {'furie': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testIn(self):
+        assigned = FurieInKleid.depGraph.get_by_address(3)['semrep']
+        semRepPat = r'\y P x. (in(x,y) & P(x))'
+        semSig = {'P': '<e,t>', 'in': '<e,<e,t>>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testEinem(self):
+        assigned = FurieInKleid.depGraph.get_by_address(4)['semrep']
+        semRepPat = r'\P U Q x. exists y. (P(y) & U(y)(Q)(x))'
+        semSig = { 'P': '<e,t>', 'Q': '<e,t>', 'U': '<e,<<e,t>,<e,t>>>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testBlutigen(self):
+        assigned = FurieInKleid.depGraph.get_by_address(5)['semrep']
+        semRepPat = r'\P x. (blutig(x) & P(x))'
+        semSig = {'blutig': '<e,t>', 'P': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testKleid(self):
+        assigned = FurieInKleid.depGraph.get_by_address(6)['semrep']
+        semRepPat = r'\x. kleid(x)'
+        semSig = {'kleid': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testBewacht(self):
+        assigned = FurieInKleid.depGraph.get_by_address(7)['semrep']
+        semRepPat = r'\y x. bewachen(x,y)'
+        semSig = {'bewachen': '<e,<e,t>>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testEinen(self):
+        assigned = FurieInKleid.depGraph.get_by_address(8)['semrep']
+        semRepPat = r'\P R x. exists y. (P(y) & R(y)(x))'
+        semSig = { 'P': '<e,t>', 'R': '<e,<e,t>>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testSchlund(self):
+        assigned = FurieInKleid.depGraph.get_by_address(9)['semrep']
+        semRepPat = r'\x. schlund(x)'
+        semSig = {'schlund': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+class TagInHaengematte(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'tag_in_hängematte.conll')
+        with open(conllFile) as f:
+            cls.depGraph = nlp.DependencyGraph(f.read())
+        assigner = montesniere.assign.SemRepAssigner.fromfile(RULES)
+        assigner.assignToDependencyGraph(cls.depGraph)
+
+    def testDonald(self):
+        assigned = TagInHaengematte.depGraph.get_by_address(1)['semrep']
+        semRepPat = r'\P. P(donald)'
+        semSig = {'donald': 'e', 'P': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testGeniesst(self):
+        assigned = TagInHaengematte.depGraph.get_by_address(2)['semrep']
+        semRepPat = r'\y x. genießen(x,y)'
+        semSig = {'geniessen': '<e,<e,t>>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testEinen(self):
+        assigned = TagInHaengematte.depGraph.get_by_address(3)['semrep']
+        semRepPat = r'\P R x. exists y. (P(y) & R(y)(x))'
+        semSig = {'P': '<e,t>', 'R': '<e,<e,t>>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testSchoenen(self):
+        assigned = TagInHaengematte.depGraph.get_by_address(4)['semrep']
+        semRepPat = r'\P x. (schön(x) & P(x))'
+        semSig = { 'P': '<e,t>', 'schön': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testTag(self):
+        assigned = TagInHaengematte.depGraph.get_by_address(5)['semrep']
+        semRepPat = r'\x. tag(x)'
+        semSig = {'tag': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testIn(self):
+        assigned = TagInHaengematte.depGraph.get_by_address(6)['semrep']
+        semRepPat = r'\y P x. (in(x,y) & P(x))'
+        semSig = {'P': '<e,t>', 'in': '<e,<e,t>>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testEiner(self):
+        assigned = TagInHaengematte.depGraph.get_by_address(7)['semrep']
+        semRepPat = r'\P U Q x. exists y. (P(y) & U(y)(Q)(x))'
+        semSig = { 'P': '<e,t>', 'Q': '<e,t>', 'U': '<e,<<e,t>,<e,t>>>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testWeichen(self):
+        assigned = TagInHaengematte.depGraph.get_by_address(8)['semrep']
+        semRepPat = r'\P x. (weich(x) & P(x))'
+        semSig = { 'P': '<e,t>', 'weich': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testHaengematte(self):
+        assigned = TagInHaengematte.depGraph.get_by_address(9)['semrep']
+        semRepPat = r'\x. hängematte(x)'
+        semSig = {'hängematte': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+class SingtUndTanzt(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'singt_und_tanzt.conll')
+        with open(conllFile) as f:
+            cls.depGraph = nlp.DependencyGraph(f.read())
+        assigner = montesniere.assign.SemRepAssigner.fromfile(RULES)
+        assigner.assignToDependencyGraph(cls.depGraph)
+
+    def testMaria(self):
+        assigned = SingtUndTanzt.depGraph.get_by_address(1)['semrep']
+        semRepPat = r'\P. P(maria)'
+        semSig = {'maria': 'e', 'P': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testSingt(self):
+        assigned = SingtUndTanzt.depGraph.get_by_address(2)['semrep']
+        semRepPat = r'\x. singen(x)'
+        semSig = {'singen': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testUnd(self):
+        assigned = SingtUndTanzt.depGraph.get_by_address(3)['semrep']
+        semRepPat = r'\V W. (W & V)'
+        semSig = {'V': 't', 'W': 't'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testPeter(self):
+        assigned = SingtUndTanzt.depGraph.get_by_address(4)['semrep']
+        semRepPat = r'\P. P(peter)'
+        semSig = {'peter': 'e', 'P': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testTanzt(self):
+        assigned = SingtUndTanzt.depGraph.get_by_address(5)['semrep']
+        semRepPat = r'\x. tanzen(x)'
+        semSig = {'tanzen': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+@unittest.skip('foo')
+class HeuteBaden(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'heute_baden.conll')
+        with open(conllFile) as f:
+            cls.depGraph = nlp.DependencyGraph(f.read())
+        assigner = montesniere.assign.SemRepAssigner.fromfile(RULES)
+        assigner.assignToDependencyGraph(cls.depGraph)
+
+    def testMit(self):
+        assigned = HeuteBaden.depGraph.get_by_address(1)['semrep']
+        semRepPat = r'\P. P(maria)'
+        semSig = {'maria': 'e', 'P': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testSingt(self):
+        assigned = HeuteBaden.depGraph.get_by_address(2)['semrep']
+        semRepPat = r'\x. singen(x)'
+        semSig = {'singen': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testUnd(self):
+        assigned = HeuteBaden.depGraph.get_by_address(3)['semrep']
+        semRepPat = r'\V W. (W & V)'
+        semSig = {'V': 't', 'W': 't'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testPeter(self):
+        assigned = HeuteBaden.depGraph.get_by_address(4)['semrep']
+        semRepPat = r'\P. P(peter)'
+        semSig = {'peter': 'e', 'P': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testTanzt(self):
+        assigned = HeuteBaden.depGraph.get_by_address(5)['semrep']
+        semRepPat = r'\x. tanzen(x)'
+        semSig = {'tanzen': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
 
 if __name__ == '__main__':
     global RULES

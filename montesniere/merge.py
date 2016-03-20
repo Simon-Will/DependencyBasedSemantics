@@ -9,7 +9,7 @@ import nltk.parse as nlp
 import nltk.sem.logic as nll
 
 class SemMerger:
-    ''' Combines the logical expressions of each node and returns
+    """ Combines the logical expressions of each node and returns
     al logical expression of the entire sentence.
     A SemMerger object consitst of a dependencygraph, that will be 
     updated continously.
@@ -19,10 +19,10 @@ class SemMerger:
         dg: a nltk.parse.dependencygraph.DependencyGraph 
             object with logical expression assigned to each node.
         dependencies: a list of nodes being currenlty processed
-    '''
+    """
         
     def __init__(self, depGraph):
-        '''Initializes SemMerger with given values. 
+        """Initializes SemMerger with given values. 
         dependencyGraph has to be an preprocessed DependencyGraph object
         with each node having a logical expression (semrep)
         An ordinary DependencyGraph will not lead to a sensible result.
@@ -33,7 +33,7 @@ class SemMerger:
             the initialized SemMerger object
         Raises:
             TypeError: dg is not a DependencyGraph object
-        '''
+        """
         self.dg = depGraph
         self.root = self.getRoot()
         self.dependencies = []
@@ -52,6 +52,9 @@ class SemMerger:
             node: A node of a dependencyGraph object.
             force: A bool denoting if a merge should be forced, even if node
                 was merged already.
+
+        Returns:
+            None
         """
         if self.isMerged(node) and not force:
             # The node was already merged and a new merge will not be forced.
@@ -109,17 +112,23 @@ class SemMerger:
                 expr0, expr1 = mergeDict[t[0]], mergeDict[t[1]]
                 if isApplicableTo(expr0, expr1):
                     firstMerge = expr0.applyto(expr1)
+                    # Generate new mergeDict without keys for expr1 and expr2
                     newMergeDict = {
                             k:v for k,v in mergeDict.items()
                             if k != t[0] and k != t[1]
                             }
+                    # But include the result of the application under a new key.
                     newMergeDict[t] = firstMerge
                     try:
                         merged = self._merge(newMergeDict).simplify()
                     except NoMergePossibleException:
+                        # The rest of the children cannot be merged.
+                        # Start with a different attempt at the first merge.
                         continue
                     return merged
             else:
+                # If all attempts to apply any type to another one fail,
+                # raise an Exception.
                 errMsg = "Could not merge the following types:"
                 for v in mergeDict.values():
                     errMsg = "{0}\n{1}".format(errMsg, v)
@@ -136,7 +145,7 @@ class SemMerger:
 
     def doubleNamedEntity(self, head_node, node):
         tlp = nll.LogicParser(type_check=True)
-        '''Fuse representations of first and last name of one entity 
+        """Fuse representations of first and last name of one entity 
             into one
             
         Args:
@@ -144,7 +153,7 @@ class SemMerger:
             node        :   first name of NE
         Returns:
             fused expression
-        '''
+        """
         self.dependencies.append(head_node['address'])
         head_node['lemma'] = node['lemma'] + "_" + head_node['lemma']
         
@@ -163,7 +172,7 @@ class SemMerger:
         head_node['semrep'] = tlp.parse(new_expr, signature=exprSig)
     
     def getSemantics(self):
-        ''' returns logical expression of the entire sentence '''
+        """ returns logical expression of the entire sentence """
         #self.getDependencies()
         #return self.getSemRepresentation()
         self.mergeWithChildren(self.root)
@@ -188,14 +197,14 @@ class SemMerger:
         return children
 
     def getRoot(self):
-        '''Get the root node of the dependencyGraph.
+        """Get the root node of the dependencyGraph.
         
         Returns:
             The root node of the dependencyGraph self.dg.
 
         Raises:
             ValueError if self.dg has less than or more than one root node.
-        '''
+        """
         roots = self.getChildren(self.dg.nodes[0])
 
         if len(roots) == 1:
@@ -208,6 +217,14 @@ class SemMerger:
             raise ValueError(errMsg)
 
 def _generateApplicationTries(iterable):
+    """Generate all possible pairs in iterable.
+    
+    Args:
+        iterable: An iterable with at least two elements.
+    
+    Yields:
+        All the possible pairs in the iterable, one after the other.
+    """
     for i in itertools.combinations(iterable, 2):
         yield i
         yield tuple(reversed(i))
@@ -216,7 +233,7 @@ class NoMergePossibleException(Exception):
     pass
 
 def isApplicableTo(expr1, expr2, strict=False):
-    '''Test whether expr1 can be applied to expr2.
+    """Test whether expr1 can be applied to expr2.
 
     Args:
         expr1: An nltk.sem.logic.Expression object with resolved type.
@@ -224,7 +241,7 @@ def isApplicableTo(expr1, expr2, strict=False):
 
     Returns:
         True if expr1 can be applied to expr2; False otherwise.
-    '''
+    """
     if not isinstance(expr1.type, nll.ComplexType):
         return False
 
@@ -237,31 +254,6 @@ def isApplicableTo(expr1, expr2, strict=False):
     
     return False
 
-
-def applyCorrectly(expr1, expr2):
-    '''Try to correctly apply one expression to the other.
-
-    Args:
-        expr1: An nltk.sem.logic.Expression object with resolved type.
-        expr2: An nltk.sem.logic.Expression object with resolved type.
-
-    Returns:
-        An nltk.sem.logic.Expression object resulting from the
-            application of one expression to the other.
-
-    Raises:
-        nltk.sem.logic.TypeResolutionException if none of the
-            expressions can be applied to the other.
-    ''' 
-    if isApplicableTo(expr1, expr2):
-        return expr1.applyto(expr2).simplify()
-    elif isApplicableTo(expr2, expr1):
-        return expr2.applyto(expr1).simplify()
-    else:
-        # either deps are wrong or types are not accurate
-        errMsg = 'The types {0} and {1} are incompatible.'
-        raise nll.TypeException(errMsg.format(expr1, expr2))
-    
 def testUsualCase():
     import nltk.sem.logic as nll
     tlp = nll.LogicParser()

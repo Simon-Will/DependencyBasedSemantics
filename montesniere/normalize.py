@@ -36,11 +36,10 @@ class Normalizer:
         self.sb = []
         self.pr = []
         
-        
-        self.sentence = parsedSentence
-        self.word_parts = [part.split("\t") for part in 
+        try:   
+            self.sentence = parsedSentence
+            self.word_parts = [part.split("\t") for part in 
                                 self.sentence.split("\n")][:-1]
-        try:    
             #if spaces are used
             if len(self.word_parts[0]) < 2:
                 import re

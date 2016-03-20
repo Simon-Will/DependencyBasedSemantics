@@ -20,7 +20,7 @@ class TanzendeGurken(unittest.TestCase):
         normalized = TanzendeGurken.normalized.getSentence()
         resultsFile= os.path.join(
                             TEST_DIR, 
-                            'normalized/normalizedTanzendeGurken.conll'
+                            'normalizedTanzendeGurken.conll'
                             )
         expected = open(os.path.join(resultsFile)).read()
         self.assertEqual(normalized, expected)
@@ -37,7 +37,7 @@ class TanzendeGurkenPronomen(unittest.TestCase):
         normalized = TanzendeGurkenPronomen.normalized.getSentence()
         resultsFile= os.path.join(
                             TEST_DIR, 
-                            'normalized/normalizedTanzendeGurken2.conll'
+                            'normalizedTanzendeGurken2.conll'
                             )
         expected = open(os.path.join(resultsFile)).read()
         self.assertEqual(normalized, expected)
@@ -51,7 +51,7 @@ class SchenkenderHase(unittest.TestCase):
             
     def testNormalized(self):
         normalized = SchenkenderHase.normalized.getSentence()
-        results = os.path.join(TEST_DIR, 'normalized/normalizedSchenkenderHase.conll')
+        results = os.path.join(TEST_DIR, 'normalizedSchenkenderHase.conll')
         expected = open(os.path.join(results)).read()
         self.assertEqual(expected, normalized)
 
@@ -65,7 +65,7 @@ class Presidents(unittest.TestCase):
             
     def testNormalized(self):
         normalized = Presidents.normalized.getSentence()
-        results = os.path.join(TEST_DIR, 'normalized/normalizedPresidents.conll')
+        results = os.path.join(TEST_DIR, 'normalizedPresidents.conll')
         expected = open(os.path.join(results)).read()
         self.assertEqual(expected, normalized) 
         

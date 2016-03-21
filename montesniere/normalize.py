@@ -57,8 +57,9 @@ class Normalizer:
             
             if (word[4] == "VVFIN" or word[4] == "VAFIN"):
                 self.verb.append(self.word_parts.index(word))
+                
             
-            elif word[7] == "SB":
+            elif word[7] == "SB" or word[7] == "PM":
                 # checks modifiers
                 self.sb.append(self.checkAttributes(
                                     self.word_parts.index(word))
@@ -90,12 +91,13 @@ class Normalizer:
         """looks for coordinated objects"""
         for word in self.word_parts:
 
-            if word[7] == "OA" or word[7] == "DA" or word[7] == "OA2":
+            if word[7] == "OA" or word[7] == "DA" or word[7] == "OA2" or word[7] =="CM":
                 obj = self.word_parts.index(word)
                 
                 try:
                     if self.word_parts[obj+1][4] == "KON":
                         self.obj.append(self.checkfurtherObj(obj))
+                       
                     
                 except IndexError:
                     continue
@@ -158,9 +160,10 @@ class Normalizer:
     def insertSubject(self):
         """inserts subject before verb"""
         vkonj = []
+        tag = self.word_parts[self.sb[0][-1]][7]
         for verb in self.verb:
             
-            if self.word_parts[verb-1][7] != "SB":
+            if (self.word_parts[verb-1][7] != tag):
                 vkonj.append(verb)
                 word_parts, words = self.word_parts[:verb], self.word_parts[verb:]
                 subj = [su for su in self.sb for i in range(verb,-1,-1) 
@@ -168,7 +171,6 @@ class Normalizer:
                 word_parts.extend(self.addWords(subj))
                 word_parts.extend(words)
                 self.word_parts = word_parts
-                
         self.word_parts = self.mergenewSentence(self.word_parts)
         self.assignNodes(vkonj)
         
@@ -339,7 +341,7 @@ class Normalizer:
      
      
 def test():
-    gurken = Normalizer(open("../test/conll/tanzende_gurken.conll").read())
+    gurken = Normalizer(open("../test/conll/testsentence.conll").read())
     return gurken.getSentence() 
 
 def testPronomina():

@@ -113,17 +113,23 @@ class SemMerger:
                 expr0, expr1 = mergeDict[t[0]], mergeDict[t[1]]
                 if isApplicableTo(expr0, expr1):
                     firstMerge = expr0.applyto(expr1)
+                    # Generate new mergeDict without keys for expr1 and expr2
                     newMergeDict = {
                             k:v for k,v in mergeDict.items()
                             if k != t[0] and k != t[1]
                             }
+                     # But include the result of the application under a new key.
                     newMergeDict[t] = firstMerge
                     try:
                         merged = self._merge(newMergeDict).simplify()
                     except NoMergePossibleException:
+                        # The rest of the children cannot be merged.
+                        # Start with a different attempt at the first merge.
                         continue
                     return merged
             else:
+                # If all attempts to apply any type to another one fail,
+                # raise an Exception.
                 errMsg = "Could not merge the following types:"
                 for v in mergeDict.values():
                     errMsg = "{0}\n{1}".format(errMsg, v)

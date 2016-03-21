@@ -52,7 +52,7 @@ class Normalizer:
         
             
     def check_SB_Verb(self):
-        """checks if number of verbs is equal to number of subjects"""
+        """get number of subjects and verb , checks number for equality"""
         for word in self.word_parts:
             
             if (word[4] == "VVFIN" or word[4] == "VAFIN"):
@@ -87,7 +87,7 @@ class Normalizer:
         
 
     def checkOB(self):
-        """checks if objects are directly connected"""
+        """looks for coordinated objects"""
         for word in self.word_parts:
 
             if word[7] == "OA" or word[7] == "DA" or word[7] == "OA2":
@@ -105,7 +105,7 @@ class Normalizer:
         n = obj+2
         nextObj = []
         nextObj.extend(self.checkAttributes(obj))
-        nextObj.extend([obj, obj+1])
+        nextObj.extend([obj+1])
         while self.word_parts[n][7] == "NK":
             nextObj.append(n)
             n += 1
@@ -141,6 +141,7 @@ class Normalizer:
             
         
     def removePron(self, pron):
+        """replaces pronoun with nomen"""
         for subj in self.sb:
             if pron in subj:
                 subj.remove(pron)
@@ -167,6 +168,7 @@ class Normalizer:
                 word_parts.extend(self.addWords(subj))
                 word_parts.extend(words)
                 self.word_parts = word_parts
+                
         self.word_parts = self.mergenewSentence(self.word_parts)
         self.assignNodes(vkonj)
         
@@ -177,14 +179,22 @@ class Normalizer:
             konj.extend([kon for kon in obj 
                         if self.word_parts[kon][4] == "KON"])
             for konjunction in konj:
-                word_parts, words = self.word_parts[:konjunction], \
-                                    self.word_parts[konjunction+1:]
-                word_parts.append(self.word_parts[konjunction])
-                word_parts.extend(self.word_parts[:obj[0]])
-                word_parts.extend(words)
-        self.word_parts = self.mergenewSentence(word_parts)
-        self.assignNodes(konj)
+                if self.checkApplyable(konjunction):
+                    word_parts, words = self.word_parts[:konjunction], \
+                                        self.word_parts[konjunction+1:]
+                    word_parts.append(self.word_parts[konjunction])
+                    word_parts.extend(self.word_parts[:obj[0]])
+                    word_parts.extend(words)
+                    applied = True
+                else:
+                    applied = False
+        if applied:
+            self.word_parts = self.mergenewSentence(word_parts)
+            self.assignNodes(konj)
             
+    def checkApplyable(self, kon):
+        return self.word_parts[kon-1][4] == self.word_parts[kon+1][4]
+        
     def assignNodes(self, konj):
         """assign correct dependencies"""
         relations = {"SB" : [], "VV/AFIN" : [], "NN" : [], "OA" : [], 
@@ -242,6 +252,7 @@ class Normalizer:
         return n
         
     def getDistance(self, n, m):
+        """decides on most plausible dependency"""
         if n > m:
             return n-m
         else:
@@ -264,7 +275,7 @@ class Normalizer:
         return relations         
     
     def changeWord(self, word, n):
-        """cahnge dependency"""
+        """change dependency"""
         word[6] = str(n)
         return word
     
@@ -293,8 +304,9 @@ class Normalizer:
         return [part.split("\t") for part in sentence.split("\n")][:-1]
     
         
-        
-        
+    
+    
+    
             
     def getSentence(self):
         """returns normalized sentence"""
@@ -307,15 +319,17 @@ class Normalizer:
         
             self.checkPron()
             return self.orderSentence()
-        
+            
         if len(self.sb) != 0:
             self.insertSubject()
         self.checkPron()
     
         if self.obj != []:
             self.insertObject()
-            
+             
         return self.orderSentence()
+        print(self.orderSentence())
+        self.getSentence()
      
      
      

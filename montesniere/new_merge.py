@@ -282,7 +282,7 @@ def testUsualCase():
     dg.nodes[2]['semrep'] = read_expr(r'\x. taube(x)')
     dg.nodes[3]['semrep'] = read_expr(r'\y\x. beissen(x, y)')
     dg.nodes[4]['semrep'] = read_expr(r'peter')
-    dg.nodes[5]['semrep'] = read_expr(r'mueller')
+   # dg.nodes[5]['semrep'] = read_expr(r'mueller')
     semantics = SemMerger(dg)
     return semantics.getSemantics()
     

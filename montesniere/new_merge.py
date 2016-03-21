@@ -173,8 +173,6 @@ class SemMerger:
     
     def getSemantics(self):
         ''' returns logical expression of the entire sentence '''
-        #self.getDependencies()
-        #return self.getSemRepresentation()
         self.mergeWithChildren(self.root)
         return self.root['mergedsemrep']
 

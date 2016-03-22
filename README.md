@@ -115,7 +115,9 @@ to receive the merged logical expression.
 example:
 
 >lamdaKind = SemMerger(dgKind)
+
 >lambdaKind.getSemantics()
+
 exists x.(kind(x) & (all y.(Keks(y) -> essen(x,y)))) & exists z.(kind(z) & (all u.(Brezel(u) -> essen(z,u))))
 
 

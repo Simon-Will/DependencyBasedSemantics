@@ -39,7 +39,6 @@ Python 3.4
 
 NLTK
 
-tiger\_release\_aug07.corrected.16012013.conll06
 
 
 

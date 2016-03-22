@@ -17,6 +17,7 @@ H: Ein Keks wird gegessen.
 
 answer: True
 
+
 P: Ein Schaf isst einen Keks und ein Wolf isst einen Keks.
 1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Schaf   schaf   NOUN    NN      _       3       SB      _       _
@@ -41,6 +42,7 @@ H: Ein Wolf isst einen Keks.
 6       .       --      .       $.      _       3       --      _       _
 
 answer: True
+
 
 P: Ein Schaf und ein Wolf essen einen Keks.
 1       Ein     ein     DET     ART     _       2       NK      _       _
@@ -675,3 +677,193 @@ H: Einen Löwen schenkt Maria Paul.
 6       .       --      .       $.      _       3       --      _       _
 
 answer: False
+
+
+P: Rebekka und Simon sind Brillenträger.
+1       Rebekka rebekka NOUN    NE      _       4       SB      _       _
+2       und     und     CONJ    KON     _       1       CD      _       _
+3       Simon   simon   NOUN    NE      _       2       CJ      _       _
+4       sind    sein    VERB    VAFIN   _       0       --      _       _
+5       Brillenträger   brillenträger   NOUN    NN      _       4       PD      _       _
+6       .       --      .       $.      _       4       --      _       _
+
+P: Rebekka und Simon sind Menschen.
+1       Rebekka rebekka NOUN    NE      _       4       SB      _       _
+2       und     und     CONJ    KON     _       1       CD      _       _
+3       Simon   simon   NOUN    NE      _       2       CJ      _       _
+4       sind    sein    VERB    VAFIN   _       0       --      _       _
+5       Menschen        mensch  NOUN    NN      _       4       PD      _       _
+6       .       --      .       $.      _       4       --      _       _
+
+H: Jeder Mensch trägt eine Brille.
+1       Jeder   jeder   PRON    PIAT    _       2       NK      _       _
+2       Mensch  mensch  NOUN    NN      _       3       SB      _       _
+3       trägt   tragen  VERB    VVFIN   _       0       --      _       _
+4       eine    ein     DET     ART     _       5       NK      _       _
+5       Brille  brille  NOUN    NN      _       3       OA      _       _
+6       .       --      .       $.      _       3       --      _       _
+
+answer: False
+
+
+P: Bello ist im Fellwechsel.
+1       Bello   bello   NOUN    NE      _       2       SB      _       _
+2       ist     sein    VERB    VAFIN   _       0       --      _       _
+3       im      in      ADP     APPRART _       2       MO      _       _
+4       Fellwechsel     fellwechsel     NOUN    NN      _       3       NK      _       _
+5       .       --      .       $.      _       2       --      _       _
+
+P: Bello ist ein Hund.
+1       Bello   bello   NOUN    NE      _       2       SB      _       _
+2       ist     sein    VERB    VAFIN   _       0       --      _       _
+3       ein     ein     DET     ART     _       4       NK      _       _
+4       Hund    hund    NOUN    NN      _       2       PD      _       _
+5       .       --      .       $.      _       2       --      _       _
+
+H: Hunde haben Fellwechsel.
+1       Hunde   hund    NOUN    NN      _       2       SB      _       _
+2       haben   haben   VERB    VAFIN   _       0       --      _       _
+3       Fellwechsel     fellwechsel     NOUN    NN      _       2       OA      _       _
+4       .       --      .       $.      _       2       --      _       _
+
+answer: True
+
+
+P: Ein frecher Kater sitzt auf dem Tisch.
+1       Ein     ein     DET     ART     _       3       NK      _       _
+2       frecher frech   ADJ     ADJA    _       3       NK      _       _
+3       Kater   kater   NOUN    NN      _       4       SB      _       _
+4       sitzt   sitzen  VERB    VVFIN   _       0       --      _       _
+5       auf     auf     ADP     APPR    _       4       MO      _       _
+6       dem     der     DET     ART     _       7       NK      _       _
+7       Tisch   tisch   NOUN    NN      _       5       NK      _       _
+8       .       --      .       $.      _       4       --      _       _
+
+H: Ein Kater ist frech.
+1       Ein     ein     DET     ART     _       2       NK      _       _
+2       Kater   kater   NOUN    NN      _       3       SB      _       _
+3       ist     sein    VERB    VAFIN   _       0       --      _       _
+4       frech   frech   ADJ     ADJD    _       3       PD      _       _
+5       .       --      .       $.      _       3       --      _       _
+
+answer: True
+
+
+P: Maria gibt Tim eine alte Taschenuhr.
+1       Maria   maria   NOUN    NE      _       2       SB      _       _
+2       gibt    geben   VERB    VVFIN   _       0       --      _       _
+3       Tim     tim     NOUN    NE      _       2       SB      _       _
+4       eine    ein     DET     ART     _       6       NK      _       _
+5       alte    alt     ADJ     ADJA    _       6       NK      _       _
+6       Taschenuhr      taschenuhr      NOUN    NN      _       2       OA      _       _
+7       .       --      .       $.      _       2       --      _       _
+
+H: Maria gibt Tim eine neue Taschenuhr.
+1       Maria   maria   NOUN    NE      _       2       SB      _       _
+2       gibt    geben   VERB    VVFIN   _       0       --      _       _
+3       Tim     tim     NOUN    NE      _       2       SB      _       _
+4       eine    ein     DET     ART     _       6       NK      _       _
+5       neue    neu     ADJ     ADJA    _       6       NK      _       _
+6       Taschenuhr      taschenuhr      NOUN    NN      _       2       OA      _       _
+7       .       --      .       $.      _       2       --      _       _
+
+answer: False
+
+
+P: Tim funkelt einen Kater auf der Tischdecke an.
+1       Tim     tim     NOUN    NE      _       2       SB      _       _
+2       funkelt funkeln VERB    VVFIN   _       0       --      _       _
+3       einen   einen     DET     ART     _       4       NK      _       _
+4       Kater   kater   NOUN    NN      _       2       OA      _       _
+5       auf     auf     ADP     APPR    _       2       MO      _       _
+6       der     der     DET     ART     _       7       NK      _       _
+7       Tischdecke      tischdecke      NOUN    NN      _       5       NK      _       _
+8       an      an      PRT     PTKVZ   _       2       SVP     _       _
+9       .       --      .       $.      _       2       --      _       _
+
+H: Ein Kater ist auf der Tischdecke.
+1       Ein     ein     DET     ART     _       2       NK      _       _
+2       Kater   kater   NOUN    NN      _       3       SB      _       _
+3       ist     sein    VERB    VAFIN   _       0       --      _       _
+4       auf     auf     ADP     APPR    _       3       MO      _       _
+5       der     der     DET     ART     _       6       NK      _       _
+6       Tischdecke      tischdecke      NOUN    NN      _       4       NK      _       _
+7       .       --      .       $.      _       3       --      _       _
+
+answer: True
+
+
+P: Alle kahlen Meschen tragen eine billige Perücke.
+1       Alle    aller   PRON    PIAT    _       3       NK      _       _
+2       kahlen  kahl    ADJ     ADJA    _       3       NK      _       _
+3       Meschen meschen NOUN    NN      _       4       SB      _       _
+4       tragen  tragen  VERB    VVFIN   _       0       --      _       _
+5       eine    ein     DET     ART     _       7       NK      _       _
+6       billige billig  ADJ     ADJA    _       7       NK      _       _
+7       Perücke perücke NOUN    NN      _       4       OA      _       _
+8       .       --      .       $.      _       4       --      _       _
+
+P: Peter ist kahl.
+1       Peter   peter   NOUN    NE      _       2       SB      _       _
+2       ist     sein    VERB    VAFIN   _       0       --      _       _
+3       kahl    kahl    ADJ     ADJD    _       2       PD      _       _
+4       .       --      .       $.      _       2       --      _       _
+
+H: Peter trägt eine teure Perücke.
+1       Peter   peter   NOUN    NE      _       2       SB      _       _
+2       trägt   tragen  VERB    VVFIN   _       0       --      _       _
+3       eine    ein     DET     ART     _       5       NK      _       _
+4       teure   teuer   ADJ     ADJA    _       5       NK      _       _
+5       Perücke perücke NOUN    NN      _       2       OA      _       _
+6       .       --      .       $.      _       2       --      _       _
+
+answer: False
+
+
+P: Einige Menschen singen heute schlecht.
+1       Einige  einiger PRON    PIAT    _       2       NK      _       _
+2       Menschen        mensch  NOUN    NN      _       3       SB      _       _
+3       singen  singen  VERB    VVFIN   _       0       --      _       _
+4       heute   heute   ADV     ADV     _       3       MO      _       _
+5       schlecht        schlecht        ADJ     ADJD    _       3       MO      _       _
+6       .       --      .       $.      _       3       --      _       _
+
+P: Peter ist ein Mensch.
+1       Peter   peter   NOUN    NE      _       2       SB      _       _
+2       ist     sein    VERB    VAFIN   _       0       --      _       _
+3       ein     ein     DET     ART     _       4       NK      _       _
+4       Mensch  mensch  NOUN    NN      _       2       PD      _       _
+5       .       --      .       $.      _       2       --      _       _
+
+H: Peter singt schlecht.
+1       Peter   peter   NOUN    NE      _       2       SB      _       _
+2       singt   singen  VERB    VVFIN   _       0       --      _       _
+3       schlecht        schlecht        ADJ     ADJD    _       2       MO      _       _
+4       .       --      .       $.      _       2       --      _       _
+
+answer: False
+
+
+P: Jeder Hund bettelt am Tisch.
+1       Jeder   jeder   PRON    PIAT    _       2       NK      _       _
+2       Hund    hund    NOUN    NN      _       3       SB      _       _
+3       bettelt betteln VERB    VVFIN   _       0       --      _       _
+4       am      an      ADP     APPRART _       3       MO      _       _
+5       Tisch   tisch   NOUN    NN      _       4       NK      _       _
+6       .       --      .       $.      _       3       --      _       _
+
+P: Bella ist ein Hund.
+1       Bella   bella   NOUN    NE      _       2       SB      _       _
+2       ist     sein    VERB    VAFIN   _       0       --      _       _
+3       ein     ein     DET     ART     _       4       NK      _       _
+4       Hund    hund    NOUN    NN      _       2       PD      _       _
+5       .       --      .       $.      _       2       --      _       _
+
+H: Bella bettelt bei Tisch.
+1       Bella   bella   NOUN    NE      _       2       SB      _       _
+2       bettelt betteln VERB    VVFIN   _       0       --      _       _
+3       bei     bei     ADP     APPR    _       2       MO      _       _
+4       Tisch   tisch   NOUN    NN      _       3       NK      _       _
+5       .       --      .       $.      _       2       --      _       _
+
+answer: True

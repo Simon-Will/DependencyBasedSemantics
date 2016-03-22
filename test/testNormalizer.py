@@ -8,7 +8,6 @@ import inspect
 
 from context import montesniere
 
-
 class TanzendeGurken(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -24,7 +23,6 @@ class TanzendeGurken(unittest.TestCase):
                             )
         expected = open(os.path.join(resultsFile)).read()
         self.assertEqual(normalized, expected)
-  
   
 class TanzendeGurkenPronomen(unittest.TestCase):
     @classmethod
@@ -68,8 +66,7 @@ class Presidents(unittest.TestCase):
         results = os.path.join(TEST_DIR, 'normalizedPresidents.conll')
         expected = open(os.path.join(results)).read()
         self.assertEqual(expected, normalized) 
-        
-        
+
 class NurPronomen(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -83,26 +80,6 @@ class NurPronomen(unittest.TestCase):
         expected = open(os.path.join(results)).read()
         self.assertEqual(expected, normalized) 
 
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
 if __name__ == '__main__':
     global TEST_DIR
     pathToHere = inspect.getfile(inspect.currentframe())
@@ -110,6 +87,3 @@ if __name__ == '__main__':
     TEST_DIR = os.path.join(pathToTop, 'test/conll/')
 
     unittest.main()
-        
-        
-        

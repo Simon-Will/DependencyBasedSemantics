@@ -83,6 +83,11 @@ class Normalizer:
                 index -= 1
             else:
                 break
+        if (self.word_parts[index+1][7] == "CD" and 
+            self.word_parts[index+2][7] == "CJ"):
+            sb.insert(index+1)
+            sb.insert(index+2)
+            
         sb.append(oIndex)
         return sb
         
@@ -181,21 +186,22 @@ class Normalizer:
             konj.extend([kon for kon in obj 
                         if self.word_parts[kon][4] == "KON"])
             for konjunction in konj:
-                if self.checkApplyable(konjunction):
-                    word_parts, words = self.word_parts[:konjunction], \
-                                        self.word_parts[konjunction+1:]
-                    word_parts.append(self.word_parts[konjunction])
-                    word_parts.extend(self.word_parts[:obj[0]])
-                    word_parts.extend(words)
-                    applied = True
-                else:
-                    applied = False
-        if applied:
-            self.word_parts = self.mergenewSentence(word_parts)
-            self.assignNodes(konj)
+                #if self.checkApplyable(konjunction):
+                word_parts, words = self.word_parts[:konjunction], \
+                                    self.word_parts[konjunction+1:]
+                                    
+                word_parts.append(self.word_parts[konjunction])
+                word_parts.extend(self.word_parts[:obj[0]])
+                word_parts.extend(words)
+        #            applied = True
+       #         else:
+      #              applied = False
+        #if applied:
+        self.word_parts = self.mergenewSentence(word_parts)
+        self.assignNodes(konj)
             
-    def checkApplyable(self, kon):
-        return self.word_parts[kon-1][4] == self.word_parts[kon+1][4]
+    #def checkApplyable(self, kon):
+     #   return self.word_parts[kon-1][4] == self.word_parts[kon+1][4]
         
     def assignNodes(self, konj):
         """assign correct dependencies"""
@@ -306,8 +312,15 @@ class Normalizer:
         return [part.split("\t") for part in sentence.split("\n")][:-1]
     
         
-    
-    
+    def checkVerbDependency(self):
+        konj = ""
+        for word in self.word_parts:
+            if word[4] == "KON":
+                konj = word[0]
+            
+            elif ((word[4] == "VVFIN" or word[4] == "VAFIN") and konj != ""):
+                word[6] = konj
+        
     
             
     def getSentence(self):
@@ -320,6 +333,7 @@ class Normalizer:
                 self.insertObject()
         
             self.checkPron()
+            self.checkVerbDependency()
             return self.orderSentence()
             
         if len(self.sb) != 0:
@@ -329,9 +343,8 @@ class Normalizer:
         if self.obj != []:
             self.insertObject()
              
+        self.checkVerbDependency()
         return self.orderSentence()
-        print(self.orderSentence())
-        self.getSentence()
      
      
      

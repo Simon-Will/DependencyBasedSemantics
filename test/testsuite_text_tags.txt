@@ -17,6 +17,7 @@ H: Ein Keks wird gegessen.
 
 answer: True
 
+
 P: Ein Schaf isst einen Keks und ein Wolf isst einen Keks.
 1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Schaf   schaf   NOUN    NN      _       3       SB      _       _
@@ -31,7 +32,6 @@ P: Ein Schaf isst einen Keks und ein Wolf isst einen Keks.
 11      Keks    keks    NOUN    NN      _       9       OA      _       _
 12      .       --      .       $.      _       3       --      _       _
 
-
 H: Ein Wolf isst einen Keks.
 1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Wolf    wolf    NOUN    NN      _       3       SB      _       _
@@ -41,6 +41,7 @@ H: Ein Wolf isst einen Keks.
 6       .       --      .       $.      _       3       --      _       _
 
 answer: True
+
 
 P: Ein Schaf und ein Wolf essen einen Keks.
 1       Ein     ein     DET     ART     _       2       NK      _       _
@@ -90,6 +91,7 @@ H: Ein Wolf isst einen Keks.
 
 answer: True
 
+
 P: Ein Schaf isst einen Keks und es trinkt aus einem Fluss.
 1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Schaf   schaf   NOUN    NN      _       3       SB      _       _
@@ -103,7 +105,6 @@ P: Ein Schaf isst einen Keks und es trinkt aus einem Fluss.
 10      einem   ein     DET     ART     _       11      NK      _       _
 11      Fluss   fluß    NOUN    NN      _       9       NK      _       _
 12      .       --      .       $.      _       3       --      _       _
-
 
 H: Ein Schaf trinkt aus einem Fluss.
 1       Ein     ein     DET     ART     _       2       NK      _       _
@@ -148,7 +149,6 @@ H: Ein Schaf isst einen Keks und trinkt aus dem Fluss.
 10      Fluss   fluß    NOUN    NN      _       8       NK      _       _
 11      .       --      .       $.      _       3       --      _       _
 
-
 answer: True
 
 
@@ -165,7 +165,6 @@ P: Rebecca auch.
 1       Rebecca rebecca NOUN    NE      _       0       --      _       _
 2       auch    auch    ADV     ADV     _       1       MO      _       _
 3       .       --      .       $.      _       1       --      _       _
-
 
 H: Rebecca kommt zum Treffen
 1       Rebecca rebecca NOUN    NE      _       2       SB      _       _
@@ -206,7 +205,6 @@ P: Shawn schläft und Fluffy bellt.
 4       Fluffy  fluffy  NOUN    NN      _       5       SB      _       _
 5       bellt   bellen  VERB    VVFIN   _       3       CJ      _       _
 6       .       --      .       $.      _       2       --      _       _
-
 
 H: Fluffy bellt nicht.
 1       Fluffy  fluffy  NOUN    NE      _       2       SB      _       _
@@ -402,7 +400,6 @@ P: Kein Mensch zahlt gerne eine Rechnung.
 6       Rechnung        rechnung        NOUN    NN      _       3       OA      _       _
 7       .       --      .       $.      _       3       --      _       _
 
-
 P: Paul ist ein Mensch.
 1       Paul    paul    NOUN    NE      _       2       SB      _       _
 2       ist     sein    VERB    VAFIN   _       0       --      _       _
@@ -544,7 +541,6 @@ H: Sirenen haben ein schuppiges Bein.
 
 answer: unknown
 
-
 P: Donald genießt einen schönen Tag in einer weichen Hängematte.
 1       Donald  donald  NOUN    NE      _       2       SB      _       _
 2       genießt genießen        VERB    VVFIN   _       0       --      _       _
@@ -576,7 +572,6 @@ P: In Russland brennt ein Haus.
 4       ein     ein     DET     ART     _       5       NK      _       _
 5       Haus    haus    NOUN    NN      _       3       OA      _       _
 6       .       --      .       $.      _       3       --      _       _
-
 
 H: Russland brennt.
 1       Russland        russland        NOUN    NE      _       2       SB      _       _

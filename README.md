@@ -124,6 +124,7 @@ exists x.(kind(x) & (all y.(Keks(y) -> essen(x,y)))) & exists z.(kind(z) & (all 
 ###Testsuite
 Both semantic premises and hypotheses are stored in the testsuite. An input sentence is processed and the
 suit assigns a truth value and returns it.
+
 example:
 #TODO
 

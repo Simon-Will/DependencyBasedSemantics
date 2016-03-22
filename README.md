@@ -22,13 +22,13 @@ Heidelberg University, Germany
 
 
 Our goal was to create an algorithm that takes sentences, extracts their meaning
-and is both capable of judging statements to be true or false and answer
+and is both capable of asssigning a truth value to statements and answer
 questions based on the extracted knowledge.
-In order to achieve this goal first a RPG-model is trained on the TIGER-corpus
+In order to achieve this goal a RBG-model is trained on the TIGER-corpus
 and then used to annotate any sentence given by the user of the algorithm.
-This annotated sentence is then further processed in various steps to extract
-its meaning and store it as a lambda expression.
-Then this meaning can be assest and used to answer a question related to that
+These annotated sentences are then further processed in various steps to extract
+their meaning and store it as a lambda expression.
+This meaning can be accessed and used to answer a question related to that
 knowledge.
 
 
@@ -49,9 +49,9 @@ tiger\_release\_aug07.corrected.16012013.conll06
 ###normalize.py
 
 Start by using normalize.py to normalize the input sentences in order to avoid unfortunate
-coordination of phrases. During this step all coordinated phrases are changed from
+coordination of phrases. During this step all problematic coordinated phrases are changed from
 rather difficult constructions to far simpler phrases.
-This script takes one  sentence as input parameter and returns the normalized
+This script takes one sentence as input parameter and returns the normalized
 sentence.
 
 example:
@@ -85,7 +85,7 @@ our testsentence.morph.conll as input yields:
 
 
 At this point, the first problem of the algorithm is evident: 
-There is an immensse difference between our original sentence and the normalized one:
+There is an immense difference between our original sentence and the normalized one:
 This sentence speaks of one child eating all cookies and of one child,
 who eats all pretzel. There is no reason to believe both subjects refer to the
 same child.

@@ -147,5 +147,5 @@ Sollen weitere Daten hinzugefügt werden, sind folgende Schritte zu befolgen:
 * Wir empfehlen die geparsten Daten manuell zu überpfüfen und ggf. Korrekturen
   vorzunehmen
 
-* Auch können die Daten mit dem Skript normalize.py ggf. angepasst,
+* Auch können die Daten mit dem Skript normalize.py ggf. angepasst werden,
   um mögliche spätere Komplikationen zu vermeiden. Dies ist aber nicht Pflicht.

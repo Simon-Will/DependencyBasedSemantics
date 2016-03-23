@@ -32,6 +32,7 @@ This meaning can be accessed and used to answer a question related to that
 knowledge.
 In Addition, each script has a complete test module to check its functionality.
 Every test has the name of the corresponding module in its own name.
+Keeping module structure is recommended in order to avoid dependency errors.
 
 ###Requirements
 

@@ -93,7 +93,7 @@
             "deps cardinality {1}",
             "! NK.tag notElement {ADJA}"
         ],
-        "semRepPat": "\\P R x. exists y. (P(x) & {[lemma]}(y) & R(y)(x))",
+        "semRepPat": "\\P R x. exists y. (P(y) & {[lemma]}(y) & R(y)(x))",
         "semSig": {
             "P": "<e,t>",
             "{[lemma]}": "<e,t>",
@@ -124,7 +124,7 @@
             "deps cardinality {1}",
             "! NK.tag notElement {ADJA}"
         ],
-        "semRepPat": "\\P T y x. exists z. (P(x) & {[lemma]}(z) & T(z)(y)(x))",
+        "semRepPat": "\\P T y x. exists z. (P(z) & {[lemma]}(z) & T(z)(y)(x))",
         "semSig": {
             "P": "<e,t>",
             "{[lemma]}": "<e,t>",
@@ -154,7 +154,7 @@
             "deps cardinality {1}",
             "! NK.tag notElement {ADJA}"
         ],
-        "semRepPat": "\\P R x. exists y. (P(x) & {[lemma]}(y) & R(y)(x))",
+        "semRepPat": "\\P R x. exists y. (P(y) & {[lemma]}(y) & R(y)(x))",
         "semSig": {
             "P": "<e,t>",
             "{[lemma]}": "<e,t>",
@@ -183,7 +183,7 @@
             "deps cardinality {1}",
             "! NK.tag notElement {ADJA}"
         ],
-        "semRepPat": "\\P T y x. exists z. (P(x) & {[lemma]}(z) & T(z)(y)(x))",
+        "semRepPat": "\\P T y x. exists z. (P(z) & {[lemma]}(z) & T(z)(y)(x))",
         "semSig": {
             "P": "<e,t>",
             "{[lemma]}": "<e,t>",

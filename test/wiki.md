@@ -21,37 +21,23 @@
 * Arbeitsteilung: Folgender Tabelle sind die Arbeitsschritte, die Scripte und deren Authoren zu
   entnehmen:
 
->Planung des Projekts		Simon, Lukas, Rebekka
->
->process\_with\_spmrl.sh		Simon
->
->normalize.py			Rebekka
->
->condition.py			Simon
->
->heuristic_rules.json		Simon
->
->assign.py			Simon
->
->merge.py			Simon, Rebekka
->
->\__init\__.py			Simon
->
->context.py			Simon
->
->testNormalizer.py		Rebekka
->
->testAssign.py			Simon
->
->testMerge.py			Simon
->
->conll-files			Simon, Rebekka
->
->testsuite			Lukas, Simon, Rebekka
->
->Evaluation der Ergebnisse	Simon, Rebekka, (Lukas?)
->
->README & Dokumentation		Rebekka
+    >Planung des Projekts		Simon, Lukas, Rebekka
+
+    >process\_with\_spmrl.sh		Simon
+    >normalize.py			Rebekka
+    >condition.py			Simon
+    >heuristic_rules.json		Simon
+    >assign.py			        Simon
+    >merge.py			        Simon, Rebekka
+    >\__init\__.py			Simon
+    >context.py		 	        Simon
+    >testNormalizer.py		        Rebekka
+    >testAssign.py			Simon
+    >testMerge.py			Simon
+    >conll-files			Simon, Rebekka
+    >testsuite			        Lukas, Simon, Rebekka
+    >Evaluation der Ergebnisse	        Simon, Rebekka, (Lukas?)
+    >README & Dokumentation		Rebekka
 
 * Voraussetzungen:
 
@@ -143,25 +129,16 @@ ein kurzes Bsp:
 >Ein Kind isst alle Kekse und alle Brezeln.
 
 >Inhalt der Datei testsentence.conll:
->
 
->1       Ein     ein     DET     ART     _       2       NK      _       _
-
->2       Kind    kind    NOUN    NN      _       3       SB      _       _
-
->3       isst    issen   VERB    VVFIN   _       0       --      _       _
-
->4       alle    aller   PRON    PIAT    _       5       NK      _       _
-
->5       Kekse   keks    NOUN    NN      _       3       OA      _       _
-
->6       und     und     CONJ    KON     _       5       CD      _       _
-
->7       alle    aller   PRON    PIAT    _       8       NK      _       _
-
->8       Brezeln brezel  NOUN    NN      _       6       CJ      _       _
-
->9       .       --      .       $.      _       3       --      _       _
+    >1       Ein     ein     DET     ART     _       2       NK      _       _
+    >2       Kind    kind    NOUN    NN      _       3       SB      _       _
+    >3       isst    issen   VERB    VVFIN   _       0       --      _       _
+    >4       alle    aller   PRON    PIAT    _       5       NK      _       _
+    >5       Kekse   keks    NOUN    NN      _       3       OA      _       _
+    >6       und     und     CONJ    KON     _       5       CD      _       _
+    >7       alle    aller   PRON    PIAT    _       8       NK      _       _
+    >8       Brezeln brezel  NOUN    NN      _       6       CJ      _       _
+    >9       .       --      .       $.      _       3       --      _       _
 
 
 

@@ -173,33 +173,39 @@ class Condition():
         Returns:
             True, if the condition is satisfied; False otherwise.
         """
-        # XXX: The logic of this function is a little obscure. Maybe it should
-        # be rewritten.
         node = depGraph.get_by_address(address)
-        subj = node[self.subj]
-        satisfied = self._testSubj(subj)
+        satisfied = self.subj(depGraph, address, self.relationFixedObj)
         while node['rel'] in self.transeunda:
             node = depGraph.get_by_address(node['head'])
-            subj = node[self.subj]
-            satisfied = satisfied or self._testSubj(subj)
+            satisfied = satisfied or self.subj(
+                    depGraph, node['address'], self.relationFixedObj)
+
         if self.negated:
             return not satisfied
         else:
             return satisfied
             
-    def _testSubj(self, subj):
+    def _testSubjSet(self, subjSet):
         """Test if a set satisfies the condition.
 
         Args:
-            subj: A set of strings or a dict whose keys are strings.
+            subjSet: A set of strings or a dict whose keys are strings.
 
         Returns:
             True if the condition is satisfied; False otherwise.
         """
-        if isinstance(subj, dict):
-            return self.relationFixedObj(set(subj.keys()))
+        # subjSet might not actually be a set, but a dict.
+        # Use the keys then.
+        if isinstance(subjSet, dict):
+            subjSet = set(subjSet.keys())
+        return self.relationFixedObj(subjSet)
+
+    def _getSubjSet(self, depGraph, address):
+        """Get the subject set from a dependency graph."""
+        if callable(self.subj):
+            return self.subj(depGraph, address)
         else:
-            return self.relationFixedObj(subj)
+            return depGraph.get_by_address(address)[self.subj]
 
     @staticmethod
     def readConditionString(conditionString):
@@ -230,7 +236,7 @@ class Condition():
         negated, subj, rel, transeunda, obj = (False, '', '', set(), set())
         match = Condition.conditionPat.match(conditionString)
         if match:
-            subj = match.group('subj')
+            subj = _getSubj(match.group('subj'))
             obj = buildSet(match.group('obj'))
             rel = match.group('rel')
             if match.group('transeunda'):
@@ -241,6 +247,46 @@ class Condition():
             errMsg = '{} is not a valid conditionString.'
             raise ValueError(errMsg.format(conditionString))
         return negated, subj, rel, transeunda, obj
+
+def _getSubj(subjString):
+    """Return a subject function from a subject string."""
+    # toTraverse contains the paths to the final node.
+    toTraverse = [s.strip() for s in subjString.split('.')]
+    # The last element is not a path and functions as a key for the
+    # dict that is the final node.
+    key = toTraverse.pop(-1)
+
+    # Define the subject function
+    def subj(depGraph, address, relationFixedObj):
+        nodes = [depGraph.get_by_address(address)]
+        for t in toTraverse:
+            newNodes = []
+            if t == '^':
+                for n in nodes:
+                    try:
+                        newNodes.extend(depGraph.get_by_address(n['head']))
+                    except KeyError:
+                        pass
+            else:
+                for n in nodes:
+                    try:
+                        newNodes.extend(
+                                [depGraph.get_by_address(a)
+                                    for a in n['deps'][t]]
+                                )
+                    except KeyError:
+                        pass
+            nodes = newNodes
+
+        subjElms = [n[key] for n in nodes]
+        subjElms = [set(s.keys()) if isinstance(s, dict) else s
+                for s in subjElms]
+        bools = {relationFixedObj(s) for s in subjElms}
+        return any(bools)
+
+    # Return the subject function that now knows about the nodes it has to
+    # traverse.
+    return subj
 
 def buildSet(setString):
     """Build a set of strings from a string representation of a set.
@@ -273,7 +319,7 @@ def buildSet(setString):
         errMsg = "setString '{}' does not represent a set."
         raise ValueError(errMsg.format(setString))
     return s
-    
+
 def test():
     import doctest
     doctest.testmod()

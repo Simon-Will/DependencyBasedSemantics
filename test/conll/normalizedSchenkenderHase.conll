@@ -8,8 +8,8 @@
 8	und	und	KON	KON	_	3	CD	_	_	
 9	Ein	ein	DET	ART	_	10	NK	_	_
 10	Hase	hase	NOUN	NN	_	11	SB	_	_
-11	schenkt	schenken	VERB	VVFIN	_	0	--	_	_
+11	schenkt	schenken	VERB	VVFIN	_	8	--	_	_
 12	einem	ein	DET	ART	_	13	NK	_	_
 13	Igel	igel	NOUN	NN	_	11	DA	_	_
-14	Heuschnupfen	heuschnupfen	NOUN	NN	_	11	OA	_	_
+14	Heuschnupfen	heuschnupfen	NOUN	NN	_	11	CJ	_	_
 15	.	--	.	$.	_	3	--	_	_

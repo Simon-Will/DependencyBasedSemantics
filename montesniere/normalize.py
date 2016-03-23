@@ -234,21 +234,24 @@ class Normalizer:
         """nomina and mo dependency"""
         for n in relations["NN"]:
             for konjunction in konj:
-                if (int(word[0]) < konjunction and n < konjunction):
-                    if(int(word[0]) > n and word[4] == "ART"):
-                        continue
-                    n =  self.checkMo(int(word[0]), n, relations["MO"])
-                    self.changeWord(word, n)
-                    return word
+                if int(word[0]) != n:
+                    if ((int(word[0]) < konjunction and n < konjunction)):
+                        if(int(word[0]) > n and (word[4] == "ART" or 
+                            word[4] == "PIAT")):
+                            continue
+                        n =  self.checkMo(int(word[0]), n, relations["MO"])
+                        self.changeWord(word, n)
+                        return word
                     
                     
-                elif (int(word[0]) > konjunction and n > konjunction):
-                    if(int(word[0]) > n and word[4] == "ART"):
-                        continue
-                    n =  self.checkMo(int(word[0]), n, relations["MO"])
-                    self.changeWord(word, n)
-                    self.changeWord(word, n)
-                    return word
+                    elif (int(word[0]) > konjunction and n > konjunction):
+                        if(int(word[0]) > n and (word[4] == "ART" 
+                        or word[4] == "PIAT")):
+                            continue
+                        n =  self.checkMo(int(word[0]), n, relations["MO"])
+                        self.changeWord(word, n)
+                        self.changeWord(word, n)
+                        return word
         return word
             
             
@@ -314,13 +317,18 @@ class Normalizer:
         
     def checkVerbDependency(self):
         konj = ""
+        verb = ""
         for word in self.word_parts:
             if word[4] == "KON":
                 konj = word[0]
+                if verb != "":
+                    word[6] = verb
             
-            elif ((word[4] == "VVFIN" or word[4] == "VAFIN") and konj != ""):
-                word[6] = konj
-        
+            elif (word[4] == "VVFIN" or word[4] == "VAFIN"):
+                verb = word[0]
+                
+                if ((word[4] == "VVFIN" or word[4] == "VAFIN") and konj != ""):
+                    word[6] = str(konj)
     
             
     def getSentence(self):

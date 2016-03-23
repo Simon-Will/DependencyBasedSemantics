@@ -82,7 +82,10 @@ class SemMerger:
             mergeDict.update(
                     {c['address']: c['mergedsemrep'] for c in children
                         if 'mergedsemrep' in c})
-            node['mergedsemrep'] = self._merge(mergeDict)
+            if self.doubleNamed(node, c):
+                node['mergedsemrep'] = self.doubleNamedEntity(node, c)
+            else:    
+                node['mergedsemrep'] = self._merge(mergeDict)
 
         # Mark node as merged and return.
         node['merged'] = True
@@ -143,6 +146,10 @@ class SemMerger:
             merged = False
         return merged
 
+    def doubleNamed(self, node, child):
+        return (node['tag'] == 'NE' and 
+                (child['tag'] == 'NE' and child['rel'] == 'PNC'))
+
     def doubleNamedEntity(self, head_node, node):
         tlp = nll.LogicParser(type_check=True)
         """Fuse representations of first and last name of one entity 
@@ -169,12 +176,10 @@ class SemMerger:
             
         new_expr = rule.format(head_node)
         exprSig = {key.format(head_node): val for key, val in sig.items()}
-        head_node['semrep'] = tlp.parse(new_expr, signature=exprSig)
+        return tlp.parse(new_expr, signature=exprSig)
     
     def getSemantics(self):
-        """ returns logical expression of the entire sentence """
-        #self.getDependencies()
-        #return self.getSemRepresentation()
+        """ Returns logical expression of the entire sentence """
         self.mergeWithChildren(self.root)
         return self.root['mergedsemrep']
 

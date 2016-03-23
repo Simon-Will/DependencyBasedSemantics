@@ -22,20 +22,36 @@
   entnehmen:
 
     >Planung des Projekts		Simon, Lukas, Rebekka
+    
     >process\_with\_spmrl.sh		Simon
+    
     >normalize.py			Rebekka
+    
     >condition.py			Simon
+    
     >heuristic_rules.json		Simon
+    
     >assign.py			        Simon
+    
     >merge.py			        Simon, Rebekka
+    
     >\__init\__.py			Simon
+    
     >context.py		 	        Simon
+    
     >testNormalizer.py		        Rebekka
+    
+    
     >testAssign.py			Simon
+    
     >testMerge.py			Simon
+  
     >conll-files			Simon, Rebekka
+  
     >testsuite			        Lukas, Simon, Rebekka
+  
     >Evaluation der Ergebnisse	        Simon, Rebekka, (Lukas?)
+  
     >README & Dokumentation		Rebekka
 
 * Voraussetzungen:

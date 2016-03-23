@@ -30,8 +30,8 @@ These annotated sentences are then further processed in various steps to extract
 their meaning and store it as a lambda expression.
 This meaning can be accessed and used to answer a question related to that
 knowledge.
-
-
+In Addition, each script has a complete test module to check its functionality.
+Every test has the name of the corresponding module in its own name.
 
 ###Requirements
 

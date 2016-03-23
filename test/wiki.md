@@ -22,7 +22,6 @@
   entnehmen:
 
     >Planung des Projekts		Simon, Lukas, Rebekka
-
     >process\_with\_spmrl.sh		Simon
     >normalize.py			Rebekka
     >condition.py			Simon

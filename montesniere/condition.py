@@ -47,6 +47,30 @@ def makeSupersetFixedObj(obj):
         return subj.issuperset(obj)
     return supersetFixedObj
 
+def makeCardinalityFixedObj(obj):
+    """
+    >>> ten = {10}
+    >>> oneToTen = set(range(1,11))
+    >>> cardinalityTen = makeCardinalityFixedObj(ten)
+    >>> cardinalityOneToTen = makeCardinalityFixedObj(oneToTen)
+    >>> cardinalityTen(set(range(5,51,5)))
+    True
+    >>> cardinalityOneToTen({'foo', 'bar'})
+    True
+    >>> cardinalityOneToTen(set())
+    False
+    """
+    def cardinalityFixedObj(subj):
+        for n in obj:
+            try:
+                if len(subj) == n:
+                    return True
+            except TypeError:
+                return False
+        else:
+            return False
+    return cardinalityFixedObj
+
 def makeNotElementFixedObj(obj):
     def notElementFixedObj(subj):
         return subj not in obj
@@ -61,6 +85,18 @@ def makeNotSupersetFixedObj(obj):
     def notSupersetFixedObj(subj):
         return not subj.issuperset(obj)
     return notSupersetFixedObj
+
+def makeNotCardinalityFixedObj(obj):
+    def notCardinalityFixedObj(subj):
+        for n in obj:
+            try:
+                if len(subj) == n:
+                    return False
+            except TypeError:
+                return True
+        else:
+            return True
+    return notCardinalityFixedObj
 
 class Condition():
     """A condition for nodes of an nltk.parse.DependencyGraph.
@@ -118,6 +154,8 @@ class Condition():
             'notSubset': makeNotSubsetFixedObj,
             'superset': makeSupersetFixedObj,
             'notSuperset': makeNotSupersetFixedObj,
+            'cardinality': makeCardinalityFixedObj,
+            'notCardinality': makeNotCardinalityFixedObj
             }
 
     def __init__(self, subj, rel, obj, transeunda=frozenset(), negated=False):
@@ -215,23 +253,26 @@ class Condition():
             conditionString: A string representing a condition.
 
         Returns:
-            A quadruple containing subj (str), rel (str),
+            A quadruple containing subj (function), rel (str),
                 transeunda (set of str) and obj (set of str).
             
         Raises:
             ValueError if the conditionString is invalid.
 
-        >>> cs = 'deps superset {SB}'
-        >>> Condition.readConditionString(cs)
-        (False, 'deps', 'superset', set(), {'SB'})
+        >>> cs1 = 'deps superset {SB}'
+        >>> c1 = Condition.readConditionString(cs1)
+        >>> (c1[0], c1[2], c1[3], c1[4])
+        (False, 'superset', set(), {'SB'})
         >>> cs2 = 'rel element^{NK} {SB, OA}'
-        >>> Condition.readConditionString(cs2)[0:-1]
-        (False, 'rel', 'element', {'NK'})
-        >>> sorted(Condition.readConditionString(cs2)[-1])
+        >>> c2 = Condition.readConditionString(cs2)
+        >>> (c2[0], c2[2], c2[3])
+        (False, 'element', {'NK'})
+        >>> sorted(c2[4])
         ['OA', 'SB']
         >>> cs3 = '! deps subset {DA}'
-        >>> Condition.readConditionString(cs3)
-        (True, 'deps', 'subset', set(), {'DA'})
+        >>> c3 = Condition.readConditionString(cs3)
+        >>> (c3[0], c3[2], c3[3], c3[4])
+        (True, 'subset', set(), {'DA'})
         """
         negated, subj, rel, transeunda, obj = (False, '', '', set(), set())
         match = Condition.conditionPat.match(conditionString)

@@ -323,15 +323,15 @@ class SchuppigeBeine(unittest.TestCase):
 
     def testSchuppige(self):
         assigned = SchuppigeBeine.depGraph.get_by_address(3)['semrep']
-        semRepPat = r'\P x. (schuppig(x) & P(x))'
-        semSig = {'schuppig': '<e,t>', 'P': '<e,t>'}
+        semRepPat = r'\x. schuppig(x)'
+        semSig = {'schuppig': '<e,t>'}
         expected = tlp.parse(semRepPat, signature=semSig)
         self.assertEqual(assigned, expected)
 
     def testBeine(self):
         assigned = SchuppigeBeine.depGraph.get_by_address(4)['semrep']
-        semRepPat = r'\x. bein(x)'
-        semSig = {'bein': '<e,t>'}
+        semRepPat = r'\P R x. exists y. (P(x) & bein(y) & R(y)(x))'
+        semSig = {'bein': '<e,t>', 'P': '<e,t>', 'R': '<e,<e,t>>'}
         expected = tlp.parse(semRepPat, signature=semSig)
         self.assertEqual(assigned, expected)
 
@@ -886,6 +886,53 @@ class NichtEinHund(unittest.TestCase):
         semSig = {'peter': 'e'}
         expected = tlp.parse(semRepPat, signature=semSig)
         self.assertEqual(assigned, expected)
+
+@unittest.skip('not implemented')
+class GrueneAlteBaeume(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'grüne_alte_bäume.conll')
+        with open(conllFile) as f:
+            cls.depGraph = nlp.DependencyGraph(f.read())
+        assigner = montesniere.assign.SemRepAssigner.fromfile(RULES)
+        assigner.assignToDependencyGraph(cls.depGraph)
+
+    def testGruene(self):
+        assigned = GrueneAlteBaeume.depGraph.get_by_address(1)['semrep']
+        semRepPat = r'\x. grün(x)'
+        semSig = {'grün': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testEin(self):
+        assigned = GrueneAlteBaeume.depGraph.get_by_address(2)['semrep']
+        semRepPat = r'\P Q. all x. (P(x) -> Q(x))'
+        semSig = {'P': '<e,t>', 'Q': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testHund(self):
+        assigned = GrueneAlteBaeume.depGraph.get_by_address(3)['semrep']
+        semRepPat = r'\x. hund(x)'
+        semSig = {'hund': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testBeisst(self):
+        assigned = GrueneAlteBaeume.depGraph.get_by_address(4)['semrep']
+        semRepPat = r'\y x. beißen(x,y)'
+        semSig = {'beißen': '<e,<e,t>>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testPeter(self):
+        assigned = GrueneAlteBaeume.depGraph.get_by_address(5)['semrep']
+        semRepPat = r'peter'
+        semSig = {'peter': 'e'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
 
 if __name__ == '__main__':
     global RULES

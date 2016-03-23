@@ -23,7 +23,7 @@
         }
     },
     {
-	"explanation": "normal nouns without dependents (assume plural)",
+	"explanation": "normal nouns as subject without dependents",
         "conditions": [
             "tag element {NN}",
 	    "rel element {SB}",
@@ -36,8 +36,162 @@
         }
     },
     {
+	"explanation": "normal nouns as subject without article, but with one attributive adjective",
+        "conditions": [
+            "tag element {NN}",
+	    "rel element {SB}",
+            "deps superset {NK}",
+            "deps cardinality {1}",
+            "! NK.tag notElement {ADJA}"
+        ],
+        "semRepPat": "\\P Q . all x. (({[lemma]}(x) & P(x))-> Q(x))",
+        "semSig": {
+            "{[lemma]}": "<e,t>",
+            "P": "<e,t>",
+            "Q": "<e,t>"
+        }
+    },
+    {
+	"explanation": "normal nouns as subject without article, but with two attributive adjectives",
+        "note": "For more than two attributive adjectives, new rules have to be added.",
+        "conditions": [
+            "tag element {NN}",
+	    "rel element {SB}",
+            "deps superset {NK}",
+            "deps cardinality {2}",
+            "! NK.tag notElement {ADJA}"
+        ],
+        "semRepPat": "\\O P Q. all x. (({[lemma]}(x) & O(x) & P(x))-> Q(x))",
+        "semSig": {
+            "{[lemma]}": "<e,t>",
+            "O": "<e,t>",
+            "P": "<e,t>",
+            "Q": "<e,t>"
+        }
+    },
+    {
+	"explanation": "normal nouns as accusative object of monotransitive verbs and of ditransitive verbs with a second accusative object. Without article, quantifier or adjective.",
+        "conditions": [
+            "tag element {NN}",
+	    "rel element {OA}",
+            "! deps superset^{OA} {DA}",
+            "! NK.tag element {ART, PIAT, ADJA}"
+        ],
+        "semRepPat": "\\R x. exists y. ({[lemma]}(y) & R(y)(x))",
+        "semSig": {
+            "{[lemma]}": "<e,t>",
+            "R": "<e,<e,t>>"
+        }
+    },
+    {
+	"explanation": "normal nouns as accusative object of monotransitive verbs and of ditransitive verbs with a second accusative object. With one adjective, but without article or quantifier",
+        "conditions": [
+            "tag element {NN}",
+	    "rel element {OA}",
+            "! deps superset^{OA} {DA}",
+            "deps superset {NK}",
+            "deps cardinality {1}",
+            "! NK.tag notElement {ADJA}"
+        ],
+        "semRepPat": "\\P R x. exists y. (P(x) & {[lemma]}(y) & R(y)(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "{[lemma]}": "<e,t>",
+            "R": "<e,<e,t>>"
+        }
+    },
+    {
+	"explanation": "normal nouns as accusative object of ditransitive verbs. Without article, quantifier or adjective.",
+        "conditions": [
+            "tag element {NN}",
+	    "rel element {OA}",
+            "deps superset^{OA} {DA}",
+            "! NK.tag element {ART, PIAT, ADJA}"
+        ],
+        "semRepPat": "\\T y x. exists z. ({[lemma]}(z) & T(z)(y)(x))",
+        "semSig": {
+            "{[lemma]}": "<e,t>",
+            "T": "<e,<e,<e,t>>>"
+        }
+    },
+    {
+	"explanation": "normal nouns as accusative object of ditransitive verbs. With one adjective, but without article or quantifier",
+        "conditions": [
+            "tag element {NN}",
+	    "rel element {OA}",
+            "deps superset {NK}",
+            "deps superset^{OA} {DA}",
+            "deps cardinality {1}",
+            "! NK.tag notElement {ADJA}"
+        ],
+        "semRepPat": "\\P T y x. exists z. (P(x) & {[lemma]}(z) & T(z)(y)(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "{[lemma]}": "<e,t>",
+            "T": "<e,<e,<e,t>>>"
+        }
+    },
+    {
+	"explanation": "normal nouns as dative object of ditransitive verbs. Without article, quantifier or adjective.",
+        "conditions": [
+            "tag element {NN}",
+	    "rel element {DA}",
+            "! NK.tag element {ART, PIAT, ADJA}"
+        ],
+        "semRepPat": "\\R x. exists y. ({[lemma]}(y) & R(y)(x))",
+        "semSig": {
+            "{[lemma]}": "<e,t>",
+            "R": "<e,<e,t>>"
+        }
+    },
+    {
+	"explanation": "normal nouns as dative object of ditransitive verbs. With one adjective, but without article or quantifier",
+        "conditions": [
+            "tag element {NN}",
+	    "rel element {DA}",
+            "deps superset^{DA} {OA}",
+            "deps superset {NK}",
+            "deps cardinality {1}",
+            "! NK.tag notElement {ADJA}"
+        ],
+        "semRepPat": "\\P R x. exists y. (P(x) & {[lemma]}(y) & R(y)(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "{[lemma]}": "<e,t>",
+            "R": "<e,<e,t>>"
+        }
+    },
+    {
+	"explanation": "normal nouns as second accusative object of ditransitive verbs. Without article, quantifier or adjective.",
+        "conditions": [
+            "tag element {NN}",
+	    "rel element {OA2}",
+            "! NK.tag element {ART, PIAT, ADJA}"
+        ],
+        "semRepPat": "\\T y x. exists z. ({[lemma]}(z) & T(z)(y)(x))",
+        "semSig": {
+            "{[lemma]}": "<e,t>",
+            "T": "<e,<e,<e,t>>>"
+        }
+    },
+    {
+	"explanation": "normal nouns as second accusative object of ditransitive verbs. With one adjective, but without article or quantifier",
+        "conditions": [
+            "tag element {NN}",
+	    "rel element {OA2}",
+            "deps superset {NK}",
+            "deps cardinality {1}",
+            "! NK.tag notElement {ADJA}"
+        ],
+        "semRepPat": "\\P T y x. exists z. (P(x) & {[lemma]}(z) & T(z)(y)(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "{[lemma]}": "<e,t>",
+            "T": "<e,<e,<e,t>>>"
+        }
+    },
+    {
 	"explanation": "normal nouns with article or modifier",
-        "note": "TODO: determine type of noun (with adjective, with article, …",
         "conditions": [
             "tag element {NN}"
         ],
@@ -92,7 +246,8 @@
         "conditions": [
             "tag element {ART}",
             "lemma element {ein}",
-            "rel element^{NK} {DA}"
+            "rel element^{NK} {DA}",
+            "deps superset^{NK, DA} {OA}"
         ],
         "semRepPat": "\\P R x. exists y. (P(y) & R(y)(x))",
         "semSig": {
@@ -475,16 +630,30 @@
         }
     },
     {
-        "explanation": "attributive adjective",
+        "explanation": "attributive adjective in an NP containing an article or a quantifier",
         "note": "All adjectives are treated as though being intersective",
         "conditions": [
             "tag element {ADJA}",
-            "rel element {NK}"
+            "rel element {NK}",
+            "^.NK.tag element {ART, PIAT}"
         ],
         "semRepPat": "\\P x.({[lemma]}(x) & P(x))",
         "semSig": {
             "{[lemma]}": "<e,t>",
             "P": "<e,t>"
+        }
+    },
+    {
+        "explanation": "attributive adjective in an NP neither containing an article nor a quantifier",
+        "note": "All adjectives are treated as though being intersective",
+        "conditions": [
+            "tag element {ADJA}",
+            "rel element {NK}",
+            "! ^.NK.tag element {ART, PIAT}"
+        ],
+        "semRepPat": "\\x. {[lemma]}(x)",
+        "semSig": {
+            "{[lemma]}": "<e,t>"
         }
     },
     {

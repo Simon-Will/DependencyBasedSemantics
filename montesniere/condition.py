@@ -60,6 +60,15 @@ def makeCardinalityFixedObj(obj):
     >>> cardinalityOneToTen(set())
     False
     """
+    # Convert strings to integers.
+    newObj = set()
+    for o in obj:
+        try:
+            newObj.add(int(o))
+        except ValueError:
+            pass
+    obj = newObj
+
     def cardinalityFixedObj(subj):
         for n in obj:
             try:
@@ -70,6 +79,11 @@ def makeCardinalityFixedObj(obj):
         else:
             return False
     return cardinalityFixedObj
+
+def makeExist(obj):
+    def exist(subj):
+        return bool(subj)
+    return exist
 
 def makeNotElementFixedObj(obj):
     def notElementFixedObj(subj):
@@ -97,6 +111,11 @@ def makeNotCardinalityFixedObj(obj):
         else:
             return True
     return notCardinalityFixedObj
+
+def makeNotExist(obj):
+    def notExist(subj):
+        return not bool(subj)
+    return notExist
 
 class Condition():
     """A condition for nodes of an nltk.parse.DependencyGraph.
@@ -155,7 +174,9 @@ class Condition():
             'superset': makeSupersetFixedObj,
             'notSuperset': makeNotSupersetFixedObj,
             'cardinality': makeCardinalityFixedObj,
-            'notCardinality': makeNotCardinalityFixedObj
+            'notCardinality': makeNotCardinalityFixedObj,
+            'exist': makeExist,
+            'notExist' : makeNotExist
             }
 
     def __init__(self, subj, rel, obj, transeunda=frozenset(), negated=False):
@@ -305,7 +326,7 @@ def _getSubj(subjString):
             if t == '^':
                 for n in nodes:
                     try:
-                        newNodes.extend(depGraph.get_by_address(n['head']))
+                        newNodes.append(depGraph.get_by_address(n['head']))
                     except KeyError:
                         pass
             else:

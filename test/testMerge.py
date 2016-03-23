@@ -136,6 +136,25 @@ class SchuppigesBein(unittest.TestCase):
         expected = tlp.parse(semRep, signature=semSig)
         self.assertEquivalent(assigned, expected)
 
+class SchuppigeBeine(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'schuppige_beine.conll')
+        cls.merged = getMergedRepresentation(conllFile, RULES)
+
+    def testSchuppigeBeine(self):
+        assigned = SchuppigeBeine.merged
+        semRep = r'all x. (sirene(x) -> exists y. (haben(x,y) & bein(y) & schuppig(y)))'
+        semSig = {
+                'sirene': '<e,t>',
+                'bein': '<e,t>',
+                'schuppig': '<e,t>',
+                'haben': '<e,<e,t>>'
+                }
+        expected = tlp.parse(semRep, signature=semSig)
+        self.assertEquivalent(assigned, expected)
+
 class SchnelleJaegerin(unittest.TestCase):
 
     @classmethod

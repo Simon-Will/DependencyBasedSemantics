@@ -1,0 +1,6 @@
+1	Eine	ein	DET	ART	_	2	NK	_	_
+2	Uhr	uhr	NOUN	NN	_	3	SB	_	_
+3	ist	sein	VERB	VAFIN	_	0	--	_	_
+4	keine	kein	PRON	PIAT	_	5	NK	_	_
+5	Wanduhr	wanduhr	NOUN	NN	_	3	PD	_	_
+6	.	--	.	$.	_	3	--	_	_

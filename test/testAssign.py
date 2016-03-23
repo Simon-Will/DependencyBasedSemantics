@@ -624,7 +624,6 @@ class SingtUndTanzt(unittest.TestCase):
         expected = tlp.parse(semRepPat, signature=semSig)
         self.assertEqual(assigned, expected)
 
-@unittest.skip('foo')
 class HeuteBaden(unittest.TestCase):
 
     @classmethod
@@ -635,38 +634,256 @@ class HeuteBaden(unittest.TestCase):
         assigner = montesniere.assign.SemRepAssigner.fromfile(RULES)
         assigner.assignToDependencyGraph(cls.depGraph)
 
-    def testMit(self):
+    def testHeute(self):
         assigned = HeuteBaden.depGraph.get_by_address(1)['semrep']
-        semRepPat = r'\P. P(maria)'
-        semSig = {'maria': 'e', 'P': '<e,t>'}
+        semRepPat = r'\V. heute(V)'
+        semSig = {'V': 't', 'heute': '<t,t>'}
         expected = tlp.parse(semRepPat, signature=semSig)
         self.assertEqual(assigned, expected)
 
-    def testSingt(self):
+    def testBadet(self):
         assigned = HeuteBaden.depGraph.get_by_address(2)['semrep']
-        semRepPat = r'\x. singen(x)'
-        semSig = {'singen': '<e,t>'}
+        semRepPat = r'\x. baden(x)'
+        semSig = {'baden': '<e,t>'}
         expected = tlp.parse(semRepPat, signature=semSig)
         self.assertEqual(assigned, expected)
 
-    def testUnd(self):
+    def testEine(self):
         assigned = HeuteBaden.depGraph.get_by_address(3)['semrep']
-        semRepPat = r'\V W. (W & V)'
-        semSig = {'V': 't', 'W': 't'}
+        semRepPat = r'\P Q. exists x. (P(x) & Q(x))'
+        semSig = {'P': '<e,t>', 'Q': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testTaube(self):
+        assigned = HeuteBaden.depGraph.get_by_address(4)['semrep']
+        semRepPat = r'\x. taube(x)'
+        semSig = {'taube': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+class EinigeVoegel(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'einige_vögel.conll')
+        with open(conllFile) as f:
+            cls.depGraph = nlp.DependencyGraph(f.read())
+        assigner = montesniere.assign.SemRepAssigner.fromfile(RULES)
+        assigner.assignToDependencyGraph(cls.depGraph)
+
+    def testEinige(self):
+        assigned = EinigeVoegel.depGraph.get_by_address(1)['semrep']
+        semRepPat = r'\P Q. exists x. (P(x) & Q(x))'
+        semSig = {'P': '<e,t>', 'Q': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testVoegel(self):
+        assigned = EinigeVoegel.depGraph.get_by_address(2)['semrep']
+        semRepPat = r'\x. vogel(x)'
+        semSig = {'vogel': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testSind(self):
+        assigned = EinigeVoegel.depGraph.get_by_address(3)['semrep']
+        semRepPat = r'\P. P'
+        semSig = {'P': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testSchwaene(self):
+        assigned = EinigeVoegel.depGraph.get_by_address(4)['semrep']
+        semRepPat = r'\x. schwan(x)'
+        semSig = {'schwan': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+class KeineWanduhr(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'keine_wanduhr.conll')
+        with open(conllFile) as f:
+            cls.depGraph = nlp.DependencyGraph(f.read())
+        assigner = montesniere.assign.SemRepAssigner.fromfile(RULES)
+        assigner.assignToDependencyGraph(cls.depGraph)
+
+    def testEine(self):
+        assigned = KeineWanduhr.depGraph.get_by_address(1)['semrep']
+        semRepPat = r'\P Q. exists x. (P(x) & Q(x))'
+        semSig = {'P': '<e,t>', 'Q': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testUhr(self):
+        assigned = KeineWanduhr.depGraph.get_by_address(2)['semrep']
+        semRepPat = r'\x. uhr(x)'
+        semSig = {'uhr': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testIst(self):
+        assigned = KeineWanduhr.depGraph.get_by_address(3)['semrep']
+        semRepPat = r'\P. P'
+        semSig = {'P': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testKeine(self):
+        assigned = KeineWanduhr.depGraph.get_by_address(4)['semrep']
+        semRepPat = r'\P x. ! P(x)'
+        semSig = {'P': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testWanduhr(self):
+        assigned = KeineWanduhr.depGraph.get_by_address(5)['semrep']
+        semRepPat = r'\x. wanduhr(x)'
+        semSig = {'wanduhr': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+class NichtBeissen(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'nicht_beißen.conll')
+        with open(conllFile) as f:
+            cls.depGraph = nlp.DependencyGraph(f.read())
+        assigner = montesniere.assign.SemRepAssigner.fromfile(RULES)
+        assigner.assignToDependencyGraph(cls.depGraph)
+
+    def testEin(self):
+        assigned = NichtBeissen.depGraph.get_by_address(1)['semrep']
+        semRepPat = r'\P Q. exists x. (P(x) & Q(x))'
+        semSig = {'P': '<e,t>', 'Q': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testHund(self):
+        assigned = NichtBeissen.depGraph.get_by_address(2)['semrep']
+        semRepPat = r'\x. hund(x)'
+        semSig = {'hund': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testBeisst(self):
+        assigned = NichtBeissen.depGraph.get_by_address(3)['semrep']
+        semRepPat = r'\y x. beißen(x,y)'
+        semSig = {'beißen': '<e,<e,t>>'}
         expected = tlp.parse(semRepPat, signature=semSig)
         self.assertEqual(assigned, expected)
 
     def testPeter(self):
-        assigned = HeuteBaden.depGraph.get_by_address(4)['semrep']
-        semRepPat = r'\P. P(peter)'
-        semSig = {'peter': 'e', 'P': '<e,t>'}
+        assigned = NichtBeissen.depGraph.get_by_address(4)['semrep']
+        semRepPat = r'peter'
+        semSig = {'peter': 'e'}
         expected = tlp.parse(semRepPat, signature=semSig)
         self.assertEqual(assigned, expected)
 
-    def testTanzt(self):
-        assigned = HeuteBaden.depGraph.get_by_address(5)['semrep']
-        semRepPat = r'\x. tanzen(x)'
-        semSig = {'tanzen': '<e,t>'}
+    def testNicht(self):
+        assigned = NichtBeissen.depGraph.get_by_address(5)['semrep']
+        semRepPat = r'\P x. ! P(x)'
+        semSig = {'P': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+class NichtJederMensch(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'nicht_jeder_mensch.conll')
+        with open(conllFile) as f:
+            cls.depGraph = nlp.DependencyGraph(f.read())
+        assigner = montesniere.assign.SemRepAssigner.fromfile(RULES)
+        assigner.assignToDependencyGraph(cls.depGraph)
+
+    def testNicht(self):
+        assigned = NichtJederMensch.depGraph.get_by_address(1)['semrep']
+        semRepPat = r'\E P Q. ! E(P)(Q)'
+        semSig = {'P': '<e,t>', 'Q': '<e,t>', 'E': '<<e,t>,<<e,t>,t>>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testJeder(self):
+        assigned = NichtJederMensch.depGraph.get_by_address(2)['semrep']
+        semRepPat = r'\P Q. all x. (P(x) -> Q(x))'
+        semSig = {'P': '<e,t>', 'Q': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testMensch(self):
+        assigned = NichtJederMensch.depGraph.get_by_address(3)['semrep']
+        semRepPat = r'\x. mensch(x)'
+        semSig = {'mensch': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testIst(self):
+        assigned = NichtJederMensch.depGraph.get_by_address(4)['semrep']
+        semRepPat = r'\P. P'
+        semSig = {'P': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testEin(self):
+        assigned = NichtJederMensch.depGraph.get_by_address(5)['semrep']
+        semRepPat = r'\P. P'
+        semSig = {'P': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testGrieche(self):
+        assigned = NichtJederMensch.depGraph.get_by_address(6)['semrep']
+        semRepPat = r'\x. grieche(x)'
+        semSig = {'grieche': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+class NichtEinHund(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'nicht_ein_hund.conll')
+        with open(conllFile) as f:
+            cls.depGraph = nlp.DependencyGraph(f.read())
+        assigner = montesniere.assign.SemRepAssigner.fromfile(RULES)
+        assigner.assignToDependencyGraph(cls.depGraph)
+
+    def testNicht(self):
+        assigned = NichtEinHund.depGraph.get_by_address(1)['semrep']
+        semRepPat = r'\E P Q. ! E(P)(Q)'
+        semSig = {'P': '<e,t>', 'Q': '<e,t>', 'E': '<<e,t>,<<e,t>,t>>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testEin(self):
+        assigned = NichtEinHund.depGraph.get_by_address(2)['semrep']
+        semRepPat = r'\P Q. all x. (P(x) -> Q(x))'
+        semSig = {'P': '<e,t>', 'Q': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testHund(self):
+        assigned = NichtEinHund.depGraph.get_by_address(3)['semrep']
+        semRepPat = r'\x. hund(x)'
+        semSig = {'hund': '<e,t>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testBeisst(self):
+        assigned = NichtEinHund.depGraph.get_by_address(4)['semrep']
+        semRepPat = r'\y x. beißen(x,y)'
+        semSig = {'beißen': '<e,<e,t>>'}
+        expected = tlp.parse(semRepPat, signature=semSig)
+        self.assertEqual(assigned, expected)
+
+    def testPeter(self):
+        assigned = NichtEinHund.depGraph.get_by_address(5)['semrep']
+        semRepPat = r'peter'
+        semSig = {'peter': 'e'}
         expected = tlp.parse(semRepPat, signature=semSig)
         self.assertEqual(assigned, expected)
 

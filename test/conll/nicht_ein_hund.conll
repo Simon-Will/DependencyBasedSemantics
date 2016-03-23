@@ -1,0 +1,6 @@
+1	Nicht	nicht	PRT	PTKNEG	_	3	NG	_	_
+2	ein	ein	DET	ART	_	3	NK	_	_
+3	Hund	hund	NOUN	NN	_	4	SB	_	_
+4	beißt	beißen	VERB	VVFIN	_	0	--	_	_
+5	Peter	peter	NOUN	NE	_	4	OA	_	_
+6	.	--	.	$.	_	4	--	_	_

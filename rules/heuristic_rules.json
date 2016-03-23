@@ -26,6 +26,7 @@
 	"explanation": "normal nouns without dependents (assume plural)",
         "conditions": [
             "tag element {NN}",
+	    "rel element {SB}",
             "deps subset {}"
         ],
         "semRepPat": "\\P. all x. ({[lemma]}(x) -> P(x))",
@@ -153,6 +154,101 @@
         }
     },
     {
+        "explanation": "'einige' in subject.",
+        "conditions": [
+            "tag element {PIAT}",
+            "lemma element {einiger}",
+            "rel element^{NK} {SB}"
+        ],
+        "semRepPat": "\\P Q. exists x. (P(x) & Q(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "Q": "<e,t>"
+        }
+    },
+    {
+        "explanation": "'ein' in accusative object of monotransitive verbs and of ditransitive verbs with a second accusative object.",
+        "conditions": [
+            "tag element {PIAT}",
+            "lemma element {einiger}",
+            "rel element^{NK} {OA}",
+            "! deps superset^{NK, OA} {DA}"
+        ],
+        "semRepPat": "\\P R x. exists y. (P(y) & R(y)(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "R": "<e,<e,t>>"
+        }
+    },
+    {
+        "explanation": "'ein' in accusative object of ditransitive verbs.",
+        "conditions": [
+            "tag element {PIAT}",
+            "lemma element {einiger}",
+            "rel element^{NK} {OA}",
+            "deps superset^{NK, OA} {DA}"
+        ],
+        "semRepPat": "\\P T y x. exists z. (P(z) & T(z)(y)(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "T": "<e,<e,<e,t>>>"
+        }
+    },
+    {
+        "explanation": "'ein' in dative object of ditransitive verbs.",
+        "conditions": [
+            "tag element {PIAT}",
+            "lemma element {einiger}",
+            "rel element^{NK} {DA}"
+        ],
+        "semRepPat": "\\P R x. exists y. (P(y) & R(y)(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "R": "<e,<e,t>>"
+        }
+    },
+    {
+        "explanation": "'ein' in second accusative object of ditransitive verbs.",
+        "conditions": [
+            "tag element {PIAT}",
+            "lemma element {einiger}",
+            "rel element^{NK} {OA2}"
+        ],
+        "semRepPat": "\\P T y x. exists z. (P(z) & T(z)(y)(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "T": "<e,<e,<e,t>>>"
+        }
+    },
+    {
+        "explanation": "'ein' under a preposition modifying a verb",
+        "conditions": [
+            "tag element {PIAT}",
+            "lemma element {einiger}",
+            "rel element^{NK} {MO}"
+        ],
+        "semRepPat": "\\P B V. exists x. (P(x) & B(x)(V))",
+        "semSig": {
+            "P": "<e,t>",
+            "B": "<e,<t,t>>",
+            "V": "t"
+        }
+    },
+    {
+        "explanation": "'ein' under a preposition modifying an NP ('ein Kern in [einer] Traube')",
+        "conditions": [
+            "tag element {PIAT}",
+            "lemma element {einiger}",
+            "rel element^{NK} {MNR}"
+        ],
+        "semRepPat": "\\P U Q x. exists y. (P(y) & U(y)(Q)(x))",
+        "semSig": {
+            "P": "<e,t>",
+            "Q": "<e,t>",
+            "U": "<e,<<e,t>,<e,t>>>"
+        }
+    },
+    {
         "explanation": "'kein' in subject.",
         "conditions": [
             "tag element {PIAT}",
@@ -226,7 +322,7 @@
             "lemma element {kein}",
             "rel element^{NK} {PD}"
         ],
-        "semRepPat": "\\P. P",
+        "semRepPat": "\\P x. ! P(x)",
         "semSig": {
             "P": "<e,t>"
         }
@@ -464,6 +560,36 @@
         "semSig": {
             "V": "t",
             "W": "t"
+        }
+    },
+    {
+        "explanation": "'nicht' negating a verb",
+        "conditions": [
+            "lemma element {nicht}",
+            "tag element {PTKNEG}",
+            "rel element {NG}",
+	    "deps superset^{NG} {SB}"
+        ],
+        "semRepPat": "\\P x. ! P(x)",
+        "semSig": {
+            "P": "<e,t>"
+        }
+    },
+    {
+        "explanation": "'nicht' negating a subject that contains another specification",
+	"note": "Ideally, the other specification should be an ART or a PIAT, but this is not checked yet.",
+        "conditions": [
+            "lemma element {nicht}",
+            "tag element {PTKNEG}",
+            "rel element {NG}",
+	    "rel element^{NG} {SB}",
+	    "deps superset^{NG} {NK}"
+        ],
+        "semRepPat": "\\E P Q. ! E(P)(Q)",
+        "semSig": {
+            "P": "<e,t>",
+            "Q": "<e,t>",
+            "E": "<<e,t>,<<e,t>,t>>"
         }
     }
 ]

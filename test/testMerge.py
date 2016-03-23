@@ -255,6 +255,111 @@ class Waldgurken(unittest.TestCase):
         expected = tlp.parse(semRep, signature=semSig)
         self.assertEquivalent(assigned, expected)
 
+@unittest.skip("Types not yet assigned correctly")
+class HeuteBaden(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'heute_baden.conll')
+        cls.merged = getMergedRepresentation(conllFile, RULES)
+
+    def testHeuteBaden(self):
+        assigned = HeuteBaden.merged
+        semRep = r'heute(exists x. (taube(x) & baden(x)))'
+        semSig = {
+                'baden': '<e,t>',
+                'heute': '<t,t>'
+                }
+        expected = tlp.parse(semRep, signature=semSig)
+        self.assertEquivalent(assigned, expected)
+
+class EinigeVoegel(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'einige_vögel.conll')
+        cls.merged = getMergedRepresentation(conllFile, RULES)
+
+    def testEinigeVoegel(self):
+        assigned = EinigeVoegel.merged
+        semRep = r'exists x. (vogel(x) & schwan(x))'
+        semSig = {
+                'schwan': '<e,t>',
+                'vogel': '<e,t>'
+                }
+        expected = tlp.parse(semRep, signature=semSig)
+        self.assertEquivalent(assigned, expected)
+
+class KeineWanduhr(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'keine_wanduhr.conll')
+        cls.merged = getMergedRepresentation(conllFile, RULES)
+
+    def testKeineWanduhr(self):
+        assigned = KeineWanduhr.merged
+        semRep = r'exists x. (uhr(x) & ! wanduhr(x))'
+        semSig = {
+                'uhr': '<e,t>',
+                'wanduhr': '<e,t>'
+                }
+        expected = tlp.parse(semRep, signature=semSig)
+        self.assertEquivalent(assigned, expected)
+
+class NichtBeissen(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'nicht_beißen.conll')
+        cls.merged = getMergedRepresentation(conllFile, RULES)
+
+    def testNichtBeissen(self):
+        assigned = NichtBeissen.merged
+        semRep = r'exists x. (hund(x) & ! beissen(x,peter))'
+        semSig = {
+                'hund': '<e,t>',
+                'beissen': '<e,<e,t>>',
+                'peter': 'e'
+                }
+        expected = tlp.parse(semRep, signature=semSig)
+        self.assertEquivalent(assigned, expected)
+
+class NichtJederMensch(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'nicht_jeder_mensch.conll')
+        cls.merged = getMergedRepresentation(conllFile, RULES)
+
+    def testNichtJederMensch(self):
+        assigned = NichtJederMensch.merged
+        semRep = r'! all x. (mensch(x) -> grieche(x))'
+        semSig = {
+                'mensch': '<e,t>',
+                'grieche': '<e,t>'
+                }
+        expected = tlp.parse(semRep, signature=semSig)
+        self.assertEquivalent(assigned, expected)
+
+class NichtEinHund(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'nicht_ein_hund.conll')
+        cls.merged = getMergedRepresentation(conllFile, RULES)
+
+    def testNichtEinHund(self):
+        assigned = NichtEinHund.merged
+        semRep = r'! exists x. (hund(x) & beissen(x,peter))'
+        semSig = {
+                'hund': '<e,t>',
+                'beissen': '<e,<e,t>>',
+                'peter': 'e'
+                }
+        expected = tlp.parse(semRep, signature=semSig)
+        self.assertEquivalent(assigned, expected)
+
 if __name__ == '__main__':
     unittest.TestCase.assertEquivalent = assertEquivalent
     global RULES

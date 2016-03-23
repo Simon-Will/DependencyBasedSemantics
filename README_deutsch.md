@@ -107,11 +107,9 @@ SemMerger-Methode getSemantics() abgefragt werden.
 
 example:
 
->lamdaKind = SemMerger(dgKind)
-
->lambdaKind.getSemantics()
-
-exists x.(kind(x) & (all y.(Keks(y) -> essen(x,y)))) & exists z.(kind(z) & (all u.(Brezel(u) -> essen(z,u))))
+    >lamdaKind = SemMerger(dgKind)
+    >lambdaKind.getSemantics()
+    >exists x.(kind(x) & (all y.(Keks(y) -> essen(x,y)))) & exists z.(kind(z) & (all u.(Brezel(u) -> essen(z,u))))
 
 
 ###Testsuite
@@ -136,15 +134,15 @@ Sollen weitere Daten hinzugefügt werden, sind folgende Schritte zu befolgen:
 >Ein Kind isst alle Kekse und alle Brezeln.
 >Inhalt der Datei testsentence.conll:
 >
->1       Ein     ein     DET     ART     _       2       NK      _       _
->2       Kind    kind    NOUN    NN      _       3       SB      _       _
->3       isst    issen   VERB    VVFIN   _       0       --      _       _
->4       alle    aller   PRON    PIAT    _       5       NK      _       _
->5       Kekse   keks    NOUN    NN      _       3       OA      _       _
->6       und     und     CONJ    KON     _       5       CD      _       _
->7       alle    aller   PRON    PIAT    _       8       NK      _       _
->8       Brezeln brezel  NOUN    NN      _       6       CJ      _       _
->9       .       --      .       $.      _       3       --      _       _
+    >1       Ein     ein     DET     ART     _       2       NK      _       _
+    >2       Kind    kind    NOUN    NN      _       3       SB      _       _
+    >3       isst    issen   VERB    VVFIN   _       0       --      _       _
+    >4       alle    aller   PRON    PIAT    _       5       NK      _       _
+    >5       Kekse   keks    NOUN    NN      _       3       OA      _       _
+    >6       und     und     CONJ    KON     _       5       CD      _       _
+    >7       alle    aller   PRON    PIAT    _       8       NK      _       _
+    >8       Brezeln brezel  NOUN    NN      _       6       CJ      _       _
+    >9       .       --      .       $.      _       3       --      _       _
 
 * Wir empfehlen die geparsten Daten manuell zu überpfüfen und ggf. Korrekturen
   vorzunehmen
@@ -153,16 +151,16 @@ Sollen weitere Daten hinzugefügt werden, sind folgende Schritte zu befolgen:
   um mögliche spätere Komplikationen zu vermeiden. Dies ist aber nicht Pflicht.
 
   An unserem Beispiel führt dies zu folgender Änderung:
->1	Ein	ein	DET	ART	_	2	NK	_	_
->2	Kind	kind	NOUN	NN	_	3	SB	_	_
->3	isst	issen	VERB	VVFIN	_	0	--	_	_
->4	alle	aller	PRON	PIAT	_	5	NK	_	_
->5	Kekse	keks	NOUN	NN	_	3	OA	_	_
->6	und	und	CONJ	KON	_	3	CD	_	_
->7	Ein	ein	DET	ART	_	8	NK	_	_
->8	Kind	kind	NOUN	NN	_	9	SB	_	_
->9	isst	issen	VERB	VVFIN	_	6	--	_	_
->10	alle	aller	PRON	PIAT	_	11	NK	_	_
->11	Brezeln	brezel	NOUN	NN	_	9	CJ	_	_
->12	.	--	.	$.	_	3	--	_	_
+    >1	 Ein	ein	DET	ART	_	2	NK	_	_
+    >2	 Kind	kind	NOUN	NN	_	3	SB	_	_
+    >3	 isst	issen	VERB	VVFIN	_	0	--	_	_
+    >4	 alle	aller	PRON	PIAT	_	5	NK	_	_
+    >5	 Kekse	keks	NOUN	NN	_	3	OA	_	_
+    >6	 und	und	CONJ	KON	_	3	CD	_	_
+    >7	 Ein	ein	DET	ART	_	8	NK	_	_
+    >8	 Kind	kind	NOUN	NN	_	9	SB	_	_
+    >9	 isst	issen	VERB	VVFIN	_	6	--	_	_
+    >10	 alle	aller	PRON	PIAT	_	11	NK	_	_
+    >11	 Brezeln	brezel	NOUN	NN	_	9	CJ	_	_
+    >12	 .	--	.	$.	_	3	--	_	_
 

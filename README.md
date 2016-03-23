@@ -47,29 +47,18 @@ example:
 
 our testsentence.morph.conll as input yields:
 
-1	Ein	ein	DET	ART	_	2	NK	_	_
-
-2	Kind	kind	NOUN	NN	_	3	SB	_	_
-
-3	isst	issen	VERB	VVFIN	_	0	--	_	_
-
-4	alle	aller	PRON	PIAT	_	2	NK	_	_
-
-5	Kekse	keks	NOUN	NN	_	3	OA	_	_
-
-6	und	und	CONJ	KON	_	5	CD	_	_
-
-7	Ein	ein	DET	ART	_	8	NK	_	_
-
-8	Kind	kind	NOUN	NN	_	9	SB	_	_
-
-9	isst	issen	VERB	VVFIN	_	6	--	_	_
-
-10	alle	aller	PRON	PIAT	_	8	NK	_	_
-
-11	Brezeln	brezel	NOUN	NN	_	9	CJ	_	_
-
-12	.	--	.	$.	_	3	--	_	_
+    >1	Ein	ein	DET	ART	_	2	NK	_	_
+    >2	Kind	kind	NOUN	NN	_	3	SB	_	_
+    >3	isst	issen	VERB	VVFIN	_	0	--	_	_
+    >4	alle	aller	PRON	PIAT	_	2	NK	_	_
+    >5	Kekse	keks	NOUN	NN	_	3	OA	_	_
+    >6	und	und	CONJ	KON	_	5	CD	_	_
+    >7	Ein	ein	DET	ART	_	8	NK	_	_
+    >8	Kind	kind	NOUN	NN	_	9	SB	_	_
+    >9	isst	issen	VERB	VVFIN	_	6	--	_	_
+    >10	alle	aller	PRON	PIAT	_	8	NK	_	_
+    >11	Brezeln	brezel	NOUN	NN	_	9	CJ	_	_
+    >12	.	--	.	$.	_	3	--	_	_
 
 
 
@@ -88,19 +77,13 @@ and all its attributes.
 
 example:
 
->import nltk.parse as nlp
+    >import nltk.parse as nlp
+    >ass = SemRepAssigner.fromfile('rules/heuristic_rules.json')
+    >sKind = open('test/conll/testsentence.conll').read()
+    >dgKind = nlp.DependencyGraph(sKind)
+    >ass.assignToDependencyGraph(dgKind)
+    >print(dgKind.get\_by\_address(3)['semrep'].type)
 
->ass = SemRepAssigner.fromfile('rules/heuristic_rules.json')
-
->sKind = open('test/conll/testsentence.conll').read()
-
->dgKind = nlp.DependencyGraph(sKind)
-
->ass.assignToDependencyGraph(dgKind)
- 
->print(dgKind.get\_by\_address(3)['semrep'].type)
-
-> 
 
 ####merge.py
 
@@ -111,11 +94,9 @@ to receive the merged logical expression.
 
 example:
 
->lamdaKind = SemMerger(dgKind)
-
->lambdaKind.getSemantics()
-
-exists x.(kind(x) & (all y.(Keks(y) -> essen(x,y)))) & exists z.(kind(z) & (all u.(Brezel(u) -> essen(z,u))))
+    >lamdaKind = SemMerger(dgKind)
+    >lambdaKind.getSemantics()
+    >exists x.(kind(x) & (all y.(Keks(y) -> essen(x,y)))) & exists z.(kind(z) & (all u.(Brezel(u) -> essen(z,u))))
 
 
 ###Testsuite

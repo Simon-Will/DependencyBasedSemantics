@@ -21,18 +21,14 @@ Heidelberg University, Germany
 
 
 
-The algorithm presented in this module takes sentences, extracts their meaning
-and is both capable of asssigning a truth value to statements and answer
-questions based on the extracted knowledge.
-In order to achieve this a RBG-model is trained on the TIGER-corpus
-and then used to annotate any sentence given by the user of the algorithm.
-These annotated sentences are then further processed in various steps to extract
-their meaning and store it as a lambda expression.
-This meaning can be accessed and used to answer a question related to that
-knowledge.
-In Addition, each script has a complete test module to check its functionality.
-Every test has the name of the corresponding module in its own name.
-Keeping module structure is recommended in order to avoid dependency errors.
+The algorithm presented in this module takes already parsed sentences, extracts their meaning
+and returns a logical expression representing the given sentence. During this process, 
+a depedencygraph is created out of the given sentence and each node is assigned a unique 
+lambda expression representing its meaning. Then these expression are merged using functional
+application and returned to the user.
+This complete expression can be accessed and later used to assign a truth value to an other sentence
+related to that extracted knowledge. This function is represented by our testsuit.
+
 
 ###Requirements
 

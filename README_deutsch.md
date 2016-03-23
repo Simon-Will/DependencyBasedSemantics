@@ -151,6 +151,7 @@ Sollen weitere Daten hinzugefügt werden, sind folgende Schritte zu befolgen:
   um mögliche spätere Komplikationen zu vermeiden. Dies ist aber nicht Pflicht.
 
   An unserem Beispiel führt dies zu folgender Änderung:
+    >
     >1	Ein	ein	DET	ART	_	2	NK	_	_
     >2	Kind	kind	NOUN	NN	_	3	SB	_	_
     >3	isst	issen	VERB	VVFIN	_	0	--	_	_

@@ -93,7 +93,7 @@ und angewendet werden kann.
 
 Während des gesamten Projekts legten wir besonderen
 Wert auf eine intuitive Verwendung und mögliche Weiterentwicklung des Programms.
-Im Folgenden wird jeder Programmteil vorgestellt sowie seine genau Verwendung 
+Im Folgenden wird jeder Programmteil vorgestellt sowie seine genaue Verwendung 
 erläutert und anhand von Beispielen veranschaulicht. Anschließend wird auf die 
 möglichen Anwendungen, dann auf die Grenzen unseres Moduls näher eingegangen. 
 
@@ -243,7 +243,7 @@ An einem Beispielsatz: "Eine Taube beißt Peter Mueller."
     >\P Q.exists x.(P(x) & Q(x)
 
 
-#####test/conll/beissenden\_taube\_und\_Peter\_Mueller.conn
+#####test/conll/beissenden\_taube\_und\_Peter\_Mueller.conll
 
 #### Zusammensetzen der Lambda-Ausdrücke
 
@@ -301,13 +301,13 @@ Diese können abgefragt werden.
 ### Conclusion
 
 Abschließend lässt sich sagen, dass unser Modul einen Großteil der ihm gestellten
-A4ufgaben zu unserer Zufriedenheit löst. So wird eine breite Variation
+Aufgaben zu unserer Zufriedenheit löst. So wird eine breite Variation
 von Quantoren in jeder Position korrekt erkannt (alle, einige, keine, etc.),
 auch solche, die im betreffenden Satz nicht explizit als solche gekennzeichnet
 sind, so wird z. B. in "Große Pferde essen leckeres Futter." die allgemeine 
 Aussage erkannt und ein Allquantor verwendet:
 
-    >all x.((pferd(x) & gro0(x)) -> exists y.(leck(y) & futter(y) & essen(x,y)))
+    >all x.((pferd(x) & groß(x)) -> exists y.(leck(y) & futter(y) & essen(x,y)))
 
 Zudem stellen sowohl Transitivität und Ditransitivität kein Probleme dar,
  Eigennamen werden korrekt erkannt - darunter auch die Erkennung von Vor- und 
@@ -326,7 +326,7 @@ man den abgewandelten Satz, so existiert diese Sicherheit nicht. Es besteht kein
 Grund anzunehmen, dass es sich dabei um dieselbe Entität handelt. Dabei handelt es
 sich um keinen Einzelfall, sondern um ein prinzipielles Problem:
 Wenn das Subjekt oder ein Objekt unter Verwendung eines  Existenzquantors bestimmt
-wird, wird das zur Normalisierungf eingeschobene Sub- oder Objekt ebenfalls einen
+wird, wird das zur Normalisierung eingeschobene Sub- oder Objekt ebenfalls einen
 Existenzquantor aufweisen. Dies ließe sich zwar durch die gezielte Verwendung 
 von definiten Artikeln verwenden, jedoch haben wir uns entschieden diesen Bereich 
 im Rahmen unseres Projekts nicht zu behandeln, um den zeitlichen Rahmen unseres
@@ -342,7 +342,7 @@ Erweiterungen, zumal wir uns erst seit kurzem damit beschäftigen.
 Des Weiteren gibt es noch Probleme mit den Anbindungen einiger
 Präpositionalphrasen, Adverbien und Adjektive. Allerdings vermuten wir hier einen
 Bug in NLTK gefunden zu haben (näheres kann im Python-Skript assign.py und 
-heuristic_rulel.json nachgelesen werden).
+heuristic_rules.json nachgelesen werden).
 
 Zusammenfassend besteht jedoch kein Zweifel daran, dass unser Modul bei
 einem Großteil der ihm gegebenen Sätze keine Fehler macht.

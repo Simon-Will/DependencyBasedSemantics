@@ -36,7 +36,7 @@ NLTK 3.0
 
 #### `montesniere_get_Semantics.sh`
 We recommend using our shell script in order to avoid dependency errors. Start it on
-the command line by running `./algorithm.sh test/conll/<filename>`.
+the command line by running `./montesniere_get_Semantics.sh test/conll/<filename>`.
 
 
 #### `normalize.py`

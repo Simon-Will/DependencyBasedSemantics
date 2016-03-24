@@ -205,7 +205,7 @@ P: Shawn schläft und Fluffy bellt.
 1       Shawn   shawn   NOUN    NE      _       2       SB      _       _
 2       schläft schlafen        VERB    VVFIN   _       0       --      _       _
 3       und     und     CONJ    KON     _       2       CD      _       _
-4       Fluffy  fluffy  NOUN    NN      _       5       SB      _       _
+4       Fluffy  fluffy  NOUN    NE      _       5       SB      _       _
 5       bellt   bellen  VERB    VVFIN   _       3       CJ      _       _
 6       .       --      .       $.      _       2       --      _       _
 
@@ -332,7 +332,7 @@ P: Shawn schläft seit gestern.
 
 H: Shawn schläft.
 1       Shawn   shawn   NOUN    NE      _       2       SB      _       _
-2       schläft schlafen        VERB    VVFIN   _               --      _       _
+2       schläft schlafen        VERB    VVFIN   _       0       --      _       _
 3       .       --      .       $.      _       2       --      _       _
 
 answer: True
@@ -543,6 +543,7 @@ H: Sirenen haben ein schuppiges Bein.
 6       .       --      .       $.      _       2       --      _       _
 
 answer: unknown
+
 
 P: Donald genießt einen schönen Tag in einer weichen Hängematte.
 1       Donald  donald  NOUN    NE      _       2       SB      _       _

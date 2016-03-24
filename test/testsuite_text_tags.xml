@@ -5,7 +5,7 @@
   id="1"
   fracas_answer="yes">
   <p idx="1">
-     Ein Keks wird von einem Schaf gegessen
+    Ein Keks wird von einem Schaf gegessen.
   </p>
   <p_conll idx="1">1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Keks    keks    NOUN    NN      _       3       SB      _       _
@@ -17,7 +17,7 @@
 8       .       --      .       $.      _       3       --      _       _
 </p_conll>
   <h>
-     Ein Keks wird gegessen
+    Ein Keks wird gegessen.
   </h>
   <h_conll>1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Keks    keks    NOUN    NN      _       3       SB      _       _
@@ -25,13 +25,14 @@
 4       gegessen        gessen  VERB    VVPP    _       3       OC      _       _
 5       .       --      .       $.      _       3       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
   id="2"
   fracas_answer="yes">
   <p idx="1">
-     Ein Schaf isst einen Keks und ein Wolf isst einen Keks
+    Ein Schaf isst einen Keks und ein Wolf isst einen Keks.
   </p>
   <p_conll idx="1">1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Schaf   schaf   NOUN    NN      _       3       SB      _       _
@@ -47,7 +48,7 @@
 12      .       --      .       $.      _       3       --      _       _
 </p_conll>
   <h>
-     Ein Wolf isst einen Keks
+    Ein Wolf isst einen Keks.
   </h>
   <h_conll>1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Wolf    wolf    NOUN    NN      _       3       SB      _       _
@@ -56,13 +57,14 @@
 5       Keks    keks    NOUN    NN      _       3       OA      _       _
 6       .       --      .       $.      _       3       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
   id="3"
   fracas_answer="yes">
   <p idx="1">
-     Ein Schaf und ein Wolf essen einen Keks
+    Ein Schaf und ein Wolf essen einen Keks.
   </p>
   <p_conll idx="1">1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Schaf   schaf   NOUN    NN      _       6       SB      _       _
@@ -75,7 +77,7 @@
 9       .       --      .       $.      _       6       --      _       _
 </p_conll>
   <h>
-     Ein Wolf isst einen Keks
+    Ein Wolf isst einen Keks.
   </h>
   <h_conll>1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Wolf    wolf    NOUN    NN      _       3       SB      _       _
@@ -84,13 +86,14 @@
 5       Keks    keks    NOUN    NN      _       3       OA      _       _
 6       .       --      .       $.      _       3       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
   id="4"
   fracas_answer="yes">
   <p idx="1">
-     Ein Schaf isst einen Keks
+    Ein Schaf isst einen Keks.
   </p>
   <p_conll idx="1">1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Schaf   schaf   NOUN    NN      _       3       SB      _       _
@@ -100,7 +103,7 @@
 6       .       --      .       $.      _       3       --      _       _
 </p_conll>
   <p idx="2">
-     Ein Wolf isst auch einen
+    Ein Wolf isst auch einen.
   </p>
   <p_conll idx="2">1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Wolf    wolf    NOUN    NN      _       3       SB      _       _
@@ -110,7 +113,7 @@
 6       .       --      .       $.      _       3       --      _       _
 </p_conll>
   <h>
-     Ein Wolf isst einen Keks
+    Ein Wolf isst einen Keks.
   </h>
   <h_conll>1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Wolf    wolf    NOUN    NN      _       3       SB      _       _
@@ -119,13 +122,14 @@
 5       Keks    keks    NOUN    NN      _       3       OA      _       _
 6       .       --      .       $.      _       3       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
   id="5"
   fracas_answer="yes">
   <p idx="1">
-     Ein Schaf isst einen Keks und es trinkt aus einem Fluss
+    Ein Schaf isst einen Keks und es trinkt aus einem Fluss.
   </p>
   <p_conll idx="1">1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Schaf   schaf   NOUN    NN      _       3       SB      _       _
@@ -141,7 +145,7 @@
 12      .       --      .       $.      _       3       --      _       _
 </p_conll>
   <h>
-     Ein Schaf trinkt aus einem Fluss
+    Ein Schaf trinkt aus einem Fluss.
   </h>
   <h_conll>1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Schaf   schaf   NOUN    NN      _       3       SB      _       _
@@ -151,13 +155,14 @@
 6       Fluss   fluß    NOUN    NN      _       4       NK      _       _
 7       .       --      .       $.      _       3       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
   id="6"
   fracas_answer="yes">
   <p idx="1">
-     Ein Schaf isst einen Keks und ein Wolf isst einen Keks und das Schaf trinkt aus einem Fluss
+    Ein Schaf isst einen Keks und ein Wolf isst einen Keks und das Schaf trinkt aus einem Fluss.
   </p>
   <p_conll idx="1">1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Schaf   schaf   NOUN    NN      _       3       SB      _       _
@@ -180,7 +185,7 @@
 19      .       --      .       $.      _       3       --      _       _
 </p_conll>
   <h>
-     Ein Schaf isst einen Keks und trinkt aus dem Fluss
+    Ein Schaf isst einen Keks und trinkt aus dem Fluss.
   </h>
   <h_conll>1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Schaf   schaf   NOUN    NN      _       3       SB      _       _
@@ -194,13 +199,14 @@
 10      Fluss   fluß    NOUN    NN      _       8       NK      _       _
 11      .       --      .       $.      _       3       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
   id="7"
   fracas_answer="yes">
   <p idx="1">
-     Lukas und Simon kommen zum Treffen
+    Lukas und Simon kommen zum Treffen.
   </p>
   <p_conll idx="1">1       Lukas   lukas   NOUN    NE      _       4       SB      _       _
 2       und     und     CONJ    KON     _       1       CD      _       _
@@ -211,27 +217,28 @@
 7       .       --      .       $.      _       4       --      _       _
 </p_conll>
   <p idx="2">
-     Rebecca auch
+    Rebecca auch.
   </p>
   <p_conll idx="2">1       Rebecca rebecca NOUN    NE      _       0       --      _       _
 2       auch    auch    ADV     ADV     _       1       MO      _       _
 3       .       --      .       $.      _       1       --      _       _
 </p_conll>
   <h>
-     Rebecca kommt zum Treffe
+    Rebecca kommt zum Treffen
   </h>
   <h_conll>1       Rebecca rebecca NOUN    NE      _       2       SB      _       _
 2       kommt   kommen  VERB    VVFIN   _       0       --      _       _
 3       zum     zu      ADP     APPRART _       2       MO      _       _
 4       Treffen treffen NOUN    NN      _       3       NK      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
   id="8"
   fracas_answer="yes">
   <p idx="1">
-     Alle Schafe haben Wolle
+    Alle Schafe haben Wolle.
   </p>
   <p_conll idx="1">1       Alle    aller   PRON    PIAT    _       2       NK      _       _
 2       Schafe  schaf   NOUN    NN      _       3       SB      _       _
@@ -240,7 +247,7 @@
 5       .       --      .       $.      _       3       --      _       _
 </p_conll>
   <p idx="2">
-     Dolly ist ein Schaf
+    Dolly ist ein Schaf.
   </p>
   <p_conll idx="2">1       Dolly   dolly   NOUN    NE      _       2       SB      _       _
 2       ist     sein    VERB    VAFIN   _       0       --      _       _
@@ -249,43 +256,45 @@
 5       .       --      .       $.      _       2       --      _       _
 </p_conll>
   <h>
-     Dolly hat Wolle
+    Dolly hat Wolle.
   </h>
   <h_conll>1       Dolly   dolly   NOUN    NE      _       2       SB      _       _
 2       hat     haben   VERB    VAFIN   _       0       --      _       _
 3       Wolle   wolle   NOUN    NN      _       2       OA      _       _
 4       .       --      .       $.      _       2       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
   id="9"
   fracas_answer="no">
   <p idx="1">
-     Shawn schläft und Fluffy bellt
+    Shawn schläft und Fluffy bellt.
   </p>
   <p_conll idx="1">1       Shawn   shawn   NOUN    NE      _       2       SB      _       _
 2       schläft schlafen        VERB    VVFIN   _       0       --      _       _
 3       und     und     CONJ    KON     _       2       CD      _       _
-4       Fluffy  fluffy  NOUN    NN      _       5       SB      _       _
+4       Fluffy  fluffy  NOUN    NE      _       5       SB      _       _
 5       bellt   bellen  VERB    VVFIN   _       3       CJ      _       _
 6       .       --      .       $.      _       2       --      _       _
 </p_conll>
   <h>
-     Fluffy bellt nicht
+    Fluffy bellt nicht.
   </h>
   <h_conll>1       Fluffy  fluffy  NOUN    NE      _       2       SB      _       _
 2       bellt   bellen  VERB    VVFIN   _       0       --      _       _
 3       nicht   nicht   PRT     PTKNEG  _       2       NG      _       _
 4       .       --      .       $.      _       2       --      _       _
 </h_conll>
+  <a>no</a>
 </problem>
 
 <problem
   id="10"
   fracas_answer="yes">
   <p idx="1">
-     Das Schaf gibt dem Wolf eine Blume
+    Das Schaf gibt dem Wolf eine Blume.
   </p>
   <p_conll idx="1">1       Das     der     DET     ART     _       2       NK      _       _
 2       Schaf   schaf   NOUN    NN      _       3       SB      _       _
@@ -297,7 +306,7 @@
 8       .       --      .       $.      _       3       --      _       _
 </p_conll>
   <h>
-     Eine Blume gibt das Schaf dem Wolf
+    Eine Blume gibt das Schaf dem Wolf.
   </h>
   <h_conll>1       Eine    ein     DET     ART     _       2       NK      _       _
 2       Blume   blume   NOUN    NN      _       3       OA      _       _
@@ -308,13 +317,14 @@
 7       Wolf    wolf    NOUN    NE      _       5       DA      _       _
 8       .       --      .       $.      _       3       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
   id="11"
   fracas_answer="yes">
   <p idx="1">
-     Jedes Schaf hat Gras gefressen
+    Jedes Schaf hat Gras gefressen.
   </p>
   <p_conll idx="1">1       Jedes   jeder   PRON    PIAT    _       2       NK      _       _
 2       Schaf   schaf   NOUN    NN      _       3       SB      _       _
@@ -324,7 +334,7 @@
 6       .       --      .       $.      _       3       --      _       _
 </p_conll>
   <h>
-     Jedes Schaf hat gefressen
+    Jedes Schaf hat gefressen.
   </h>
   <h_conll>1       Jedes   jeder   PRON    PIAT    _       2       NK      _       _
 2       Schaf   schaf   NOUN    NN      _       3       SB      _       _
@@ -332,13 +342,14 @@
 4       gefressen       fressen VERB    VVPP    _       3       OC      _       _
 5       .       --      .       $.      _       3       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
   id="12"
   fracas_answer="yes">
   <p idx="1">
-     Jedes Schaf hat Gras gefressen und jeder Wolf hat am Fluss getrunken
+    Jedes Schaf hat Gras gefressen und jeder Wolf hat am Fluss getrunken.
   </p>
   <p_conll idx="1">1       Jedes   jeder   PRON    PIAT    _       2       NK      _       _
 2       Schaf   schaf   NOUN    NN      _       3       SB      _       _
@@ -355,7 +366,7 @@
 13      .       --      .       $.      _       3       --      _       _
 </p_conll>
   <h>
-     Jedes Schaf hat Gras gefressen
+    Jedes Schaf hat Gras gefressen.
   </h>
   <h_conll>1       Jedes   jeder   PRON    PIAT    _       2       NK      _       _
 2       Schaf   schaf   NOUN    NN      _       3       SB      _       _
@@ -364,13 +375,14 @@
 5       gefressen       fressen VERB    VVPP    _       3       OC      _       _
 6       .       --      .       $.      _       3       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
   id="13"
   fracas_answer="no">
   <p idx="1">
-     Shawn ist ein schönes Tier
+    Shawn ist ein schönes Tier.
   </p>
   <p_conll idx="1">1       Shawn   shawn   ADV     ADV     _       2       MO      _       _
 2       ist     sein    VERB    VAFIN   _       0       --      _       _
@@ -380,7 +392,7 @@
 6       .       --      .       $.      _       2       --      _       _
 </p_conll>
   <h>
-     Shawn ist kein schönes Tier
+    Shawn ist kein schönes Tier.
   </h>
   <h_conll>1       Shawn   shawn   ADV     ADV     _       2       MO      _       _
 2       ist     sein    VERB    VAFIN   _       0       --      _       _
@@ -389,13 +401,14 @@
 5       Tier    tier    NOUN    NN      _       2       SB      _       _
 6       .       --      .       $.      _       2       --      _       _
 </h_conll>
+  <a>no</a>
 </problem>
 
 <problem
   id="14"
   fracas_answer="no">
   <p idx="1">
-     Shawn versteckt sich hinter Fluffy
+    Shawn versteckt sich hinter Fluffy.
   </p>
   <p_conll idx="1">1       Shawn   shawn   NOUN    NE      _       2       SB      _       _
 2       versteckt       verstecken      VERB    VVFIN   _       0       --      _       _
@@ -405,7 +418,7 @@
 6       .       --      .       $.      _       2       --      _       _
 </p_conll>
   <h>
-     Fluffy versteckt sich hinter Shawn
+    Fluffy versteckt sich hinter Shawn.
   </h>
   <h_conll>1       Fluffy  fluffy  NOUN    NN      _       2       SB      _       _
 2       versteckt       verstecken      VERB    VVFIN   _       0       --      _       _
@@ -414,13 +427,14 @@
 5       Shawn   shawn   NOUN    NE      _       4       NK      _       _
 6       .       --      .       $.      _       2       --      _       _
 </h_conll>
+  <a>no</a>
 </problem>
 
 <problem
   id="15"
   fracas_answer="yes">
   <p idx="1">
-     Shawn schläft seit gestern
+    Shawn schläft seit gestern.
   </p>
   <p_conll idx="1">1       Shawn   shawn   NOUN    NE      _       2       SB      _       _
 2       schläft schlafen        VERB    VVFIN   _       0       --      _       _
@@ -429,19 +443,20 @@
 5       .       --      .       $.      _       2       --      _       _
 </p_conll>
   <h>
-     Shawn schläft
+    Shawn schläft.
   </h>
   <h_conll>1       Shawn   shawn   NOUN    NE      _       2       SB      _       _
-2       schläft schlafen        VERB    VVFIN   _               --      _       _
+2       schläft schlafen        VERB    VVFIN   _       0       --      _       _
 3       .       --      .       $.      _       2       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
   id="16"
   fracas_answer="yes">
   <p idx="1">
-     Eine Furie in einem blutigen Kleid bewacht einen Schlund
+    Eine Furie in einem blutigen Kleid bewacht einen Schlund.
   </p>
   <p_conll idx="1">1       Eine    ein     DET     ART     _       2       NK      _       _
 2       Furie   furie   NOUN    NN      _       0       --      _       _
@@ -455,7 +470,7 @@
 10      .       --      .       $.      _       2       --      _       _
 </p_conll>
   <h>
-     Eine Furie bewacht einen Schlund
+    Eine Furie bewacht einen Schlund.
   </h>
   <h_conll>1       Eine    ein     DET     ART     _       2       NK      _       _
 2       Furie   furie   NOUN    NN      _       3       SB      _       _
@@ -464,13 +479,14 @@
 5       Schlund schlund NOUN    NN      _       3       OA      _       _
 6       .       --      .       $.      _       3       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
   id="17"
   fracas_answer="yes">
   <p idx="1">
-     Ein Haus in Russland brennt
+    Ein Haus in Russland brennt.
   </p>
   <p_conll idx="1">1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Haus    haus    NOUN    NN      _       5       SB      _       _
@@ -480,20 +496,21 @@
 6       .       --      .       $.      _       5       --      _       _
 </p_conll>
   <h>
-     Ein Haus brennt
+    Ein Haus brennt.
   </h>
   <h_conll>1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Haus    haus    NOUN    NN      _       3       SB      _       _
 3       brennt  brennen VERB    VVFIN   _       0       --      _       _
 4       .       --      .       $.      _       3       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
   id="18"
   fracas_answer="yes">
   <p idx="1">
-     Heute badet eine Taube
+    Heute badet eine Taube.
   </p>
   <p_conll idx="1">1       Heute   heute   ADV     ADV     _       2       MO      _       _
 2       badet   baden   VERB    VVFIN   _       0       --      _       _
@@ -502,20 +519,21 @@
 5       .       --      .       $.      _       2       --      _       _
 </p_conll>
   <h>
-     Eine Taube badet
+    Eine Taube badet.
   </h>
   <h_conll>1       Eine    ein     DET     ART     _       2       NK      _       _
 2       Taube   taube   NOUN    NN      _       3       OA      _       _
 3       badet   baden   VERB    VVFIN   _       0       --      _       _
 4       .       --      .       $.      _       3       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
   id="19"
   fracas_answer="no">
   <p idx="1">
-     Kein Mensch zahlt gerne eine Rechnung
+    Kein Mensch zahlt gerne eine Rechnung.
   </p>
   <p_conll idx="1">1       Kein  kein    ADJ     ADJA    _       2       NK      _       _
 2       Mensch  mensch  NOUN    NN      _       3       SB      _       _
@@ -526,7 +544,7 @@
 7       .       --      .       $.      _       3       --      _       _
 </p_conll>
   <p idx="2">
-     Paul ist ein Mensch
+    Paul ist ein Mensch.
   </p>
   <p_conll idx="2">1       Paul    paul    NOUN    NE      _       2       SB      _       _
 2       ist     sein    VERB    VAFIN   _       0       --      _       _
@@ -535,7 +553,7 @@
 5       .       --      .       $.      _       2       --      _       _
 </p_conll>
   <h>
-     Paul zahlt Rechnungen gerne
+    Paul zahlt Rechnungen gerne.
   </h>
   <h_conll>1       Paul    paul    NOUN    NE      _       2       SB      _       _
 2       zahlt   zahlen  VERB    VVFIN   _       0       --      _       _
@@ -543,13 +561,14 @@
 4       gerne   gerne   ADV     ADV     _       2       MO      _       _
 5       .       --      .       $.      _       2       --      _       _
 </h_conll>
+  <a>no</a>
 </problem>
 
 <problem
   id="20"
   fracas_answer="yes">
   <p idx="1">
-     Ein Lehrer lehrt Maria ein Musikstück
+    Ein Lehrer lehrt Maria ein Musikstück.
   </p>
   <p_conll idx="1">1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Lehrer  lehrer  NOUN    NN      _       3       SB      _       _
@@ -560,20 +579,21 @@
 7       .       --      .       $.      _       3       --      _       _
 </p_conll>
   <h>
-     Ein Lehrer lehrt
+    Ein Lehrer lehrt.
   </h>
   <h_conll>1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Lehrer  lehrer  NOUN    NN      _       3       SB      _       _
 3       lehrt   lehren  VERB    VVFIN   _       0       --      _       _
 4       .       --      .       $.      _       3       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
   id="21"
   fracas_answer="yes">
   <p idx="1">
-     Ein Kind isst alle Brezeln und alle Kekse
+    Ein Kind isst alle Brezeln und alle Kekse.
   </p>
   <p_conll idx="1">1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Kind    kind    NOUN    NN      _       3       SB      _       _
@@ -586,7 +606,7 @@
 9       .       --      .       $.      _       3       --      _       _
 </p_conll>
   <h>
-     Ein Kind isst alle Kekse
+    Ein Kind isst alle Kekse.
   </h>
   <h_conll>1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Kind    kind    NOUN    NN      _       3       SB      _       _
@@ -595,13 +615,14 @@
 5       Kekse   keks    NOUN    NN      _       3       OA      _       _
 6       .       --      .       $.      _       3       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
   id="22"
   fracas_answer="yes">
   <p idx="1">
-     Alle Gurken leben und tanzen in Wäldern
+    Alle Gurken leben und tanzen in Wäldern.
   </p>
   <p_conll idx="1">1       Alle    aller   PRON    PIAT    _       2       NK      _       _
 2       Gurken  gurke   NOUN    NN      _       3       SB      _       _
@@ -613,7 +634,7 @@
 8       .       --      .       $.      _       3       --      _       _
 </p_conll>
   <p idx="2">
-     Minigurken sind Gurken
+    Minigurken sind Gurken.
   </p>
   <p_conll idx="2">1       Minigurken      minigurke       NOUN    NN      _       2       SB      _       _
 2       sind    sein    VERB    VAFIN   _       0       --      _       _
@@ -621,19 +642,20 @@
 4       .       --      .       $.      _       2       --      _       _
 </p_conll>
   <h>
-     Minigurken tanzen
+    Minigurken tanzen.
   </h>
   <h_conll>1       Minigurken      minigurke       NOUN    NN      _       2       OA      _       _
 2       tanzen  tanzen  VERB    VVINF   _       0       --      _       _
 3       .       --      .       $.      _       2       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
   id="23"
   fracas_answer="yes">
   <p idx="1">
-     Ein Hase schenkt einem Igel eine Blume und Kuchen
+    Ein Hase schenkt einem Igel eine Blume und Kuchen.
   </p>
   <p_conll idx="1">1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Hase    hase    NOUN    NN      _       3       SB      _       _
@@ -647,7 +669,7 @@
 10      .       --      .       $.      _       3       --      _       _
 </p_conll>
   <h>
-     Ein Hase schenkt einem Igel eine Blume
+    Ein Hase schenkt einem Igel eine Blume.
   </h>
   <h_conll>1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Hase    hase    NOUN    NN      _       3       SB      _       _
@@ -658,13 +680,14 @@
 7       Blume   blume   NOUN    NN      _       3       OA      _       _
 8       .       --      .       $.      _       3       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
   id="24"
   fracas_answer="yes">
   <p idx="1">
-     Eine schnelle Jägerin erzürnt Plexippos
+    Eine schnelle Jägerin erzürnt Plexippos.
   </p>
   <p_conll idx="1">1       Eine    ein     DET     ART     _       3       NK      _       _
 2       schnelle        schnell ADJ     ADJA    _       3       NK      _       _
@@ -674,7 +697,7 @@
 6       .       --      .       $.      _       4       --      _       _
 </p_conll>
   <h>
-     Es gibt eine schnelle Jägerin
+    Es gibt eine schnelle Jägerin.
   </h>
   <h_conll>1       Es      es      PRON    PPER    _       2       EP      _       _
 2       gibt    geben   VERB    VVFIN   _       0       --      _       _
@@ -683,13 +706,14 @@
 5       Jägerin jägerin NOUN    NN      _       2       OA      _       _
 6       .       --      .       $.      _       2       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
   id="25"
-  fracas_answer="yes">
+  fracas_answer="unknown">
   <p idx="1">
-     Sirenen haben Beine
+    Sirenen haben Beine.
   </p>
   <p_conll idx="1">1       Sirenen sirene  NOUN    NN      _       2       SB      _       _
 2       haben   haben   VERB    VAFIN   _       0       --      _       _
@@ -697,7 +721,7 @@
 4       .       --      .       $.      _       2       --      _       _
 </p_conll>
   <h>
-     Sirenen haben ein schuppiges Bein
+    Sirenen haben ein schuppiges Bein.
   </h>
   <h_conll>1       Sirenen sirene  NOUN    NN      _       2       SB      _       _
 2       haben   haben   VERB    VAFIN   _       0       --      _       _
@@ -706,11 +730,16 @@
 5       Bein    bein    NOUN    NN      _       2       OA      _       _
 6       .       --      .       $.      _       2       --      _       _
 </h_conll>
-  <a>yes</a>
-  <p idx="2">
-     Donald genießt einen schönen Tag in einer weichen Hängematte
+  <a>unknown</a>
+</problem>
+
+<problem
+  id="26"
+  fracas_answer="yes">
+  <p idx="1">
+    Donald genießt einen schönen Tag in einer weichen Hängematte.
   </p>
-  <p_conll idx="2">1       Donald  donald  NOUN    NE      _       2       SB      _       _
+  <p_conll idx="1">1       Donald  donald  NOUN    NE      _       2       SB      _       _
 2       genießt genießen        VERB    VVFIN   _       0       --      _       _
 3       einen   ein     DET     ART     _       5       NK      _       _
 4       schönen schön   ADJ     ADJA    _       5       NK      _       _
@@ -722,7 +751,7 @@
 10      .       --      .       $.      _       2       --      _       _
 </p_conll>
   <h>
-     Donald liegt in einer weichen Hängematte
+    Donald liegt in einer weichen Hängematte.
   </h>
   <h_conll>1       Donald  donald  NOUN    NE      _       2       SB      _       _
 2       liegt   liegen  VERB    VVFIN   _       0       --      _       _
@@ -732,13 +761,14 @@
 6       Hängematte      hängematte      NOUN    NN      _       3       NK      _       _
 7       .       --      .       $.      _       2       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
-  id="26"
+  id="27"
   fracas_answer="no">
   <p idx="1">
-     In Russland brennt ein Haus
+    In Russland brennt ein Haus.
   </p>
   <p_conll idx="1">1       In      in      ADP     APPR    _       3       MO      _       _
 2       Russland        russland        NOUN    NE      _       1       NK      _       _
@@ -748,19 +778,20 @@
 6       .       --      .       $.      _       3       --      _       _
 </p_conll>
   <h>
-     Russland brennt
+    Russland brennt.
   </h>
   <h_conll>1       Russland        russland        NOUN    NE      _       2       SB      _       _
 2       brennt  brennen VERB    VVFIN   _       0       --      _       _
 3       .       --      .       $.      _       2       --      _       _
 </h_conll>
+  <a>no</a>
 </problem>
 
 <problem
-  id="27"
+  id="28"
   fracas_answer="no">
   <p idx="1">
-     Gerne geht Maria in die Kirche
+    Gerne geht Maria in die Kirche.
   </p>
   <p_conll idx="1">1       Gerne   gerne   ADV     ADV     _       2       MO      _       _
 2       geht    gehen   VERB    VVFIN   _       0       --      _       _
@@ -771,7 +802,7 @@
 7       .       --      .       $.      _       2       --      _       _
 </p_conll>
   <p idx="2">
-     Maria ist ein Mensch
+    Maria ist ein Mensch.
   </p>
   <p_conll idx="2">1       Maria   maria   NOUN    NE      _       2       SB      _       _
 2       ist     sein    VERB    VAFIN   _       0       --      _       _
@@ -780,7 +811,7 @@
 5       .       --      .       $.      _       2       --      _       _
 </p_conll>
   <h>
-     Kein Mensch geht gerne in die Kirche
+    Kein Mensch geht gerne in die Kirche.
   </h>
   <h_conll>1       Kein    kein    PRON    PIAT    _       2       NK      _       _
 2       Mensch  mensch  NOUN    NN      _       3       SB      _       _
@@ -791,13 +822,14 @@
 7       Kirche  kirche  NOUN    NN      _       5       NK      _       _
 8       .       --      .       $.      _       3       --      _       _
 </h_conll>
+  <a>no</a>
 </problem>
 
 <problem
-  id="28"
+  id="29"
   fracas_answer="yes">
   <p idx="1">
-     Paul füttert einem Hund Fleisch
+    Paul füttert einem Hund Fleisch.
   </p>
   <p_conll idx="1">1       Paul    paul    NOUN    NE      _       2       SB      _       _
 2       füttert füttern VERB    VVFIN   _       0       --      _       _
@@ -807,7 +839,7 @@
 6       .       --      .       $.      _       2       --      _       _
 </p_conll>
   <h>
-     Jemand füttert einem Hund Fleisch
+    Jemand füttert einem Hund Fleisch.
   </h>
   <h_conll>1       Jemand  jemand  NOUN    NE      _       2       SB      _       _
 2       füttert füttern VERB    VVFIN   _       0       --      _       _
@@ -816,13 +848,14 @@
 5       Fleisch fleisch NOUN    NN      _       4       NK      _       _
 6       .       --      .       $.      _       2       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
-  id="29"
+  id="30"
   fracas_answer="yes">
   <p idx="1">
-     Japaner lieben klassische Musik
+    Japaner lieben klassische Musik.
   </p>
   <p_conll idx="1">1       Japaner japaner NOUN    NN      _       2       SB      _       _
 2       lieben  lieben  VERB    VVFIN   _       0       --      _       _
@@ -831,20 +864,21 @@
 5       .       --      .       $.      _       2       --      _       _
 </p_conll>
   <h>
-     Japaner lieben Musik
+    Japaner lieben Musik.
   </h>
   <h_conll>1       Japaner japaner NOUN    NN      _       2       SB      _       _
 2       lieben  lieben  VERB    VVFIN   _       0       --      _       _
 3       Musik   musik   NOUN    NN      _       2       OA      _       _
 4       .       --      .       $.      _       2       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
-  id="30"
+  id="31"
   fracas_answer="no">
   <p idx="1">
-     Maria schenkt Paul eine Katze
+    Maria schenkt Paul eine Katze.
   </p>
   <p_conll idx="1">1       Maria   maria   NOUN    NE      _       2       SB      _       _
 2       schenkt schenken        VERB    VVFIN   _       0       --      _       _
@@ -854,7 +888,7 @@
 6       .       --      .       $.      _       2       --      _       _
 </p_conll>
   <p idx="2">
-     Katzen und Löwen sind Raubkatzen
+    Katzen und Löwen sind Raubkatzen.
   </p>
   <p_conll idx="2">1       Katzen  katze   NOUN    NN      _       4       SB      _       _
 2       und     und     CONJ    KON     _       1       CD      _       _
@@ -864,7 +898,7 @@
 6       .       --      .       $.      _       4       --      _       _
 </p_conll>
   <h>
-     Einen Löwen schenkt Maria Paul
+    Einen Löwen schenkt Maria Paul.
   </h>
   <h_conll>1       Einen   ein     DET     ART     _       2       NK      _       _
 2       Löwen   löwe    NOUN    NN      _       3       OA      _       _
@@ -873,13 +907,14 @@
 5       Paul    paul    NOUN    NE      _       3       SB      _       _
 6       .       --      .       $.      _       3       --      _       _
 </h_conll>
+  <a>no</a>
 </problem>
 
 <problem
-  id="31"
+  id="32"
   fracas_answer="no">
   <p idx="1">
-     Rebekka und Simon sind Brillenträger
+    Rebekka und Simon sind Brillenträger.
   </p>
   <p_conll idx="1">1       Rebekka rebekka NOUN    NE      _       4       SB      _       _
 2       und     und     CONJ    KON     _       1       CD      _       _
@@ -889,7 +924,7 @@
 6       .       --      .       $.      _       4       --      _       _
 </p_conll>
   <p idx="2">
-     Rebekka und Simon sind Menschen
+    Rebekka und Simon sind Menschen.
   </p>
   <p_conll idx="2">1       Rebekka rebekka NOUN    NE      _       4       SB      _       _
 2       und     und     CONJ    KON     _       1       CD      _       _
@@ -899,7 +934,7 @@
 6       .       --      .       $.      _       4       --      _       _
 </p_conll>
   <h>
-     Jeder Mensch trägt eine Brille
+    Jeder Mensch trägt eine Brille.
   </h>
   <h_conll>1       Jeder   jeder   PRON    PIAT    _       2       NK      _       _
 2       Mensch  mensch  NOUN    NN      _       3       SB      _       _
@@ -908,13 +943,14 @@
 5       Brille  brille  NOUN    NN      _       3       OA      _       _
 6       .       --      .       $.      _       3       --      _       _
 </h_conll>
+  <a>no</a>
 </problem>
 
 <problem
-  id="32"
+  id="33"
   fracas_answer="yes">
   <p idx="1">
-     Bello ist im Fellwechsel
+    Bello ist im Fellwechsel.
   </p>
   <p_conll idx="1">1       Bello   bello   NOUN    NE      _       2       SB      _       _
 2       ist     sein    VERB    VAFIN   _       0       --      _       _
@@ -923,7 +959,7 @@
 5       .       --      .       $.      _       2       --      _       _
 </p_conll>
   <p idx="2">
-     Bello ist ein Hund
+    Bello ist ein Hund.
   </p>
   <p_conll idx="2">1       Bello   bello   NOUN    NE      _       2       SB      _       _
 2       ist     sein    VERB    VAFIN   _       0       --      _       _
@@ -932,20 +968,21 @@
 5       .       --      .       $.      _       2       --      _       _
 </p_conll>
   <h>
-     Hunde haben Fellwechsel
+    Hunde haben Fellwechsel.
   </h>
   <h_conll>1       Hunde   hund    NOUN    NN      _       2       SB      _       _
 2       haben   haben   VERB    VAFIN   _       0       --      _       _
 3       Fellwechsel     fellwechsel     NOUN    NN      _       2       OA      _       _
 4       .       --      .       $.      _       2       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
-  id="33"
+  id="34"
   fracas_answer="yes">
   <p idx="1">
-     Ein frecher Kater sitzt auf dem Tisch
+    Ein frecher Kater sitzt auf dem Tisch.
   </p>
   <p_conll idx="1">1       Ein     ein     DET     ART     _       3       NK      _       _
 2       frecher frech   ADJ     ADJA    _       3       NK      _       _
@@ -957,7 +994,7 @@
 8       .       --      .       $.      _       4       --      _       _
 </p_conll>
   <h>
-     Ein Kater ist frech
+    Ein Kater ist frech.
   </h>
   <h_conll>1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Kater   kater   NOUN    NN      _       3       SB      _       _
@@ -965,13 +1002,14 @@
 4       frech   frech   ADJ     ADJD    _       3       PD      _       _
 5       .       --      .       $.      _       3       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
-  id="34"
+  id="35"
   fracas_answer="no">
   <p idx="1">
-     Maria gibt Tim eine alte Taschenuhr
+    Maria gibt Tim eine alte Taschenuhr.
   </p>
   <p_conll idx="1">1       Maria   maria   NOUN    NE      _       2       SB      _       _
 2       gibt    geben   VERB    VVFIN   _       0       --      _       _
@@ -982,7 +1020,7 @@
 7       .       --      .       $.      _       2       --      _       _
 </p_conll>
   <h>
-     Maria gibt Tim eine neue Taschenuhr
+    Maria gibt Tim eine neue Taschenuhr.
   </h>
   <h_conll>1       Maria   maria   NOUN    NE      _       2       SB      _       _
 2       gibt    geben   VERB    VVFIN   _       0       --      _       _
@@ -992,13 +1030,14 @@
 6       Taschenuhr      taschenuhr      NOUN    NN      _       2       OA      _       _
 7       .       --      .       $.      _       2       --      _       _
 </h_conll>
+  <a>no</a>
 </problem>
 
 <problem
-  id="35"
+  id="36"
   fracas_answer="yes">
   <p idx="1">
-     Tim funkelt einen Kater auf der Tischdecke an
+    Tim funkelt einen Kater auf der Tischdecke an.
   </p>
   <p_conll idx="1">1       Tim     tim     NOUN    NE      _       2       SB      _       _
 2       funkelt funkeln VERB    VVFIN   _       0       --      _       _
@@ -1011,7 +1050,7 @@
 9       .       --      .       $.      _       2       --      _       _
 </p_conll>
   <h>
-     Ein Kater ist auf der Tischdecke
+    Ein Kater ist auf der Tischdecke.
   </h>
   <h_conll>1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Kater   kater   NOUN    NN      _       3       SB      _       _
@@ -1021,13 +1060,14 @@
 6       Tischdecke      tischdecke      NOUN    NN      _       4       NK      _       _
 7       .       --      .       $.      _       3       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 <problem
-  id="36"
+  id="37"
   fracas_answer="no">
   <p idx="1">
-     Alle kahlen Meschen tragen eine billige Perücke
+    Alle kahlen Meschen tragen eine billige Perücke.
   </p>
   <p_conll idx="1">1       Alle    aller   PRON    PIAT    _       3       NK      _       _
 2       kahlen  kahl    ADJ     ADJA    _       3       NK      _       _
@@ -1039,7 +1079,7 @@
 8       .       --      .       $.      _       4       --      _       _
 </p_conll>
   <p idx="2">
-     Peter ist kahl
+    Peter ist kahl.
   </p>
   <p_conll idx="2">1       Peter   peter   NOUN    NE      _       2       SB      _       _
 2       ist     sein    VERB    VAFIN   _       0       --      _       _
@@ -1047,7 +1087,7 @@
 4       .       --      .       $.      _       2       --      _       _
 </p_conll>
   <h>
-     Peter trägt eine teure Perücke
+    Peter trägt eine teure Perücke.
   </h>
   <h_conll>1       Peter   peter   NOUN    NE      _       2       SB      _       _
 2       trägt   tragen  VERB    VVFIN   _       0       --      _       _
@@ -1056,13 +1096,14 @@
 5       Perücke perücke NOUN    NN      _       2       OA      _       _
 6       .       --      .       $.      _       2       --      _       _
 </h_conll>
+  <a>no</a>
 </problem>
 
 <problem
-  id="37"
+  id="38"
   fracas_answer="no">
   <p idx="1">
-     Einige Menschen singen heute schlecht
+    Einige Menschen singen heute schlecht.
   </p>
   <p_conll idx="1">1       Einige  einiger PRON    PIAT    _       2       NK      _       _
 2       Menschen        mensch  NOUN    NN      _       3       SB      _       _
@@ -1072,7 +1113,7 @@
 6       .       --      .       $.      _       3       --      _       _
 </p_conll>
   <p idx="2">
-     Peter ist ein Mensch
+    Peter ist ein Mensch.
   </p>
   <p_conll idx="2">1       Peter   peter   NOUN    NE      _       2       SB      _       _
 2       ist     sein    VERB    VAFIN   _       0       --      _       _
@@ -1081,20 +1122,21 @@
 5       .       --      .       $.      _       2       --      _       _
 </p_conll>
   <h>
-     Peter singt schlecht
+    Peter singt schlecht.
   </h>
   <h_conll>1       Peter   peter   NOUN    NE      _       2       SB      _       _
 2       singt   singen  VERB    VVFIN   _       0       --      _       _
 3       schlecht        schlecht        ADJ     ADJD    _       2       MO      _       _
 4       .       --      .       $.      _       2       --      _       _
 </h_conll>
+  <a>no</a>
 </problem>
 
 <problem
-  id="38"
+  id="39"
   fracas_answer="yes">
   <p idx="1">
-     Jeder Hund bettelt am Tisch
+    Jeder Hund bettelt am Tisch.
   </p>
   <p_conll idx="1">1       Jeder   jeder   PRON    PIAT    _       2       NK      _       _
 2       Hund    hund    NOUN    NN      _       3       SB      _       _
@@ -1104,7 +1146,7 @@
 6       .       --      .       $.      _       3       --      _       _
 </p_conll>
   <p idx="2">
-     Bella ist ein Hund
+    Bella ist ein Hund.
   </p>
   <p_conll idx="2">1       Bella   bella   NOUN    NE      _       2       SB      _       _
 2       ist     sein    VERB    VAFIN   _       0       --      _       _
@@ -1113,7 +1155,7 @@
 5       .       --      .       $.      _       2       --      _       _
 </p_conll>
   <h>
-     Bella bettelt bei Tisch
+    Bella bettelt bei Tisch.
   </h>
   <h_conll>1       Bella   bella   NOUN    NE      _       2       SB      _       _
 2       bettelt betteln VERB    VVFIN   _       0       --      _       _
@@ -1121,6 +1163,7 @@
 4       Tisch   tisch   NOUN    NN      _       3       NK      _       _
 5       .       --      .       $.      _       2       --      _       _
 </h_conll>
+  <a>yes</a>
 </problem>
 
 </fracas-problems>

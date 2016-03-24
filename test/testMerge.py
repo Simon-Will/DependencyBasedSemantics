@@ -259,7 +259,6 @@ class SingtUndTanzt(unittest.TestCase):
         expected = tlp.parse(semRep, signature=semSig)
         self.assertEquivalent(assigned, expected)
 
-@unittest.skip("Types not yet assigned correctly")
 class Waldgurken(unittest.TestCase):
 
     @classmethod
@@ -269,7 +268,7 @@ class Waldgurken(unittest.TestCase):
 
     def testWaldgurken(self):
         assigned = Waldgurken.merged
-        semRep = r'exists x. (wald(x) & in(all y. (gurke(y) -> leben(y))),x)'
+        semRep = r'exists x. (wald(x) & in(all y. (gurke(y) -> leben(y)),x))'
         semSig = {
                 'gurke': '<e,t>',
                 'leben': '<e,t>'
@@ -292,9 +291,6 @@ class HeuteBaden(unittest.TestCase):
                 'heute': '<t,t>'
                 }
         expected = tlp.parse(semRep, signature=semSig)
-        print()
-        print(assigned)
-        print(expected)
         self.assertEquivalent(assigned, expected)
 
 class EinigeVoegel(unittest.TestCase):

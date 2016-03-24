@@ -613,7 +613,7 @@
         ],
         "semRepPat": "\\x V. {[lemma]}(V,x)",
         "semSig": {
-            "{[lemma]}": "<e,<t,t>>",
+            "{[lemma]}": "<t,<e,t>>",
             "V": "t"
         }
     },

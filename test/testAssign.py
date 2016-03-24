@@ -415,14 +415,14 @@ class WaldGurken(unittest.TestCase):
     def testIn(self):
         assigned = WaldGurken.depGraph.get_by_address(4)['semrep']
         semRepPat = r'\x V. in(V,x)'
-        semSig = {'V': 't', 'in': '<e,<t,t>>'}
+        semSig = {'V': 't', 'in': '<t,<e,t>>'}
         expected = tlp.parse(semRepPat, signature=semSig)
         self.assertEqual(assigned, expected)
 
     def testEinem(self):
         assigned = WaldGurken.depGraph.get_by_address(5)['semrep']
-        semRepPat = r'\P B. exists x. (P(x) & B(x))'
-        semSig = {'P': '<e,t>', 'B': '<e,<t,t>>'}
+        semRepPat = r'\P B V. exists x. (P(x) & B(x)(V))'
+        semSig = {'P': '<e,t>', 'B': '<e,<t,t>>', 'V': 't'}
         expected = tlp.parse(semRepPat, signature=semSig)
         self.assertEqual(assigned, expected)
 

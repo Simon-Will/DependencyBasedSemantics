@@ -19,10 +19,15 @@ Ruprecht-Karls-Universität Heidelberg
 
 Durch Verwendung dieses Moduls können Sätzen logische Ausdrücke zugewiesen und 
 bei anschließender Verwendung der Testsuit auch einzelnen Sätzen ein 
-Wahrheitswert zugewiesen werden. Dabei wird jedem Wort ein Lambda-Ausdruck
-zugewiesen und diese durch funktionale Applikation zusammgefügt.
-Der Fokus liegt dabei auf dem korrekten Zuweisen der logischen Ausdrücke.
-
+Wahrheitswert zugewiesen werden. Dabei wird aus dem eingespeisten
+Satz ein Dependenzgraph aus dem eingegebenen Satz erschaffen. 
+Jedem Knoten des Graphen wird ein eigener Lambda-Ausdruck zugewiesen, der dessen
+Bedeutung repräsentiert. Diese Ausdrücke werden dann zusammengesetzt und 
+der logische Ausdruck für den gesamten Satz zurückgegeben. 
+Dieser kann benutzt werden, um einem anderen Satz auf der Basis des extrahierten
+Wissens einen Wahrheitswert zuzuweisen. Unsere Testsuit repräsentiert diese 
+Funktion.
+Der Fokus des Moduls liegt auf dem korrekten Zuweisen der logischen Ausdrücke.
 
 ###Voraussetzungen
 
@@ -30,25 +35,21 @@ Python 3.4
 
 NLTK 3.0
 
-tiger\_release\_aug07.corrected.16012013.conll06
 
-* RGBParser
-
-TIGER-Korpus und RBGParser werden nur zum erstellen neuer Daten benötigt,
-im Algorithmus selbst finden sie keine Verwendung
+###Module
 
 ####normalize.py
-
-Dieses Skript kann benutzt werden, um Sätze in eine vereinfachte Form zu bringen,
-mit welcher der Algorihmus besser umgehen kann. Dadurch können Fehler in der weiteren
-Verarbeitung vermieden werden. Die Verwendung dieses Skript empfiehlt sich lediglich,
-wenn neue Sätze zu den bereits vorhandenen conll-Datein hinzugefügt werden sollen.
+Die Verwendung dieses Skript empfiehlt sich lediglich vor dem Hinzufügen
+von neuen Daten im '"test" Ordner.
+Es verändert die Struktur eines Satzes, indem er problematische Koordinationen
+von Phrasen umschreibt. Dadurch werden Fehler in der weiteren
+Verarbeitung vermieden.
 Hinweis: Das Ausführen dieses Programms ist keine Garantie für ein erfolgreiches 
 Ablaufen des Algorithmus.
-Für einen Programmaufruf muss der zu normalisierende Satz erst aus einer Datei 
-ausgelesen, dann beim Erstellen eines Normalizerobjektes als Argument übergeben
-werden. Man erhält den normalisierten durch den Aufruf der Methode getSentence()
-des Normalizerobjekts.
+Für einen Programmaufruf muss der zu normalisierende Satz im conll06-Format 
+als Argument übergeben werden. Durch Aufruf der Methode getSentence() wird
+der normalisierte Satz zurückgegeben.
+
 
 Beispiel:
 
@@ -57,32 +58,26 @@ testsentence.morph.conll aus test/conll als Eingabe führt zu folgendem Resultat
     >1	Ein	ein	DET	ART	_	2	NK	_	_
     >2	Kind	kind	NOUN	NN	_	3	SB	_	_
     >3	isst	issen	VERB	VVFIN	_	0	--	_	_
-    >4	alle	aller	PRON	PIAT	_	2	NK	_	_
+    >4	alle	aller	PRON	PIAT	_	5	NK	_	_
     >5	Kekse	keks	NOUN	NN	_	3	OA	_	_
-    >6	und	und	CONJ	KON	_	5	CD	_	_
+    >6	und	und	CONJ	KON	_	3	CD	_	_
     >7	Ein	ein	DET	ART	_	8	NK	_	_
     >8	Kind	kind	NOUN	NN	_	9	SB	_	_
     >9	isst	issen	VERB	VVFIN	_	6	--	_	_
-    >10	alle	aller	PRON	PIAT	_	8	NK	_	_
+    >10	alle	aller	PRON	PIAT	_	11	NK	_	_
     >11	Brezeln	brezel	NOUN	NN	_	9	CJ	_	_
     >12	.	--	.	$.	_	3	--	_	_
 
 
-
-
 ####assign.py
 
-Mit Hilfe eines SemRepAssignerobjekts kann ein Satz eingelesen und 
-der dazugehörige Dependenzgraph zurückgegeben werden. Dabei wird jedem
-Knoten des Baums ein passender logischer bzw. ein Lamda-Ausdruck 
-zugewiesen.
 Um ein Assignerobjekt zu erstellen, wird das condition module benötigt.
-assign.py und condition.py befinden sich im selben Ordner.
+Dieses muss importiert werden.
 Zur Erstellung eines SemRepAssignerobjekts muss die Datei heuristic_rules.json
-der Methode fromSring übergeben werden. Dann einen conll06 formatierten Satz 
-beim Aufruf von nltk.parse.DependencyGraph als Argument ergeben.
-Das so erstellte Objekt als Argument der SemRepAssigner Methode 
-assignToDependencyGraph übergeben.
+der Methode fromSring übergeben werden. Dann muss man einen conll06 formatierten Satz 
+beim Aufruf von nltk.parse.DependencyGraph als Argument übergeben.
+Danach ruft man die Methode assignToDependencyGraph des erstellten SemRepAssigner 
+mit dem DependencyGraphobjekt als Argument auf.
 Durch den Aufruf der Methode get\_by\_address kann jeder Knoten abgefragt 
 werden.
 
@@ -90,26 +85,28 @@ Beispiel:
 
     >import nltk.parse as nlp
     >ass = SemRepAssigner.fromfile('rules/heuristic_rules.json')
-    >sKind = open('test/conll/testsentence.conll').read()
-    >dgKind = nlp.DependencyGraph(sKind)
-    >ass.assignToDependencyGraph(dgKind)
-    >print(dgKind.get\_by\_address(3)['semrep'].type)
-
-> 
+    >sTaube = open('test/conll/beissende_taube_und_Peter_Mueller.conll').read()
+    >dgTaube = nlp.DependencyGraph(sTaube)
+    >ass.assignToDependencyGraph(dgTaube)
+    >print(dgTaube.get_by_address(3)['semrep'])
+    >\y x.beissen(x,y)
+    >print(dgTaube.get_by_address(3)['semrep'].type)
+    ><e,<e,t>>
 
 ####merge.py
 
-Die Anwendung dieses Skripts ermöglicht es, die zuvor dem Dependenzgraph in assign.py zugewiesenen
-logischen Ausdrücke durch funktionale Applikationen zusammenzufügen.
-Bei der Erstellung eines SemMergerobjekts den durch die Anwendung von assign.py erhaltenen
-Dependenzgraph als Argument übergeben. Der logische Ausdruck des Satzes kann über die
-SemMerger-Methode getSemantics() abgefragt werden.
+Dieses Modul kombiniert die zuvor dem Dependenzgraph in assign.py zugewiesenen
+logischen Ausdrücke.
+Man übergibt bei der Erstellung eines SemMergerobjekt den durch die Anwendung von
+assign.py erhaltenen Dependenzgraph als Argument.
+Der logische Ausdruck des Satzes wird über die
+SemMerger-Methode getSemantics() abgefragt.
 
-example:
+Beispiel:
 
-    >lamdaKind = SemMerger(dgKind)
-    >lambdaKind.getSemantics()
-    >exists x.(kind(x) & (all y.(Keks(y) -> essen(x,y)))) & exists z.(kind(z) & (all u.(Brezel(u) -> essen(z,u))))
+    >lamdaTaube = SemMerger(dgTaube)
+    >lambdaTaube.getSemantics()
+    >exists x.(Taube(x) & beissen(x, Peter_Mueller)))))
 
 
 ###Testsuite
@@ -122,30 +119,14 @@ Format abgespeichert, wobei der Wahrheitsgehalt der Hypothesen abgefragt werden 
 
 Sollen weitere Daten hinzugefügt werden, sind folgende Schritte zu befolgen:
 
-* parsen der hinzuzufügenden Daten, diese sollten als Sätze abgespeichert sein,
-  vorzugsweise in einem txt-File
-
-** Dafür wird das Bash-Skript process\_with\_spmrl.sh verwendet. Dabei wird
-   das Datenfile als Kommandozeilenargument übergeben. Soll anstelle des 
-   Default-RBGParser ein anderer RBGParser verwendet werden, ist dieser 
-   als zweites Kommandozeilenargument zu übergeben
-   Bsp.:
-
->Ein Kind isst alle Kekse und alle Brezeln.
->Inhalt der Datei testsentence.conll:
->
-    >1       Ein     ein     DET     ART     _       2       NK      _       _
-    >2       Kind    kind    NOUN    NN      _       3       SB      _       _
-    >3       isst    issen   VERB    VVFIN   _       0       --      _       _
-    >4       alle    aller   PRON    PIAT    _       5       NK      _       _
-    >5       Kekse   keks    NOUN    NN      _       3       OA      _       _
-    >6       und     und     CONJ    KON     _       5       CD      _       _
-    >7       alle    aller   PRON    PIAT    _       8       NK      _       _
-    >8       Brezeln brezel  NOUN    NN      _       6       CJ      _       _
-    >9       .       --      .       $.      _       3       --      _       _
+* parsen der hinzuzufügenden Daten, vorzugsweise mit einem RBGParser, der auf dem
+  TIGER-Korpus trainiert wurde
 
 * Wir empfehlen die geparsten Daten manuell zu überpfüfen und ggf. Korrekturen
   vorzunehmen
 
-* Auch können die Daten mit dem Skript normalize.py ggf. angepasst werden,
-  um mögliche spätere Komplikationen zu vermeiden. Dies ist aber nicht Pflicht.
+* Nun wird Normalize.py verwendet, um problematische Phrasenkoordination zu vermeiden
+
+* Wir empfehlen die verarbeiteten Daten manuell zu überprüfn und ggf. zu korrigieren
+
+* Nun die Daten den Testdaten hinzufügen

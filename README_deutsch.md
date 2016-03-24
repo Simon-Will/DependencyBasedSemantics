@@ -38,6 +38,12 @@ NLTK 3.0
 
 ###Module
 
+####montesniere_get_Semantics
+Wir empfehlen diesen Skrip über die Kommandozeile aufzurufen. Die zu 
+verarbeitende Datei wird als Kommamdozeilenparameter angegeben. 
+Der komplette Algorithmus wird ausgeführt, anschließend wird der vollständie 
+logische Ausdruck auf der Kommandozeile ausgegeben.
+
 ####normalize.py
 Die Verwendung dieses Skript empfiehlt sich lediglich vor dem Hinzufügen
 von neuen Daten im '"test" Ordner.
@@ -112,6 +118,17 @@ Beispiel:
 ###Testsuite
 In dieser Testsuite sind mehrere Prämissen-Hypothesen-Paare im xml-Format im FraCas ähnlichen
 Format abgespeichert, wobei der Wahrheitsgehalt der Hypothesen abgefragt werden kann.
+Dazu wird folgender Kommandozeilenaufruf verwendet:
+
+    >./testFracas.py [Regeln] [Fracas Testsuit im xml-Format]
+
+am Bsp.:
+   
+    >testFracas.py ../rules/heuristic_rules.json testsuite_text_tags.xml
+    >33 out of 39 failed
+    >IDs of failed tests: 1, 3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20,
+    > 21, 22, 23, 24, 26, 27, 28, 29, 31, 32, 33, 34, 35, 36, 37, 38, 38
+
 
 
 

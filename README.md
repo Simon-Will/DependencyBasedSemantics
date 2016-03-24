@@ -37,9 +37,9 @@ Python 3.4
 NLTK 3.0
 
 
-###algorithm.sh
+####montesniere_get_Semantics
 We recommend using our bash script in order to avoid dependency errors. Start it on
-the command line and run ./algorithm.sh test/conll/<filename>
+the command line and run ./algorithm.sh test/conll/filename
 
 
 ####normalize.py
@@ -109,13 +109,18 @@ example, using the same sentence as before:
 
 
 
-###Testsuite
-Both semantic premises and hypotheses are stored in the testsuite. An input sentence is processed and the
-suit assigns a truth value and returns it.
+###testFracas.py
+Both premises and hypotheses are stored in the testsuite. Call testFracas.py from the commandline,
+use heuristic\_rules.json and testsuite\_text\_tags.xml as arguments. The number of failed and
+succesful tests is shown on the commandline.
+
 
 example:
-#TODO
 
+    >./testFracas.py ../rules/heuristic_rules.json testsuite_text_tags.xml
+    >33 out of 39 failed
+    >IDs of failed tests: 1, 3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20,
+    > 21, 22, 23, 24, 26, 27, 28, 29, 31, 32, 33, 34, 35, 36, 37, 38, 38
 
 ###Add new data
 Follow these steps to add new data:

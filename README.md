@@ -130,9 +130,3 @@ Follow these steps to add new data:
 * Use normalize.py to normalize your sentences in order to avoid unfortunate coordinations of phrases
 * Check your data for mistakes manually.
 * Add it to our test data.
-
-
-
-###Results
-
-

@@ -380,6 +380,26 @@ class NichtEinHund(unittest.TestCase):
         expected = tlp.parse(semRep, signature=semSig)
         self.assertEquivalent(assigned, expected)
 
+class LeckeresFutter(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'leckeres_futter.conll')
+        cls.merged = getMergedRepresentation(conllFile, RULES)
+
+    def testLeckeresFutter(self):
+        assigned = LeckeresFutter.merged
+        semRep = r'all x. ((pferd(x) & gross(x)) -> exists y. (lecker(y) & futter(y) & essen(x,y)))'
+        semSig = {
+                'pferd': '<e,t>',
+                'futter': '<e,t>',
+                'gross': '<e,t>',
+                'lecker': '<e,t>',
+                'essen': '<e,<e,t>>'
+                }
+        expected = tlp.parse(semRep, signature=semSig)
+        self.assertEquivalent(assigned, expected)
+
 if __name__ == '__main__':
     unittest.TestCase.assertEquivalent = assertEquivalent
     global RULES

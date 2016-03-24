@@ -83,11 +83,7 @@ class Normalizer:
                 index -= 1
             else:
                 break
-        if (self.word_parts[index+1][7] == "CD" and 
-            self.word_parts[index+2][7] == "CJ"):
-            sb.insert(index+1)
-            sb.insert(index+2)
-            
+        
         sb.append(oIndex)
         return sb
         
@@ -362,7 +358,7 @@ class Normalizer:
      
      
 def test():
-    gurken = Normalizer(open("../test/conll/testsentence.conll").read())
+    gurken = Normalizer(open("../test/conll/tanzende_gurken.conll").read())
     return gurken.getSentence() 
 
 def testPronomina():
@@ -373,17 +369,11 @@ def testObj():
     hase = Normalizer(open("../test/conll/schenkender_hasen.conll").read())
     return hase.getSentence()
     
-def testpresidentens():
-    pres = Normalizer(open("../test/conll/presidents.conll").read())
-    return pres.getSentence()
    
-def testKeineAenderung():
-    ka = Normalizer(open("../test/conll/keine_aenderung.conll").read())
-    return ka.getSentence()
+def testObjtwo():
+    maria = Normalizer(open("../test/conll/Maria_und_Kuchen.conll").read())
+    return maria.getSentence()
     
-def testDoppeltesObjekt():
-    do = Normalizer(open("../test/conll/doppelte_objekt.conll").read())
-    return do.getSentence()
     
 def testNurPronomen():
     np = Normalizer(open("../test/conll/nur_pronomen.conll").read())
@@ -393,12 +383,5 @@ if __name__ == '__main__':
     print(test())
     print(testPronomina())
     print(testObj())
-
-    # FIX-ME in
-    print(testpresidentens())
-    
-    print(testKeineAenderung())
-    # FIX_ME in
-    print(testDoppeltesObjekt())
-    
+    print(testObjtwo())
     print(testNurPronomen())

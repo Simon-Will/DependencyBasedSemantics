@@ -78,7 +78,8 @@ class SemMerger:
                     self.mergeWithChildren(c, force)
 
             # Now actually merge the node with its children.
-            mergeDict = {node['address']: node['semrep']}
+            mergeDict = {node['address']: node['semrep']} if 'semrep' in node\
+                    else {}
             mergeDict.update(
                     {c['address']: c['mergedsemrep'] for c in children
                         if 'mergedsemrep' in c})

@@ -593,7 +593,6 @@
     },
     {
         "explanation": "real adverbs and adverbial adjectives",
-        "note": "In semSig, the type of {[lemma]} (<t,t>) should be specified. But nltk does not seem to allow the type t in the first part of a type",
         "note": "TODO: Think about adverbs modifying adjectives",
         "conditions": [
             "tag element {ADV, ADJD}",

@@ -5,14 +5,14 @@ P: Ein Keks wird von einem Schaf gegessen.
 4       von     von     ADP     APPR    _       7       SBP     _       _
 5       einem   ein     DET     ART     _       6       NK      _       _
 6       Schaf   schaf   NOUN    NN      _       4       NK      _       _
-7       gegessen        gessen  VERB    VVPP    _       3       OC      _       _
+7       gegessen        essen  VERB    VVPP    _       3       OC      _       _
 8       .       --      .       $.      _       3       --      _       _
 
 H: Ein Keks wird gegessen.
 1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Keks    keks    NOUN    NN      _       3       SB      _       _
 3       wird    werden  VERB    VAFIN   _       0       --      _       _
-4       gegessen        gessen  VERB    VVPP    _       3       OC      _       _
+4       gegessen        essen  VERB    VVPP    _       3       OC      _       _
 5       .       --      .       $.      _       3       --      _       _
 
 answer: True
@@ -21,13 +21,13 @@ answer: True
 P: Ein Schaf isst einen Keks und ein Wolf isst einen Keks.
 1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Schaf   schaf   NOUN    NN      _       3       SB      _       _
-3       isst    issen   VERB    VVFIN   _       0       --      _       _
+3       isst    essen   VERB    VVFIN   _       0       --      _       _
 4       einen   ein     DET     ART     _       5       NK      _       _
 5       Keks    keks    NOUN    NN      _       3       OA      _       _
 6       und     und     CONJ    KON     _       3       CD      _       _
 7       ein     ein     DET     ART     _       8       NK      _       _
 8       Wolf    wolf    NOUN    NN      _       9       SB      _       _
-9       isst    issen   VERB    VVFIN   _       6       CJ      _       _
+9       isst    essen   VERB    VVFIN   _       6       CJ      _       _
 10      einen   ein     DET     ART     _       11      NK      _       _
 11      Keks    keks    NOUN    NN      _       9       OA      _       _
 12      .       --      .       $.      _       3       --      _       _
@@ -35,7 +35,7 @@ P: Ein Schaf isst einen Keks und ein Wolf isst einen Keks.
 H: Ein Wolf isst einen Keks.
 1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Wolf    wolf    NOUN    NN      _       3       SB      _       _
-3       isst    issen   VERB    VVFIN   _       0       --      _       _
+3       isst    essen   VERB    VVFIN   _       0       --      _       _
 4       einen   ein     DET     ART     _       5       NK      _       _
 5       Keks    keks    NOUN    NN      _       3       OA      _       _
 6       .       --      .       $.      _       3       --      _       _
@@ -57,7 +57,7 @@ P: Ein Schaf und ein Wolf essen einen Keks.
 H: Ein Wolf isst einen Keks.
 1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Wolf    wolf    NOUN    NN      _       3       SB      _       _
-3       isst    issen   VERB    VVFIN   _       0       --      _       _
+3       isst    essen   VERB    VVFIN   _       0       --      _       _
 4       einen   ein     DET     ART     _       5       NK      _       _
 5       Keks    keks    NOUN    NN      _       3       OA      _       _
 6       .       --      .       $.      _       3       --      _       _
@@ -68,7 +68,7 @@ answer: True
 P: Ein Schaf isst einen Keks.
 1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Schaf   schaf   NOUN    NN      _       3       SB      _       _
-3       isst    issen   VERB    VVFIN   _       0       --      _       _
+3       isst    essen   VERB    VVFIN   _       0       --      _       _
 4       einen     ein     DET     ART     _       5       NK      _       _
 5       Keks    keks    NOUN    NN      _       3       OA      _       _
 6       .       --      .       $.      _       3       --      _       _
@@ -76,15 +76,15 @@ P: Ein Schaf isst einen Keks.
 P: Ein Wolf isst auch einen.
 1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Wolf    wolf    NOUN    NN      _       3       SB      _       _
-3       isst    issen   VERB    VVFIN   _       0       --      _       _
-4       auch    auch    ADV     ADV     _       5       MO      _       _
+3       isst    essen   VERB    VVFIN   _       0       --      _       _
+4       auch    auch    ADV     ADV     _       3       MO      _       _
 5       einen   einer   PRON    PIS     _       3       OA      _       _
 6       .       --      .       $.      _       3       --      _       _
 
 H: Ein Wolf isst einen Keks.
 1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Wolf    wolf    NOUN    NN      _       3       SB      _       _
-3       isst    issen   VERB    VVFIN   _       0       --      _       _
+3       isst    essen   VERB    VVFIN   _       0       --      _       _
 4       einen   ein     DET     ART     _       5       NK      _       _
 5       Keks    keks    NOUN    NN      _       3       OA      _       _
 6       .       --      .       $.      _       3       --      _       _
@@ -95,7 +95,7 @@ answer: True
 P: Ein Schaf isst einen Keks und es trinkt aus einem Fluss.
 1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Schaf   schaf   NOUN    NN      _       3       SB      _       _
-3       isst    issen   VERB    VVFIN   _       0       --      _       _
+3       isst    essen   VERB    VVFIN   _       0       --      _       _
 4       einen   ein     DET     ART     _       5       NK      _       _
 5       Keks    keks    NOUN    NN      _       3       OA      _       _
 6       und     und     CONJ    KON     _       3       CD      _       _
@@ -121,13 +121,13 @@ answer: True
 P: Ein Schaf isst einen Keks und ein Wolf isst einen Keks und das Schaf trinkt aus einem Fluss.
 1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Schaf   schaf   NOUN    NN      _       3       SB      _       _
-3       isst    issen   VERB    VVFIN   _       0       --      _       _
+3       isst    essen   VERB    VVFIN   _       0       --      _       _
 4       einen   ein     DET     ART     _       5       NK      _       _
 5       Keks    keks    NOUN    NN      _       3       OA      _       _
 6       und     und     CONJ    KON     _       3       CD      _       _
 7       ein     ein     DET     ART     _       8       NK      _       _
 8       Wolf    wolf    NOUN    NN      _       9       SB      _       _
-9       isst    issen   VERB    VVFIN   _       6       CJ      _       _
+9       isst    essen   VERB    VVFIN   _       6       CJ      _       _
 10      einen   ein     DET     ART     _       11      NK      _       _
 11      Keks    keks    NOUN    NN      _       9       OA      _       _
 12      und     und     CONJ    KON     _       9       CD      _       _
@@ -139,7 +139,7 @@ P: Ein Schaf isst einen Keks und ein Wolf isst einen Keks und das Schaf trinkt a
 18      Fluss   fluß    NOUN    NN      _       16      NK      _       _
 19      .       --      .       $.      _       3       --      _       _
 
-H: Ein Schaf isst einen Keks und trinkt aus dem Fluss.
+H: Ein Schaf isst einen Keks und trinkt aus einem Fluss.
 1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Schaf   schaf   NOUN    NN      _       3       SB      _       _
 3       isst    issen   VERB    VVFIN   _       0       --      _       _
@@ -148,7 +148,7 @@ H: Ein Schaf isst einen Keks und trinkt aus dem Fluss.
 6       und     und     CONJ    KON     _       3       CD      _       _
 7       trinkt  trinken VERB    VVFIN   _       6       CJ      _       _
 8       aus     aus     ADP     APPR    _       7       MO      _       _
-9       dem     der     DET     ART     _       10      NK      _       _
+9       einem   ein     DET     ART     _       10      NK      _       _
 10      Fluss   fluß    NOUN    NN      _       8       NK      _       _
 11      .       --      .       $.      _       3       --      _       _
 
@@ -164,16 +164,17 @@ P: Lukas und Simon kommen zum Treffen.
 6       Treffen treffen NOUN    NN      _       5       NK      _       _
 7       .       --      .       $.      _       4       --      _       _
 
-P: Rebecca auch.
-1       Rebecca rebecca NOUN    NE      _       0       --      _       _
+P: Rebekka auch.
+1       Rebekka rebekka NOUN    NE      _       0       --      _       _
 2       auch    auch    ADV     ADV     _       1       MO      _       _
 3       .       --      .       $.      _       1       --      _       _
 
-H: Rebecca kommt zum Treffen
-1       Rebecca rebecca NOUN    NE      _       2       SB      _       _
+H: Rebekka kommt zum Treffen.
+1       Rebekka rebekka NOUN    NE      _       2       SB      _       _
 2       kommt   kommen  VERB    VVFIN   _       0       --      _       _
 3       zum     zu      ADP     APPRART _       2       MO      _       _
 4       Treffen treffen NOUN    NN      _       3       NK      _       _
+3       .       --      .       $.      _       2       --      _       _
 
 answer: True
 
@@ -201,13 +202,14 @@ H: Dolly hat Wolle.
 answer: True
 
 
-P: Shawn schläft und Fluffy bellt.
+P: Shawn schläft und Fluffy bellt nicht.
 1       Shawn   shawn   NOUN    NE      _       2       SB      _       _
 2       schläft schlafen        VERB    VVFIN   _       0       --      _       _
 3       und     und     CONJ    KON     _       2       CD      _       _
 4       Fluffy  fluffy  NOUN    NE      _       5       SB      _       _
 5       bellt   bellen  VERB    VVFIN   _       3       CJ      _       _
-6       .       --      .       $.      _       2       --      _       _
+6       nicht   nicht   PRT     PTKNEG  _       5       NG      _       _
+7       .       --      .       $.      _       2       --      _       _
 
 H: Fluffy bellt nicht.
 1       Fluffy  fluffy  NOUN    NE      _       2       SB      _       _
@@ -215,7 +217,7 @@ H: Fluffy bellt nicht.
 3       nicht   nicht   PRT     PTKNEG  _       2       NG      _       _
 4       .       --      .       $.      _       2       --      _       _
 
-answer: False
+answer: True
 
 
 P: Das Schaf gibt dem Wolf eine Blume.
@@ -286,19 +288,19 @@ answer: True
 
 
 P: Shawn ist ein schönes Tier.
-1       Shawn   shawn   ADV     ADV     _       2       MO      _       _
+1       Shawn   shawn   NOUN    NE     _       2       SB      _       _
 2       ist     sein    VERB    VAFIN   _       0       --      _       _
 3       ein     ein     DET     ART     _       5       NK      _       _
 4       schönes schön   ADJ     ADJA    _       5       NK      _       _
-5       Tier    tier    NOUN    NN      _       2       SB      _       _
+5       Tier    tier    NOUN    NN      _       2       PD      _       _
 6       .       --      .       $.      _       2       --      _       _
 
 H: Shawn ist kein schönes Tier.
-1       Shawn   shawn   ADV     ADV     _       2       MO      _       _
+1       Shawn   shawn   NOUN    NE     _       2       SB      _       _
 2       ist     sein    VERB    VAFIN   _       0       --      _       _
 3       kein    kein    PRON    PIAT    _       5       NK      _       _
 4       schönes schön   ADJ     ADJA    _       5       NK      _       _
-5       Tier    tier    NOUN    NN      _       2       SB      _       _
+5       Tier    tier    NOUN    NN      _       2       PD      _       _
 6       .       --      .       $.      _       2       --      _       _
 
 answer: False
@@ -313,7 +315,7 @@ P: Shawn versteckt sich hinter Fluffy.
 6       .       --      .       $.      _       2       --      _       _
 
 H: Fluffy versteckt sich hinter Shawn.
-1       Fluffy  fluffy  NOUN    NN      _       2       SB      _       _
+1       Fluffy  fluffy  NOUN    NE      _       2       SB      _       _
 2       versteckt       verstecken      VERB    VVFIN   _       0       --      _       _
 3       sich    sich    PRON    PRF     _       2       OA      _       _
 4       hinter  hinter  ADP     APPR    _       2       MO      _       _
@@ -339,16 +341,16 @@ answer: True
 
 
 P: Eine Furie in einem blutigen Kleid bewacht einen Schlund.
-1       Eine    ein     DET     ART     _       2       NK      _       _
-2       Furie   furie   NOUN    NN      _       0       --      _       _
-3       in      in      ADP     APPR    _       2       MNR     _       _
-4       einem   ein     DET     ART     _       6       NK      _       _
-5       blutigen        blutig  ADJ     ADJA    _       6       NK      _       _
-6       Kleid   kleid   NOUN    NN      _       3       NK      _       _
-7       bewacht bewacht ADJ     ADJD    _       2       MNR     _       _
-8       einen   ein     DET     ART     _       9       NK      _       _
-9       Schlund schlund NOUN    NN      _       2       AG      _       _
-10      .       --      .       $.      _       2       --      _       _
+1	Eine	ein	DET	ART	_	2	NK	_	_
+2	Furie	furie	NOUN	NN	_	7	SB	_	_
+3	in	in	ADP	APPR	_	2	MNR	_	_
+4	einem	ein	DET	ART	_	6	NK	_	_
+5	blutigen	blutig	ADJ	ADJA	_	6	NK	_	_
+6	Kleid	kleid	NOUN	NN	_	3	NK	_	_
+7	bewacht	bewachen	VERB	VVFIN	_	0	--	_	_
+8	einen	ein	DET	ART	_	9	NK	_	_
+9	Schlund	schlund	NOUN	NN	_	7	OA	_	_
+10	.	--	.	$.	_	2	--	_	_
 
 H: Eine Furie bewacht einen Schlund.
 1       Eine    ein     DET     ART     _       2       NK      _       _
@@ -395,7 +397,7 @@ answer: True
 
 
 P: Kein Mensch zahlt gerne eine Rechnung.
-1       Kein  kein    ADJ     ADJA    _       2       NK      _       _
+1       Kein    kein    PRON    PIAT    _       2       NK      _       _
 2       Mensch  mensch  NOUN    NN      _       3       SB      _       _
 3       zahlt   zahlen  VERB    VVFIN   _       0       --      _       _
 4       gerne   gerne   ADV     ADV     _       3       MO      _       _
@@ -424,9 +426,9 @@ P: Ein Lehrer lehrt Maria ein Musikstück.
 1       Ein     ein     DET     ART     _       2       NK      _       _
 2       Lehrer  lehrer  NOUN    NN      _       3       SB      _       _
 3       lehrt   lehren  VERB    VVFIN   _       0       --      _       _
-4       Maria   maria   NOUN    NE      _       3       SB      _       _
+4       Maria   maria   NOUN    NE      _       3       OA      _       _
 5       ein     ein     DET     ART     _       6       NK      _       _
-6       Musikstück      musikstück      NOUN    NN      _       3       OA      _       _
+6       Musikstück      musikstück      NOUN    NN      _       3       OA2      _       _
 7       .       --      .       $.      _       3       --      _       _
 
 H: Ein Lehrer lehrt.
@@ -542,7 +544,7 @@ H: Sirenen haben ein schuppiges Bein.
 5       Bein    bein    NOUN    NN      _       2       OA      _       _
 6       .       --      .       $.      _       2       --      _       _
 
-answer: unknown
+answer: Unknown
 
 
 P: Donald genießt einen schönen Tag in einer weichen Hängematte.
@@ -574,7 +576,7 @@ P: In Russland brennt ein Haus.
 2       Russland        russland        NOUN    NE      _       1       NK      _       _
 3       brennt  brennen VERB    VVFIN   _       0       --      _       _
 4       ein     ein     DET     ART     _       5       NK      _       _
-5       Haus    haus    NOUN    NN      _       3       OA      _       _
+5       Haus    haus    NOUN    NN      _       3       SB      _       _
 6       .       --      .       $.      _       3       --      _       _
 
 H: Russland brennt.
@@ -582,7 +584,7 @@ H: Russland brennt.
 2       brennt  brennen VERB    VVFIN   _       0       --      _       _
 3       .       --      .       $.      _       2       --      _       _
 
-answer: False
+answer: Unknown
 
 
 P: Gerne geht Maria in die Kirche.
@@ -619,15 +621,15 @@ P: Paul füttert einem Hund Fleisch.
 2       füttert füttern VERB    VVFIN   _       0       --      _       _
 3       einem   ein     DET     ART     _       4       NK      _       _
 4       Hund    hund    NOUN    NN      _       2       DA      _       _
-5       Fleisch fleisch NOUN    NN      _       4       NK      _       _
+5       Fleisch fleisch NOUN    NN      _       4       OA      _       _
 6       .       --      .       $.      _       2       --      _       _
 
 H: Jemand füttert einem Hund Fleisch.
-1       Jemand  jemand  NOUN    NE      _       2       SB      _       _
+1       Jemand  jemand  PRON    PIS      _       2       SB      _       _
 2       füttert füttern VERB    VVFIN   _       0       --      _       _
 3       einem   ein     DET     ART     _       4       NK      _       _
 4       Hund    hund    NOUN    NN      _       2       DA      _       _
-5       Fleisch fleisch NOUN    NN      _       4       NK      _       _
+5       Fleisch fleisch NOUN    NN      _       4       OA      _       _
 6       .       --      .       $.      _       2       --      _       _
 
 answer: True
@@ -673,7 +675,7 @@ H: Einen Löwen schenkt Maria Paul.
 5       Paul    paul    NOUN    NE      _       3       SB      _       _
 6       .       --      .       $.      _       3       --      _       _
 
-answer: False
+answer: Unknown
 
 
 P: Rebekka und Simon sind Brillenträger.
@@ -700,7 +702,7 @@ H: Jeder Mensch trägt eine Brille.
 5       Brille  brille  NOUN    NN      _       3       OA      _       _
 6       .       --      .       $.      _       3       --      _       _
 
-answer: False
+answer: Unknown
 
 
 P: Bello ist im Fellwechsel.
@@ -723,7 +725,7 @@ H: Hunde haben Fellwechsel.
 3       Fellwechsel     fellwechsel     NOUN    NN      _       2       OA      _       _
 4       .       --      .       $.      _       2       --      _       _
 
-answer: True
+answer: Unknown
 
 
 P: Ein frecher Kater sitzt auf dem Tisch.
@@ -749,7 +751,7 @@ answer: True
 P: Maria gibt Tim eine alte Taschenuhr.
 1       Maria   maria   NOUN    NE      _       2       SB      _       _
 2       gibt    geben   VERB    VVFIN   _       0       --      _       _
-3       Tim     tim     NOUN    NE      _       2       SB      _       _
+3       Tim     tim     NOUN    NE      _       2       DA      _       _
 4       eine    ein     DET     ART     _       6       NK      _       _
 5       alte    alt     ADJ     ADJA    _       6       NK      _       _
 6       Taschenuhr      taschenuhr      NOUN    NN      _       2       OA      _       _
@@ -758,13 +760,13 @@ P: Maria gibt Tim eine alte Taschenuhr.
 H: Maria gibt Tim eine neue Taschenuhr.
 1       Maria   maria   NOUN    NE      _       2       SB      _       _
 2       gibt    geben   VERB    VVFIN   _       0       --      _       _
-3       Tim     tim     NOUN    NE      _       2       SB      _       _
+3       Tim     tim     NOUN    NE      _       2       DA      _       _
 4       eine    ein     DET     ART     _       6       NK      _       _
 5       neue    neu     ADJ     ADJA    _       6       NK      _       _
 6       Taschenuhr      taschenuhr      NOUN    NN      _       2       OA      _       _
 7       .       --      .       $.      _       2       --      _       _
 
-answer: False
+answer: Unknown
 
 
 P: Tim funkelt einen Kater auf der Tischdecke an.
@@ -772,7 +774,7 @@ P: Tim funkelt einen Kater auf der Tischdecke an.
 2       funkelt funkeln VERB    VVFIN   _       0       --      _       _
 3       einen   einen     DET     ART     _       4       NK      _       _
 4       Kater   kater   NOUN    NN      _       2       OA      _       _
-5       auf     auf     ADP     APPR    _       2       MO      _       _
+5       auf     auf     ADP     APPR    _       4       MNR      _       _
 6       der     der     DET     ART     _       7       NK      _       _
 7       Tischdecke      tischdecke      NOUN    NN      _       5       NK      _       _
 8       an      an      PRT     PTKVZ   _       2       SVP     _       _
@@ -838,16 +840,17 @@ H: Peter singt schlecht.
 3       schlecht        schlecht        ADJ     ADJD    _       2       MO      _       _
 4       .       --      .       $.      _       2       --      _       _
 
-answer: False
+answer: Unknown
 
 
-P: Jeder Hund bettelt am Tisch.
+P: Jeder Hund bettelt an einem Tisch.
 1       Jeder   jeder   PRON    PIAT    _       2       NK      _       _
 2       Hund    hund    NOUN    NN      _       3       SB      _       _
 3       bettelt betteln VERB    VVFIN   _       0       --      _       _
-4       am      an      ADP     APPRART _       3       MO      _       _
-5       Tisch   tisch   NOUN    NN      _       4       NK      _       _
-6       .       --      .       $.      _       3       --      _       _
+4       an      an      ADP     APPR    _       3       MO      _       _
+5       einem   ein     DET     ART     _       6       NK      _       _
+6       Tisch   tisch   NOUN    NN      _       4       NK      _       _
+7       .       --      .       $.      _       3       --      _       _
 
 P: Bella ist ein Hund.
 1       Bella   bella   NOUN    NE      _       2       SB      _       _
@@ -856,12 +859,13 @@ P: Bella ist ein Hund.
 4       Hund    hund    NOUN    NN      _       2       PD      _       _
 5       .       --      .       $.      _       2       --      _       _
 
-H: Bella bettelt bei Tisch.
+H: Bella bettelt an einem Tisch.
 1       Bella   bella   NOUN    NE      _       2       SB      _       _
 2       bettelt betteln VERB    VVFIN   _       0       --      _       _
-3       bei     bei     ADP     APPR    _       2       MO      _       _
-4       Tisch   tisch   NOUN    NN      _       3       NK      _       _
-5       .       --      .       $.      _       2       --      _       _
+3       an      an      ADP     APPR    _       2       MO      _       _
+4       einem   ein     DET     ART     _       5       NK      _       _
+5       Tisch   tisch   NOUN    NN      _       3       NK      _       _
+6       .       --      .       $.      _       2       --      _       _
 
 answer: True
 

@@ -288,20 +288,35 @@ answer: True
 
 
 P: Shawn ist ein schönes Tier.
+<<<<<<< HEAD:test/testsuite.txt
 1       Shawn   shawn   NOUN    NE     _       2       SB      _       _
+=======
+1       Shawn   shawn   NOUN    NE      _       2       SB      _       _
+>>>>>>> 8dc16ad3de5b91586369f076108fc43fd2c75fd1:test/testsuite_text_tags.txt
 2       ist     sein    VERB    VAFIN   _       0       --      _       _
 3       ein     ein     DET     ART     _       5       NK      _       _
 4       schönes schön   ADJ     ADJA    _       5       NK      _       _
 5       Tier    tier    NOUN    NN      _       2       PD      _       _
+<<<<<<< HEAD:test/testsuite.txt
 6       .       --      .       $.      _       2       --      _       _
 
 H: Shawn ist kein schönes Tier.
 1       Shawn   shawn   NOUN    NE     _       2       SB      _       _
+=======
+6       .       --      .       $.      _       2       --      _   
+
+H: Shawn ist kein schönes Tier.
+1       Shawn   shawn   NOUN    NE      _       2       SB      _       _
+>>>>>>> 8dc16ad3de5b91586369f076108fc43fd2c75fd1:test/testsuite_text_tags.txt
 2       ist     sein    VERB    VAFIN   _       0       --      _       _
 3       kein    kein    PRON    PIAT    _       5       NK      _       _
 4       schönes schön   ADJ     ADJA    _       5       NK      _       _
 5       Tier    tier    NOUN    NN      _       2       PD      _       _
+<<<<<<< HEAD:test/testsuite.txt
 6       .       --      .       $.      _       2       --      _       _
+=======
+6       .       --      .       $.      _       2       --      _ 
+>>>>>>> 8dc16ad3de5b91586369f076108fc43fd2c75fd1:test/testsuite_text_tags.txt
 
 answer: False
 
@@ -341,6 +356,7 @@ answer: True
 
 
 P: Eine Furie in einem blutigen Kleid bewacht einen Schlund.
+<<<<<<< HEAD:test/testsuite.txt
 1	Eine	ein	DET	ART	_	2	NK	_	_
 2	Furie	furie	NOUN	NN	_	7	SB	_	_
 3	in	in	ADP	APPR	_	2	MNR	_	_
@@ -351,6 +367,18 @@ P: Eine Furie in einem blutigen Kleid bewacht einen Schlund.
 8	einen	ein	DET	ART	_	9	NK	_	_
 9	Schlund	schlund	NOUN	NN	_	7	OA	_	_
 10	.	--	.	$.	_	2	--	_	_
+=======
+1       Eine    ein     DET     ART     _       2       NK      _       _
+2       Furie   furie   NOUN    NN      _       7       SB      _       _
+3       in      in      ADP     APPR    _       2       MNR     _       _
+4       einem   ein     DET     ART     _       6       NK      _       _
+5       blutigen        blutig  ADJ     ADJA    _       6       NK      _       _
+6       Kleid   kleid   NOUN    NN      _       3       NK      _       _
+7       bewacht bewacht VERB    VVFIN   _       0       --      _       _
+8       einen   ein     DET     ART     _       9       NK      _       _
+9       Schlund schlund NOUN    NN      _       7       OA      _       _
+10      .       --      .       $.      _       7       --      _       _
+>>>>>>> 8dc16ad3de5b91586369f076108fc43fd2c75fd1:test/testsuite_text_tags.txt
 
 H: Eine Furie bewacht einen Schlund.
 1       Eine    ein     DET     ART     _       2       NK      _       _

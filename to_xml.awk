@@ -33,7 +33,7 @@ BEGIN {
         if ($i ~ /^P:/) {
             ++PREMISES
             # Get premise info
-            SENTENCE = substr($i, 3, length($i) - 3)
+            SENTENCE = substr($i, 4, length($i) - 3)
             CONLL_START = i + 1
             CONLL_END = i
             for (; $i !~ /^\s*$/; ++i) {
@@ -52,7 +52,7 @@ BEGIN {
 
         } else if ($i ~ /^H:/) {
             # Get hypothesis info
-            SENTENCE = substr($i, 3, length($i) - 3)
+            SENTENCE = substr($i, 4, length($i) - 3)
             CONLL_START = i + 1
             CONLL_END = i
             for (; $i !~ /^\s*$/; ++i) {
@@ -68,11 +68,10 @@ BEGIN {
                 print $j, "\n"
             }
             print "</h_conll>\n"
-
-        } else if ($i ~ /^answer/) {
-            print "  <a>", ANSWER, "</a>\n"
         }
     }
+
+    print "  <a>", ANSWER, "</a>\n"
 
     # Print closing tag
     print "</problem>\n\n"

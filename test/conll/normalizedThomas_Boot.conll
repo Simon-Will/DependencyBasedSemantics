@@ -1,0 +1,10 @@
+1	Thomas	thomas	NOUN	NE	_	2	SB	_	_
+2	sieht	sehen	VERB	VVFIN	_	0	--	_	_
+3	ein	ein	DET	ART	_	4	NK	_	_
+4	Boot	boot	NOUN	NN	_	2	OA	_	_
+5	und	und	CONJ	KON	_	2	CD	_	_
+6	Thomas	thomas	NOUN	NE	_	7	SB	_	_
+7	sieht	sehen	VERB	VVFIN	_	5	--	_	_
+8	einen	ein	DET	ART	_	9	NK	_	_
+9	Leuchtturm	leuchtturm	NOUN	NN	_	7	CJ	_	_
+10	.	--	.	$.	_	2	--	_	_

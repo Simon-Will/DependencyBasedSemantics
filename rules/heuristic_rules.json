@@ -322,7 +322,7 @@
         }
     },
     {
-        "explanation": "'ein' in accusative object of monotransitive verbs and of ditransitive verbs with a second accusative object.",
+        "explanation": "'einige' in accusative object of monotransitive verbs and of ditransitive verbs with a second accusative object.",
         "conditions": [
             "tag element {PIAT}",
             "lemma element {einiger}",
@@ -336,7 +336,7 @@
         }
     },
     {
-        "explanation": "'ein' in accusative object of ditransitive verbs.",
+        "explanation": "'einige' in accusative object of ditransitive verbs.",
         "conditions": [
             "tag element {PIAT}",
             "lemma element {einiger}",
@@ -350,7 +350,7 @@
         }
     },
     {
-        "explanation": "'ein' in dative object of ditransitive verbs.",
+        "explanation": "'einige' in dative object of ditransitive verbs.",
         "conditions": [
             "tag element {PIAT}",
             "lemma element {einiger}",
@@ -363,7 +363,7 @@
         }
     },
     {
-        "explanation": "'ein' in second accusative object of ditransitive verbs.",
+        "explanation": "'einige' in second accusative object of ditransitive verbs.",
         "conditions": [
             "tag element {PIAT}",
             "lemma element {einiger}",
@@ -376,7 +376,7 @@
         }
     },
     {
-        "explanation": "'ein' under a preposition modifying a verb",
+        "explanation": "'einige' under a preposition modifying a verb",
         "conditions": [
             "tag element {PIAT}",
             "lemma element {einiger}",
@@ -390,7 +390,7 @@
         }
     },
     {
-        "explanation": "'ein' under a preposition modifying an NP ('ein Kern in [einer] Traube')",
+        "explanation": "'einige' under a preposition modifying an NP ('ein Kern in [einer] Traube')",
         "conditions": [
             "tag element {PIAT}",
             "lemma element {einiger}",
@@ -601,6 +601,7 @@
         ],
         "semRepPat": "\\V . {[lemma]}(V)",
         "semSig": {
+            "V": "t",
             "{[lemma]}": "<t,t>"
         }
     },

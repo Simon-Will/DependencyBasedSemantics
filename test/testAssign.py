@@ -330,7 +330,7 @@ class SchuppigeBeine(unittest.TestCase):
 
     def testBeine(self):
         assigned = SchuppigeBeine.depGraph.get_by_address(4)['semrep']
-        semRepPat = r'\P R x. exists y. (P(x) & bein(y) & R(y)(x))'
+        semRepPat = r'\P R x. exists y. (P(y) & bein(y) & R(y)(x))'
         semSig = {'bein': '<e,t>', 'P': '<e,t>', 'R': '<e,<e,t>>'}
         expected = tlp.parse(semRepPat, signature=semSig)
         self.assertEqual(assigned, expected)
@@ -414,8 +414,8 @@ class WaldGurken(unittest.TestCase):
 
     def testIn(self):
         assigned = WaldGurken.depGraph.get_by_address(4)['semrep']
-        semRepPat = r'\x v. in(V,x)'
-        semSig = {'V': 't'}
+        semRepPat = r'\x V. in(V,x)'
+        semSig = {'V': 't', 'in': '<e,<t,t>>'}
         expected = tlp.parse(semRepPat, signature=semSig)
         self.assertEqual(assigned, expected)
 

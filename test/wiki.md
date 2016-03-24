@@ -10,7 +10,7 @@
 * regelmäßige Treffen und reger Email-Kontakt sowie zu allen Zeiten gegenseitige 
   Kontrolle und kritische Anmerkungen der Gruppenmitglieder
 
-* in dieser Dokumentation werden lediglich die Funktionsweise des Moduls erläutert und
+* es werden lediglich die Funktionsweise des Moduls und
   die Voraussetzungen für dessen Verwendung erläutert,  die konkreten
   Funktionsaufrufe und die modularen Abhängigkeiten können unserem README entnommen werden
 
@@ -40,12 +40,15 @@
     >context.py		 	        Simon
     
     >testNormalizer.py		        Rebekka
-    
-    
+       
     >testAssign.py			Simon
     
     >testMerge.py			Simon
   
+    >to_xml.awk				Simon
+ 
+    >montesniere_get_Semantics		Rebekka
+
     >conll-files			Simon, Rebekka
   
     >testsuite			        Lukas, Simon, Rebekka
@@ -67,7 +70,7 @@
 	* TIGER-Korpus und RBGParser werden nur zum erstellen neuer Daten benötigt,
 	  im Algorithmus selbst finden sie keine Verwendung
 
-* der erste Anhaltspunkt für Fragen ist diese Dokumentation sowie die korrespondierende githup-webpage,
+* der erste Anhaltspunkt für Fragen ist diese Dokumentation sowie die korrespondierende github-webpage,
   des Weiteren können Fragen auch per Mail an die angegebene Adressen der einzelnen Gruppenmitglieder gestellt 
   werden
 
@@ -84,9 +87,11 @@ Dabei legen wir unseren Schwerpunkt auf die Extraktion von Lambda-Ausdrücken au
 einzelnen Satzteilen, die dann zur kompletten Repräsentation des Satzes 
 zusammengesetzt werden. So kann nun eine relativ hohe Anzahl an Phänomenen mit 
 relativ allgemein formulierten Vorgaben aus Sätzen extrahiert und in Form eines 
-Lambda-Ausdrucks dargestellt sowie abgefragt werden. Dieser Algorithmus wurde dann für die 
-Erstellung einer Testsuit verwendet, die es ermöglicht, das extrahierte Wissen 
-abzuspeichern und abzufragen. Während des gesamten Projekts legten wir besonderen
+Lambda-Ausdrucks dargestellt sowie abgefragt werden. 
+Ebenfalls wurde eine Testsuit erstellt, in der so extrahiertes Wissen abgefragt
+und angewendet werden kann.
+
+Während des gesamten Projekts legten wir besonderen
 Wert auf eine intuitive Verwendung und mögliche Weiterentwicklung des Programms.
 Im Folgenden wird jeder Programmteil vorgestellt sowie seine genau Verwendung 
 erläutert und anhand von Beispielen veranschaulicht. Anschließend wird auf die 
@@ -95,7 +100,7 @@ möglichen Anwendungen, dann auf die Grenzen unseres Moduls näher eingegangen.
 
 ### Funktionsweise des Algorithmus
 
-Unserem Plan folgend, haben wir unseren Algorithmus in drei große Schritte und eine
+Unserem Plan folgend haben wir unseren Algorithmus in drei große Schritte und eine
 Testsuit geteilt:
 
 * die Vorbereitung des Satzes bzw. der Daten für die weitere Verarbeitung
@@ -105,17 +110,15 @@ Testsuit geteilt:
 * bei Verwendung de Testsuit wird jedem Prämisse-Hypothese-Paar der Hypothese
   ein Wahrheitswert zugewiesen
 
-#### Bitte Skript noch schreiben
+
+
 Um die Verwendung des Moduls zu erleichtern, befindet sich im Projektordner 
-das bash-Skript "......", das den gesamten Algorithmus in einem Schritt
+das bash-Skript montesniere_get_Semantics, das den Algorithmus in einem Schritt
 ausführt und eine komfortable Ausführung ermöglicht. Dies verhindert, dass
 man besondere Aufmerksamkeit auf die Abhängigkeiten der einzelnen Skripte
 lenken muss und diesbezügliche Fehler vermieden werden. 
-"...." wird im Projektordner selbst gestartet, erwartet eine Eingabe / hat die
-Konsolenargumente xy, und führt die einzelnen Schritte des Algorithmus in korrekter
-Reihenfolge automatisiert aus. Das Ergebnis wird ausgegeben / in der Datei xy gespeichert.
 
-Im Folgenden nun also die einzelnen Schritte:
+Im Folgenden nun also die einzelnen Schritte unseres Algorithmus:
 
 #### Vorbereitung der Sätze
 Der erste Schritt ist optional und sollte nur ausgeführt werden. wenn ein
@@ -132,7 +135,7 @@ angegebenen Files tokenisiert und mit einem Model eines RBGParser geparst.
 Dafür wird unserer Default-Modell verwendet, das auf dem 
 tiger\_release\_aug07.corrected.16012013.conll06 Korpus auf ella trainiert 
 wurde und unter[einfügen] zu finden ist.
-Durch die Audführung des Skripts erhält man den Inhalt der Datei im CoNLL06-Format. 
+Durch die Ausführung des Skripts erhält man den Inhalt der Datei im CoNLL06-Format. 
 Soll ein anderes Modell verwendet werden, muss dieses als zweites Konsolenargument 
 angegeben werden. Dabei sollte man aber darauf achten, anschließend eine Datei 
 im CoNLL09-Format zu erhalten, da bei der Verwendung des CoNLL09-Formats im 
@@ -157,24 +160,40 @@ ein kurzes Bsp:
 
 
 
-Der Inhalt dieser Datei kann nun für alle weiteren Schritte benutzt werden
-und dient im weiteren Verlauf dieser Dokumentation als Beispiel.
+Der Inhalt dieser Datei kann nun für alle weiteren Schritte benutzt werden.
 
-#### konkrete Vorbereitung
+
+#### Normalisierierng
 Wir bezeichnen den ersten Schritt in unserem Verfahren als Normalisierung. Dabei 
 handelt es sich um ein Skript, das für unseren Algortihmus nur schwer zu 
 verabeitende Sätze in eine leichter zu erfassende Form abändert. Konkret
 handelt es sich dabei um Koordinationen von Phrasen, bei denen der Algorithmus
-Gefahr läuft zu scheitern (wir verwenden lediglich Dependenzbäume, jedoch lässt sich
-dieses Problem unter Einbezug der Phrasenstrukturbegrifflichkeiten verständlicher
-erklären).
+Gefahr läuft zu scheitern. Darunter fallen z. B. solche Äußerungen:
+"Peter lädt Maria auf einen Tee und ein Stück Kuchen ein."
+Um die spätere Verabeitung zu erleichtern, würde dieser Satz folgendermaßen
+abgeändert werden:
+"Peter lädt Maria auf einen Tee und Peter lädt Maria auf ein Stück Kuchen ein."
+Dieser längere Satz könnte von unserem Algorithmus zumindest teilweise verarbeitet
+werden, in seiner urpsrünglichen Fassung würde kein Ergebnis erzielt werden.
 
 Der Fokus liegt dabei auf der Koordination von Objekten und Verben, sowie des 
-Ersetzens von Pronomen.
+Ersetzens von Pronomen, wenn das Subjekt im Satz explizit genannt wird.
 
-am Beispiel:
+an einem Beispiel: "Ein Kind isst alle Kekse und alle Brezeln."
 
+    > original
+    >1       Ein     ein     DET     ART     _       2       NK      _       _
+    >2       Kind    kind    NOUN    NN      _       3       SB      _       _
+    >3       isst    issen   VERB    VVFIN   _       0       --      _       _
+    >4       alle    aller   PRON    PIAT    _       5       NK      _       _
+    >5       Kekse   keks    NOUN    NN      _       3       OA      _       _
+    >6       und     und     CONJ    KON     _       5       CD      _       _
+    >7       alle    aller   PRON    PIAT    _       8       NK      _       _
+    >8       Brezeln brezel  NOUN    NN      _       6       CJ      _       _
+    >9       .       --      .       $.      _       3       --      _       _
+########aus: test/conll/testsentence.conll
 
+    > normalisierte Struktur
     >1	Ein	ein	DET	ART	_	2	NK	_	_
     >2	Kind	kind	NOUN	NN	_	3	SB	_	_
     >3	isst	issen	VERB	VVFIN	_	0	--	_	_
@@ -188,60 +207,83 @@ am Beispiel:
     >11	Brezeln	brezel	NOUN	NN	_	9	CJ	_	_
     >12	.	--	.	$.	_	3	--	_	_
 
-########Quelle hier einfügen###########################
+
 In diesem Fall wurde das Subjekt des Satzes vor dem zweiten Verb wieder verwendet
 und somit eine Koordination auf Satzebene erreicht.
 
-Dies schließt die Vorverarbeitung der Daten ab.
+Dies schließt die Vorverarbeitung der Daten ab
 
 #### Extraktion des einzelnen Lambda-Ausdrücke
 
-Dieser Schritt erfolgt über einen Programmaufruf des Skriptes assign.py.
-An dieser Stelle ist noch anzumerken, dass der Aufruf dieses Programms
-die beiden Skripte condition.py und heuristic\_rules.json benötigt.
-Dabei enthält heuristic\_rules.json sämtliche zum Festlegen der 
-Lambda-Ausdrücke benötigten Regeln, während condition.py diese zu 
-für den Assigner verwendbaren Regeln umwandelt.
-Dementsprechend müssen hier diese Abhängigkeiten beachtet werden.
+Nach der Vorverarbeitung werden die einzelnen Lamda-Ausdrücke für den
+eingegebenen Satz erstellt. Dafür wird aus dem Satz durch Verwendung von
+NLTK's parse Modul ein Dependenzgraph erstellt. Jedem der Knoten des Graphs
+weist unser Algorithmus einen logischen Ausdruck unter Verwendung des 
+Lambda-Kalküls zu.
+Zur Zuordnung des korrekten Lambda-Ausdrucks verwenden wir eine Datei, in der
+Paare aus selbst erstellten Regeln und logischen Ausdrücken gespeichert sind.
+Dabei wird jedes Wort des Satzes auf diese Regeln getestet. Kann eine Regel
+angewandt werden, wird dem Knoten der entsprechende logische Ausdruck zugewiesen
+und kann über den neu erstellten Eintrag 'semrep' abgerufen werden.
+Greift keine Regel, wird dem Knoten kein logischer Ausdruck zugewiesen. Ein solcher Fall
+tritt z. B. beim ROOT-Knoten auf.
 
-Durch die Ausführung des Skripts wird der Satz mit Hilfe des Moduls nltk.parse
-als ein Dependenzbaum dargestellt. Auf diesen wird dann ein 
-Assigner Objekt angewandt. Dadurch erhält jeder relevante Bestandteil
-des eingegebenen, zuvor geparsten Satzes einen eigenen Lambda-Ausdruck.
-Bei der Zuweisung dieser Ausdrücke werden die eingespeisten Regeln
-abgefragt. Ein Ausdruck wird nur in Übereinstimmung mit den Regeln 
-festgelegt.
-Diese Zuweisung kann anschließend beliebig abgefragt werden.
-
-Ein solcher Aufruf als Beispiel:
+An einem Beispielsatz: "Eine Taube beißt Peter Mueller."
 
     >import nltk.parse as nlp
     >ass = SemRepAssigner.fromfile('rules/heuristic_rules.json')
-    >sKind = open('test/conll/testsentence.conll').read()
-    >dgKind = nlp.DependencyGraph(sKind)
-    >ass.assignToDependencyGraph(dgKind)
-    >print(dgKind.get\_by\_address(3)['semrep'].type)
+    >sTaube = open('test/conll/beissende_taube_und_Peter_Mueller.conll').read()
+    >dgTaube = nlp.DependencyGraph(sTaube)
+    >ass.assignToDependencyGraph(dgTaube)
+    >print(dgTaube.get_by_address(3)['semrep'])
+    >\y x.beissen(x,y)
+    >print(dgTaube.get_by_address(3)['semrep'].type)
+    ><e,<e,t>>
+    >print(dgTaube.get_by_address(1)['semrep'])
+    >\P Q.exists x.(P(x) & Q(x)
 
 
-#####Quelle einfügen#####
+#####test/conll/beissenden\_taube\_und\_Peter\_Mueller.conn
 
-#### Zusammensetzen der einzelnen Lambda-Ausdrücke
+#### Zusammensetzen der Lambda-Ausdrücke
 
-Durch die Ausführung des Skriptes merge.py werden die Lambda-Ausdrücke der einzelnen
-Wörter zu einem Ausdruck für den gesamten Satz zusammengesetzt. Dabei findet vor 
-jeder Applikation zweier Lambda-Ausdrücke ein Typ-Überprüfung statt, sodass
-nur gültige Typen erstellt werden.
-Folglich handelt es sich bei merge.py um kein eigenständiges Skript, da es den 
-vorverarbeiteten Dependenzbaum benötigt. Durch einen Funktionsaufruf kann nun 
-der vollständige logische Ausdruck des Satzes abgefragt werden.
-Sind die Typen der Worte nicht kompatibel, erhält man eine deskriptive Fehlermeldung.
+Durch die Ausführung des Skriptes merge.py werden die Lambda-Ausdrücke durch
+funktionale Applikaton zu einem Ausdruck für den gesamten Satz zusammengesetzt. 
+Dabei findet vor jeder Applikation zweier Lambda-Ausdrücke ein Typ-Überprüfung statt, sodass
+nur gültige Typen erstellt werden können.
 
-wieder das Beispiel:
+Dabei schreitet unser Algorithmus den Dependenzbaum von den Blättern zur Wurzel ab. 
+Dementsprechend werden erst die Lambda-Ausdrücke der Kinder eines Knotens behandelt
+bevor der Algorithmus sich dem Mutterknoten zuwendet. Da sich die gewählte 
+Reihenfolge der Applikationen als nicht zielführend erweisen kann, beherrscht 
+unser Algorithmus eine Variation des Backtrackings: Die ursprünglichen logischen 
+Ausdrücke werden nicht überschrieben. Kann dem gewählte Weg nicht bis zur Wurzel
+des Dependenzbaums gefolgt werden, wird dieser Versuch abgebrochen und automatisch
+ein andere Reihenfolge ausgewählt. Sobald die Wurzel des Baums erreicht ist, wird
+der vollständige logische Ausdruck abgespeichert und kann durch einen 
+Funktionsaufruf abgefragt werden.
+Sind die Typen der Worte nicht kompatibel, wird nach der Abfrage aller möglichen
+Applikationsreihenfolgen eine deskriptive Fehlermeldung ausgegeben.
 
-    >lamdaKind = SemMerger(dgKind)
-    >lambdaKind.getSemantics()
-    >exists x.(kind(x) & (all y.(Keks(y) -> essen(x,y)))) & exists z.(kind(z) & (all u.(Brezel(u) -> essen(z,u))))
+Der Ablauf am Beispielsatz: "Eine Taube beißt Peter Mueller."
+    
+    >import nltk.parse as nlp
+    >ass = SemRepAssigner.fromfile('rules/heuristic_rules.json')
+    >sTaube = open('test/conll/beissende_taube_und_Peter_Mueller.conll').read()
+    >dgTaube = nlp.DependencyGraph(sTaube)
+    >ass.assignToDependencyGraph(dgTaube)
+    >lamdaTaube = SemMerger(dgTaube)
+    >lambdaTaube.getSemantics()
+    >exists x.(Taube(x) & beissen(x, Peter_Mueller))
 
+Die Fehlermeldung, wenn der Algorithmus die Wurzel des Dependenbaums nicht errreicht,
+hier am Beispielsatz "Ein Kind isst alle Kekse und Brezeln."
+
+    >montesniere.merge.NoMergePossibleException: Could not merge the following types:
+    >\R x.all y.(brezel(y) -> R(y,x))
+    >\Q. exists x.(kind(x) & Q(x))
+    >\y x.essen(x,y)
+    >\R x.all y.(keks(y) -> R(y,x))
 
 ###Testsuite
 Bei unserer Testsuit handelt es sich um eine partielle Form der FraCas-Testsuit
@@ -259,34 +301,46 @@ Diese können abgefragt werden.
 ### Conclusion
 
 Abschließend lässt sich sagen, dass unser Modul einen Großteil der ihm gestellten
-Aufgaben zu unserer Zufriedenheit lösen kann. So wird eine breite Variation
+A4ufgaben zu unserer Zufriedenheit löst. So wird eine breite Variation
 von Quantoren in jeder Position korrekt erkannt (alle, einige, keine, etc.),
-Transitivität und Ditransitivität stellen keine Probleme dar, Eigennamen werden
-korrekt erkannt - darunter auch die Erkennung von Vor- und Nachnamen - und die
-Wortstellung hat keinerlei Einfluss auf das Ergebnis.
+auch solche, die im betreffenden Satz nicht explizit als solche gekennzeichnet
+sind, so wird z. B. in "Große Pferde essen leckeres Futter." die allgemeine 
+Aussage erkannt und ein Allquantor verwendet:
+
+    >all x.((pferd(x) & gro0(x)) -> exists y.(leck(y) & futter(y) & essen(x,y)))
+
+Zudem stellen sowohl Transitivität und Ditransitivität kein Probleme dar,
+ Eigennamen werden korrekt erkannt - darunter auch die Erkennung von Vor- und 
+Nachnamen - und die Wortstellung hat keinen Einfluss auf das Ergebnis. 
+Hinzu kommt noch eine recht genaue Erkennung und Zuordnung von Adjektiven, 
+Negation und wenigen Konjunktionen.
 
 Dennoch ist auch Kritik an unserem Modell angebracht.
 Zwar erstellt unser Modul zuverlässig die logische Repräsentation eines Satzes, 
 aber es sind ihm Grenzen gesetzt. So erweist sich der Normalizer bei
 einigen Sätzen als Hilfe, erschafft jedoch auch neue Probleme.
-Dies ist bereits am obigen Beispielsatz zu erkennen. Im eigentlichen Satz besteht
-kein Zweifel daran, dass es sich bei dem Keks essenden und dem Brezel verspeisenden
-Kind um dasselbe handelt. Betrachtet man den abgewandelten Satz, so existiert diese
-Sicherheit nicht. Es besteht kein Grund anzunehmen, dass es sich dabei um dasselbe
-Entität handelt. Der logische Ausdruck in unserem letzten Schritt spiegelt diesen
-Unterschied auch wieder. Dabei handelt es sich um keinen Einzelfall, denn dieses
-Phänomen tritt immer auf, wenn das Subjekt von einem Existenzquantor bestimmt
-wird. Dies ließe sich zwar durch die gezielte Verwendung von definiten Artikeln
-verwenden, jedoch haben wir uns entschieden diesen Bereich im Rahmen unseres 
-Projekts nicht zu behandeln, um den zeitlichen Rahmen einzuhalten. Das gleiche
-Problem stellt sich bei der Ersetzung von Pronomen.
+Dies ist bereits am obigen Beispielsatz "Ein Kind ist alle Kekse und Brezeln."zu 
+erkennen. Im eigentlichen Satz besteht kein Zweifel daran, dass es sich bei dem 
+Keks essenden und dem Brezel verspeisenden Kind um dasselbe handelt. Betrachtet
+man den abgewandelten Satz, so existiert diese Sicherheit nicht. Es besteht kein 
+Grund anzunehmen, dass es sich dabei um dieselbe Entität handelt. Dabei handelt es
+sich um keinen Einzelfall, sondern um ein prinzipielles Problem:
+Wenn das Subjekt oder ein Objekt unter Verwendung eines  Existenzquantors bestimmt
+wird, wird das zur Normalisierungf eingeschobene Sub- oder Objekt ebenfalls einen
+Existenzquantor aufweisen. Dies ließe sich zwar durch die gezielte Verwendung 
+von definiten Artikeln verwenden, jedoch haben wir uns entschieden diesen Bereich 
+im Rahmen unseres Projekts nicht zu behandeln, um den zeitlichen Rahmen unseres
+Projets einzuhalten. 
+Das gleiche Problem stellt sich bei der Ersetzung von Pronomen und deren Verarbeitung,
+sofern sie nicht auf einen Eigennamen verweisen.
 An dieser Stelle könnte das Modul noch erweitert werden.
 
-Ebenfalls Schwierigkeiten bereiten uns Negationen, da wir mit unserem Ansatz 
-ihren Skopus bisher nicht konkretisieren konnten. Auch hier besteht noch Raum für
-Erweiterungen, zumal wir uns mit diesem Problem bisher noch kaum beschäftigen
-konnten. Des Weiteren gibt es noch Probleme mit den Anbindungen einiger 
-Präpositionalphrasen und Adverbien. Allerdings vermuten wir hier einen
+Ebenfalls Schwierigkeiten bereiten uns noch einige Negationen, deren Skopus teilweise
+noch nicht korrekt erkannt wird. Eine genaue Bestimmung mit Hilfe unserer Regeln
+erweist sich in diesem Fall als schwierig. Auch hier besteht noch Raum für
+Erweiterungen, zumal wir uns erst seit kurzem damit beschäftigen.
+Des Weiteren gibt es noch Probleme mit den Anbindungen einiger
+Präpositionalphrasen, Adverbien und Adjektive. Allerdings vermuten wir hier einen
 Bug in NLTK gefunden zu haben (näheres kann im Python-Skript assign.py und 
 heuristic_rulel.json nachgelesen werden).
 

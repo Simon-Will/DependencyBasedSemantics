@@ -345,7 +345,6 @@ class NichtBeissen(unittest.TestCase):
         expected = tlp.parse(semRep, signature=semSig)
         self.assertEquivalent(assigned, expected)
 
-@unittest.skip("Types not yet assigned correctly")
 class NichtJederMensch(unittest.TestCase):
 
     @classmethod
@@ -363,7 +362,6 @@ class NichtJederMensch(unittest.TestCase):
         expected = tlp.parse(semRep, signature=semSig)
         self.assertEquivalent(assigned, expected)
 
-@unittest.skip("Types not yet assigned correctly")
 class NichtEinHund(unittest.TestCase):
 
     @classmethod

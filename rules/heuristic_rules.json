@@ -755,7 +755,7 @@
 	    "rel element^{NG} {SB}",
 	    "deps superset^{NG} {NK}"
         ],
-        "semRepPat": "\\E P Q. ! E(P)(Q)",
+        "semRepPat": "\\E P Q. ! (E(P)(Q))",
         "semSig": {
             "P": "<e,t>",
             "Q": "<e,t>",

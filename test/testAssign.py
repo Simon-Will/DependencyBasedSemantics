@@ -380,7 +380,6 @@ class HausInRussland(unittest.TestCase):
         expected = tlp.parse(semRepPat, signature=semSig)
         self.assertEqual(assigned, expected)
 
-#@unittest.skip('problem with truth type in first part of ComplexType')
 class WaldGurken(unittest.TestCase):
 
     @classmethod
@@ -802,7 +801,7 @@ class NichtJederMensch(unittest.TestCase):
 
     def testNicht(self):
         assigned = NichtJederMensch.depGraph.get_by_address(1)['semrep']
-        semRepPat = r'\E P Q. ! E(P)(Q)'
+        semRepPat = r'\E P Q. ! (E(P)(Q))'
         semSig = {'P': '<e,t>', 'Q': '<e,t>', 'E': '<<e,t>,<<e,t>,t>>'}
         expected = tlp.parse(semRepPat, signature=semSig)
         self.assertEqual(assigned, expected)
@@ -854,14 +853,14 @@ class NichtEinHund(unittest.TestCase):
 
     def testNicht(self):
         assigned = NichtEinHund.depGraph.get_by_address(1)['semrep']
-        semRepPat = r'\E P Q. ! E(P)(Q)'
+        semRepPat = r'\E P Q. ! (E(P)(Q))'
         semSig = {'P': '<e,t>', 'Q': '<e,t>', 'E': '<<e,t>,<<e,t>,t>>'}
         expected = tlp.parse(semRepPat, signature=semSig)
         self.assertEqual(assigned, expected)
 
     def testEin(self):
         assigned = NichtEinHund.depGraph.get_by_address(2)['semrep']
-        semRepPat = r'\P Q. all x. (P(x) -> Q(x))'
+        semRepPat = r'\P Q. exists x. (P(x) & Q(x))'
         semSig = {'P': '<e,t>', 'Q': '<e,t>'}
         expected = tlp.parse(semRepPat, signature=semSig)
         self.assertEqual(assigned, expected)

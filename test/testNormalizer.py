@@ -83,6 +83,55 @@ class NurPronomen(unittest.TestCase):
         expected = open(os.path.join(results)).read()
         self.assertEqual(expected, normalized) 
         
+class TobiasDank(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'Tobias_Dank.conll')
+        with open(conllFile) as f:
+            cls.normalized = montesniere.normalize.Normalizer(f.read())
+        
+    def testgetNormalizedSentence(self):
+        normalized = TobiasDank.normalized.getSentence()
+        resultsFile= os.path.join(
+                            TEST_DIR, 
+                            'normalizedTobias_Dank.conll'
+                            )
+        expected = open(os.path.join(resultsFile)).read()
+        self.assertEqual(normalized, expected)
+        
+        
+class ThomasBoot(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'Thomas_Boot.conll')
+        with open(conllFile) as f:
+            cls.normalized = montesniere.normalize.Normalizer(f.read())
+        
+    def testgetNormalizedSentence(self):
+        normalized = ThomasBoot.normalized.getSentence()
+        resultsFile= os.path.join(
+                            TEST_DIR, 
+                            'normalizedThomas_Boot.conll'
+                            )
+        expected = open(os.path.join(resultsFile)).read()
+        self.assertEqual(normalized, expected)
+        
+        
+class MariasKuchen(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        conllFile = os.path.join(TEST_DIR, 'Maria_und_Kuchen.conll')
+        with open(conllFile) as f:
+            cls.normalized = montesniere.normalize.Normalizer(f.read())
+        
+    def testgetNormalizedSentence(self):
+        normalized = MariasKuchen.normalized.getSentence()
+        resultsFile= os.path.join(
+                            TEST_DIR, 
+                            'normalizedMaria_und_Kuchen.conll'
+                            )
+        expected = open(os.path.join(resultsFile)).read()
+        self.assertEqual(normalized, expected)
         
 if __name__ == '__main__':
     global TEST_DIR

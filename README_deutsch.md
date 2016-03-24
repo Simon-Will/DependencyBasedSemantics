@@ -1,21 +1,22 @@
-##Dependency-based semantics construction with lambda calculus
+## Dependency-based semantics construction with lambda calculus
 
 
+### Authors
 
 Lukas Mülleder
 
-Simon Will
-
 Rebekka Hubert
+
+Simon Will
 
 {mülleder, will, hubert}@cl.uni-heidelberg.de
 
-Institut der Computerlinguistik
+Institut für Computerlinguistik
 
 Ruprecht-Karls-Universität Heidelberg
 
 
-###Überblick
+### Überblick
 
 Durch Verwendung dieses Moduls können Sätzen logische Ausdrücke zugewiesen und 
 bei anschließender Verwendung der Testsuit auch einzelnen Sätzen ein 
@@ -29,24 +30,25 @@ Wissens einen Wahrheitswert zuzuweisen. Unsere Testsuit repräsentiert diese
 Funktion.
 Der Fokus des Moduls liegt auf dem korrekten Zuweisen der logischen Ausdrücke.
 
-###Voraussetzungen
+
+### Voraussetzungen
 
 Python 3.4
 
 NLTK 3.0
 
 
-###Module
+### Module
 
-####montesniere_get_Semantics
-Wir empfehlen diesen Skrip über die Kommandozeile aufzurufen. Die zu 
+#### `montesniere_get_Semantics.sh`
+Wir empfehlen dieses Skript über die Kommandozeile aufzurufen. Die zu 
 verarbeitende Datei wird als Kommamdozeilenparameter angegeben. 
 Der komplette Algorithmus wird ausgeführt, anschließend wird der vollständie 
 logische Ausdruck auf der Kommandozeile ausgegeben.
 
-####normalize.py
+#### `normalize.py`
 Die Verwendung dieses Skript empfiehlt sich lediglich vor dem Hinzufügen
-von neuen Daten im '"test" Ordner.
+von neuen Daten im Ordner `test/`.
 Es verändert die Struktur eines Satzes, indem er problematische Koordinationen
 von Phrasen umschreibt. Dadurch werden Fehler in der weiteren
 Verarbeitung vermieden.
@@ -61,45 +63,47 @@ Beispiel:
 
 testsentence.morph.conll aus test/conll als Eingabe führt zu folgendem Resultat:
 
-    >1	Ein	ein	DET	ART	_	2	NK	_	_
-    >2	Kind	kind	NOUN	NN	_	3	SB	_	_
-    >3	isst	issen	VERB	VVFIN	_	0	--	_	_
-    >4	alle	aller	PRON	PIAT	_	5	NK	_	_
-    >5	Kekse	keks	NOUN	NN	_	3	OA	_	_
-    >6	und	und	CONJ	KON	_	3	CD	_	_
-    >7	Ein	ein	DET	ART	_	8	NK	_	_
-    >8	Kind	kind	NOUN	NN	_	9	SB	_	_
-    >9	isst	issen	VERB	VVFIN	_	6	--	_	_
-    >10	alle	aller	PRON	PIAT	_	11	NK	_	_
-    >11	Brezeln	brezel	NOUN	NN	_	9	CJ	_	_
-    >12	.	--	.	$.	_	3	--	_	_
+    1	Ein	ein	DET	ART	_	2	NK	_	_
+    2	Kind	kind	NOUN	NN	_	3	SB	_	_
+    3	isst	issen	VERB	VVFIN	_	0	--	_	_
+    4	alle	aller	PRON	PIAT	_	5	NK	_	_
+    5	Kekse	keks	NOUN	NN	_	3	OA	_	_
+    6	und	und	CONJ	KON	_	3	CD	_	_
+    7	Ein	ein	DET	ART	_	8	NK	_	_
+    8	Kind	kind	NOUN	NN	_	9	SB	_	_
+    9	isst	issen	VERB	VVFIN	_	6	--	_	_
+    10	alle	aller	PRON	PIAT	_	11	NK	_	_
+    11	Brezeln	brezel	NOUN	NN	_	9	CJ	_	_
+    12	.	--	.	$.	_	3	--	_	_
 
 
-####assign.py
+#### assign.py
 
 Um ein Assignerobjekt zu erstellen, wird das condition module benötigt.
 Dieses muss importiert werden.
-Zur Erstellung eines SemRepAssignerobjekts muss die Datei heuristic_rules.json
+Zur Erstellung eines SemRepAssignerobjekts muss die Datei `heuristic_rules.json`
 der Methode fromSring übergeben werden. Dann muss man einen conll06 formatierten Satz 
 beim Aufruf von nltk.parse.DependencyGraph als Argument übergeben.
 Danach ruft man die Methode assignToDependencyGraph des erstellten SemRepAssigner 
 mit dem DependencyGraphobjekt als Argument auf.
-Durch den Aufruf der Methode get\_by\_address kann jeder Knoten abgefragt 
+Durch den Aufruf der Methode `get_by_address` kann jeder Knoten abgefragt 
 werden.
 
-Beispiel:
+Beispiel für den Satz „Eine Taube beißt Peter Müller“ (`>` markiert den Python-Interpreter):
 
-    >import nltk.parse as nlp
-    >ass = SemRepAssigner.fromfile('rules/heuristic_rules.json')
-    >sTaube = open('test/conll/beissende_taube_und_Peter_Mueller.conll').read()
-    >dgTaube = nlp.DependencyGraph(sTaube)
-    >ass.assignToDependencyGraph(dgTaube)
-    >print(dgTaube.get_by_address(3)['semrep'])
-    >\y x.beissen(x,y)
-    >print(dgTaube.get_by_address(3)['semrep'].type)
-    ><e,<e,t>>
+    > import nltk.parse as nlp
+    > from montesniere.assign import SemRepAssigner
+    > ass = SemRepAssigner.fromfile('rules/heuristic_rules.json')
+    > sTaube = open('test/conll/beissende_taube_und_Peter_Mueller.conll').read()
+    > dgTaube = nlp.DependencyGraph(sTaube)
+    > ass.assignToDependencyGraph(dgTaube)
+    > print(dgTaube.get_by_address(3)['semrep'])
+    \y x.beissen(x,y)
+    > print(dgTaube.get_by_address(3)['semrep'].type)
+    <e,<e,t>>
 
-####merge.py
+
+#### merge.py
 
 Dieses Modul kombiniert die zuvor dem Dependenzgraph in assign.py zugewiesenen
 logischen Ausdrücke.
@@ -108,41 +112,92 @@ assign.py erhaltenen Dependenzgraph als Argument.
 Der logische Ausdruck des Satzes wird über die
 SemMerger-Methode getSemantics() abgefragt.
 
-Beispiel:
+Beispiel (`>` markiert den Python-Interpreter):
 
-    >lamdaTaube = SemMerger(dgTaube)
-    >lambdaTaube.getSemantics()
-    >exists x.(Taube(x) & beissen(x, Peter_Mueller)))))
+    > lambdaTaube = SemMerger(dgTaube)
+    > lambdaTaube.getSemantics()
+    exists x.(Taube(x) & beissen(x, Peter_Mueller)))))
 
 
-###Testsuite
+### Regeln
+
+Der `SemRepAssigner` aus dem Modul `montesniere.assign` ist am einfachsten mit
+einer Regeldatei im `json`-Format zu benutzen. Wir haben einige Regeln
+heuristischer Natur erstellt (`rules/heuristic_rules.json`), die voraussetzen,
+dass der Dependenzgraph die POS-Tags des
+[Stuttgart-Tübingen-Tagset](http://homepage.ruhr-uni-bochum.de/stephen.berman/Korpuslinguistik/Tagsets-STTS.html)
+und Dependenz-Tags des 
+[TIGER-Annotations-Schemas](http://www.ims.uni-stuttgart.de/forschung/ressourcen/korpora/TIGERCorpus/annotation/tiger_scheme-syntax.pdf)
+benutzt.
+Diese Regeln decken sehr grundlegende deutsche Sätze ab (eine erwähnenswerte
+Ausnahme stellen bestimmte Artikel dar).
+
+Natürlich können eigene Regeln geschrieben werden oder unsere verbessert werden.
+Eine `json`-Datei muss aus einem Array von Regel-Objekten bestehen.
+Ein Regel-Objekt hat drei Keys zu enthalten:
+
+  * Der Key `conditions` muss auf ein Array aus Strings abbilden, die der Syntax
+    eines montesniere.condition.Condition-Objektes genügen.
+  * Der Key `semRepPat` muss auf einen String abbilden, der von einem
+    nltk.sem.logic.LogicParser-Objekt interpretiert werden kann. Vorher
+    wird der String aber noch von der Python-Methode str.format formatiert.
+    So kann man das Lemma eines Wortes dynamisch zur semantischen
+    Repräsentation hinzufügen, indem man im `semRepPat` `{[lemma]}` verwendet.
+  * Der Key `semSig` muss auf ein Signatur-Objekt abbilden, dessen Keys
+    Ausdrücke sein sollten, die in `semRepPat` vorkommen. Die Keys müssen auf
+    Strings abbilden, die die Typen der jeweiligen Ausdrücke beschreiben.
+
+Außerdem ist es nützlich, zu jedem Regel-Objekt eine Erklärung hinzuzufügen, die
+beschreibt, welches Phänomen die Regel behandelt. Andernfalls verliert man leicht
+den Überblick, sobald die Regelmenge eine gewisse Größe erreicht.
+
+Beispielregel:
+
+```json
+{
+    "explanation": "proper name in subject position",
+    "conditions": [
+        "tag element {NE}",
+        "rel element {SB}"
+    ],
+    "semRepPat": "\\P. P({[lemma]})",
+    "semSig": {
+        "P": "<e,t>",
+        "{[lemma]}": "e"
+    }
+}
+```
+
+
+### Testsuite
+Diese Testsuite ist der englischen [FraCaS-Testsuite](http://www-nlp.stanford.edu/~wcmac/downloads/) nachempfunden.
 In dieser Testsuite sind mehrere Prämissen-Hypothesen-Paare im xml-Format im FraCas ähnlichen
 Format abgespeichert, wobei der Wahrheitsgehalt der Hypothesen abgefragt werden kann.
 Dazu wird folgender Kommandozeilenaufruf verwendet:
 
-    >./testFracas.py [Regeln] [Fracas Testsuit im xml-Format]
+    > ./testFracas.py [Regeln] [Fracas Testsuit im xml-Format]
 
-am Bsp.:
+Beispiel (`>` markiert die Shell):
    
-    >testFracas.py ../rules/heuristic_rules.json testsuite_text_tags.xml
-    >33 out of 39 failed
-    >IDs of failed tests: 1, 3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20,
-    > 21, 22, 23, 24, 26, 27, 28, 29, 31, 32, 33, 34, 35, 36, 37, 38, 38
+    > test/testFracas.py ../rules/heuristic_rules.json testsuite_text_tags.xml
+    33 out of 39 failed
+    IDs of failed tests: 1, 3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20,
+     21, 22, 23, 24, 26, 27, 28, 29, 31, 32, 33, 34, 35, 36, 37, 38, 38
+
+Für genauere Information über die einzelnen Tests kann die Option `--verbose` hinzugefügt werden.
 
 
-
-
-###Hinzufügen neuer Daten
+### Hinzufügen neuer Daten
 
 Sollen weitere Daten hinzugefügt werden, sind folgende Schritte zu befolgen:
 
-* parsen der hinzuzufügenden Daten, vorzugsweise mit einem RBGParser, der auf dem
+* Parsen der hinzuzufügenden Daten, vorzugsweise mit einem RBGParser, der auf dem
   TIGER-Korpus trainiert wurde
 
 * Wir empfehlen die geparsten Daten manuell zu überpfüfen und ggf. Korrekturen
   vorzunehmen
 
-* Nun wird Normalize.py verwendet, um problematische Phrasenkoordination zu vermeiden
+* Nun wird `normalize.py` verwendet, um problematische Phrasenkoordination zu vermeiden
 
 * Wir empfehlen die verarbeiteten Daten manuell zu überprüfn und ggf. zu korrigieren
 

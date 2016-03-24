@@ -109,8 +109,8 @@ Example, using the same sentence as before (Leading `>` marks the shell):
 
 ### Rules
 
-The SemRepAssigner from the montesniere.assign is best created from a json file
-containing the rules that are to be used. We wrote some heuristic rules
+The `SemRepAssigner` from the `montesniere.assign` is best created from a `json`
+file containing the rules that are to be used. We wrote some heuristic rules
 (`rules/heuristic_rules.json`) for dependencyGraphs that contain POS tags
 conforming to the
 [Stuttgart-Tübingen-Tagset](http://homepage.ruhr-uni-bochum.de/stephen.berman/Korpuslinguistik/Tagsets-STTS.html)
@@ -118,16 +118,16 @@ conforming to the
 and dependency tags conforming to the
 [TIGER annotation scheme](http://www.ims.uni-stuttgart.de/forschung/ressourcen/korpora/TIGERCorpus/annotation/tiger_scheme-syntax.pdf).
 These rules cover very basic German sentences
-(notably excluding definite articles).
+(notably excluding definite determiners).
 
 You can write your own rules or improve on ours.
-The json file has to consist of an array of rule objects.
+The `json` file has to consist of an array of rule objects.
 A rules objects has to include three keys:
 
   * The key `conditions` has to map to an array of strings conforming to the
-    syntax of a condition.
+    syntax of a montesniere.condition.Condition object.
   * The key `semRepPat` has to map to a string interpretable by an
-    nltk.sem.logic.LogicParser object. But before that, it is passed to python
+    nltk.sem.logic.LogicParser object. But before that, it is passed to Python
     str.format method. This is so that you can dynamically add the lemma of an
     encountered word to the semantic representation by specifying `{[lemma]}`
   * The key `semSig` has to map to a signature object each key of which should

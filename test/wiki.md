@@ -291,12 +291,67 @@ für das Deutsche.
 In Anlehung an FraCas sind in unserer Testsuite Beispielsätze, sowie deren 
 logische Form als Prämissen abgespeichert. Dabei folgt auf jede Prämisse -oder auch auf 
 mehrere - eine Hypothese mit ihrer logischen Form, der auf Basis der Prämisse den Wahrheitswert wahr oder
-falsch zugewiesen wird.
-Diese können abgefragt werden.
+falsch zugewiesen wird. Der korrekte Wahrheitswert wird darin ebenfalls abgespeichert.
+Bei einem Aufruf des Programms wird der Algorithmus für jedes 
+Prämisse(n)-Hypothesen-Paar gestartet und die entsprechenden logischen Ausdrücke
+zugewiesen. Danach wird der Hypothese ein Wahrheitswert auf Basis der Prämisse zugewiesen
+und mit den vorgegebenen Wert verglichen.
+Dem Benutzer wird angezeigt, wie viele Hypothesen falsch eingeordnet wurden.
 
-#TODO
+Generell werden mehr Hypothesen falsch zugeordnet. Dafür gibt es zwei Gründe:
+Zum einen werden tatsächlich einige Hypothesen falsch zugeordnet, zum 
+anderen befinden sich in unserer Testsuit auch Fälle, mit denen unser 
+Algorithmus noch nicht umgehen kann. Darunter fallen Anwendungen des Quantors
+"jeder" sowie einige Adjektive.
+Der Hauptgrund für eine falsche Zuordnung liegt im fehlenden Hintergrundwissen.
+So lässt sich nicht von allein der Prämisse auf die Hypothese schließen bzw.
+der gezogene Schluss erweist sich als falsch.
+Ein gutes Bsp dafür bietet das folgende Paar:
+
+    >Prämisse: Der Wolf und das Schaf essen einen Keks.
+    >Hypothese: Der Wolf isst einen Keks.
+    >vom Algorithmus zugewiesener Wahrheitswert: falsch
+
+Wolf und Schaf bilden im logischen Ausdruck eine Einheit für die andere Bedingungen
+gelten als für eine einzelne Entität.
+Solche falschen Zuweisungen findet man oft im Ablauf des Programms.
+
+Für die richtigen Zuweisungen lässt sich festhalten: Sind alle Informationen zum
+Beurteilen der Hypothese explizit angegeben, ist die Zuweisung korrekt.
+Bsp.:
+    
+    >Prämisse: Schafe haben Wolle.
+    >Prämisse: Dolly ist ein Schaf.
+    >Hypothese: Dolly hat Wolle.
+    >zugewiesener Wahrheitswert: wahr
 
 
+
+Daraus schlussfolgern wir, dass unser Modul den korrekten logischen Ausdruck 
+in allen Sätzen zuweist, aber nur in de Lage ist, feste, vorgegebene Informationen
+abzugleichen.
+Besonders deutlich wird dies am folgenden Beispiel:
+
+    >Prämisse: Eine Furie in einem blutigen Kleid bewacht einen Schlund.
+    >Hypothese: Eine Furie bewacht einen Schlund.
+    >zugewiesener Wahrheitswert: falsch
+
+Diese Zuweisung wird beim Betrachten der logischen Ausdrücke verständlich:
+
+"Eine Furie in einem blutigen Kleid bewacht einen Schlund."
+
+    > exists x.(exists y.(blutig(y) & kleid(y) & in(x,y) & furie(x)) & exists y.(schlund(y)
+      & bewachen(x,y)))
+
+"Eine Furie bewacht einen Schlund."
+    > exists x.(furie(x) & exists y.(schlund(y) & bewachen(x,y)))
+
+Man erkennt deutlich, dass lediglich nach den festgelegten Mustern gewertet wird: 
+So ist furie(x) nicht derart spezifiziert wie 
+    >exists x.(exists y.(blutig(y) & kleid(y) & in(x,y) & furie(x))
+
+und wird somit als falch gewertet: Es ist nicht exakt dasselbe. An diesem Beispiel wird gut 
+veranschaulicht, dass nicht auf Inferenz geachtet wird.
 
 ### Conclusion
 

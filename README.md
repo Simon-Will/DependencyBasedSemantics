@@ -42,7 +42,7 @@ the command line by running `./algorithm.sh test/conll/<filename>`.
 #### `normalize.py`
 
 This module is only needed if you intend to add new data to or test directory.
-Use normalize.py to normalize the input sentences in order to avoid unfortunate
+Use `normalize.py` to normalize the input sentences in order to avoid unfortunate
 coordination of phrases. 
 This script takes one sentence in conll06-format as input parameter and returns the normalized
 sentence. 
@@ -67,7 +67,7 @@ our testsentence.morph.conll as input yields:
 
 
 
-#### assign.py
+#### `assign.py`
 
 The SemRepAssigner relies on the Condition module to work properly, 
 therefore you have to import it first.
@@ -93,7 +93,7 @@ Example for the sentence “Eine Taube beißt Peter Müller.” (Leading `>` mar
     <e,<e,t>>
 
 
-#### merge.py
+#### `merge.py`
 
 The algorithm merges all logical expressions into one representing the input sentence.
 Consequently, you have to use a dependencygraph preprocessed by a SemRepAssigner object
@@ -138,11 +138,28 @@ It is recommended to add an explanation to each rule to describe what phenomena
 it is concerned with. Otherwise you will quickly get overwhelmed when you add
 more rules.
 
+Example rule:
+
+```json
+{
+    "explanation": "proper name in subject position",
+    "conditions": [
+        "tag element {NE}",
+        "rel element {SB}"
+    ],
+    "semRepPat": "\\P. P({[lemma]})",
+    "semSig": {
+        "P": "<e,t>",
+        "{[lemma]}": "e"
+    }
+}
+```
+
 
 ### Test suite
 
  This test suite ist based on the English [FraCaS test suite](http://www-nlp.stanford.edu/~wcmac/downloads/).
-Both premises and an hypothesis are stored in the testsuite. Call testFracas.py from the commandline,
+Both premises and an hypothesis are stored in the testsuite. Call `testFracas.py` from the commandline,
 use `heuristic_rules.json` and `testsuite_text_tags.xml` as arguments. The number of failed and
 succesful tests is shown on the commandline.
 

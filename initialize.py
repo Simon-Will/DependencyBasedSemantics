@@ -11,7 +11,7 @@ def getExpression(conllFile):
         depGraph = nlp.DependencyGraph(f.read())
     assigner = montesniere.assign.SemRepAssigner.fromfile("rules/heuristic_rules.json")
     assigner.assignToDependencyGraph(depGraph)
-    merger = montesniere.new_merge.SemMerger(depGraph)
+    merger = montesniere.merge.SemMerger(depGraph)
     return merger.getSemantics()
 
 

@@ -10,7 +10,6 @@ class Normalizer:
     
     Attributes:
         sentence: sentence (read out of file)
-        sentence_parts  : list of lines of splitted sentence
         self.word_parts: list of attributes of one sentence_part
         self.verb : list of verbs in the sentence
         self.sb : list of subjects and subject modifiers in the sentence
@@ -182,23 +181,18 @@ class Normalizer:
             konj.extend([kon for kon in obj 
                         if self.word_parts[kon][4] == "KON"])
             for konjunction in konj:
-                #if self.checkApplyable(konjunction):
+
                 word_parts, words = self.word_parts[:konjunction], \
                                     self.word_parts[konjunction+1:]
                                     
                 word_parts.append(self.word_parts[konjunction])
                 word_parts.extend(self.word_parts[:obj[0]])
                 word_parts.extend(words)
-        #            applied = True
-       #         else:
-      #              applied = False
-        #if applied:
+
         self.word_parts = self.mergenewSentence(word_parts)
         self.assignNodes(konj)
             
-    #def checkApplyable(self, kon):
-     #   return self.word_parts[kon-1][4] == self.word_parts[kon+1][4]
-        
+
     def assignNodes(self, konj):
         """assign correct dependencies"""
         relations = {"SB" : [], "VV/AFIN" : [], "NN" : [], "OA" : [], 

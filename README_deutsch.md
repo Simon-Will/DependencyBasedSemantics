@@ -80,7 +80,6 @@ testsentence.morph.conll aus test/conll als Eingabe führt zu folgendem Resultat
 #### assign.py
 
 Um ein Assignerobjekt zu erstellen, wird das condition module benötigt.
-Dieses muss importiert werden.
 Zur Erstellung eines SemRepAssignerobjekts muss die Datei `heuristic_rules.json`
 der Methode fromSring übergeben werden. Dann muss man einen conll06 formatierten Satz 
 beim Aufruf von nltk.parse.DependencyGraph als Argument übergeben.
@@ -202,3 +201,11 @@ Sollen weitere Daten hinzugefügt werden, sind folgende Schritte zu befolgen:
 * Wir empfehlen die verarbeiteten Daten manuell zu überprüfn und ggf. zu korrigieren
 
 * Nun die Daten den Testdaten hinzufügen
+
+### Name des Pakets
+
+Der name `montesniere` ruft die beiden Wissenschaftler
+[Richard Montague](https://de.wikipedia.org/wiki/Richard_Montague)
+und [Lucien Tesnière](https://de.wikipedia.org/wiki/Lucien_Tesnière)
+ins Gedächtnis, deren Arbeit auf den Gebieten der Dependenzgrammatik bzw. 
+der Formalen Semantik wir zu Dank verpflichtet sein.

@@ -7,6 +7,7 @@ from functools import reduce
 
 import xml.etree.ElementTree as ET
 import nltk.parse as nlp
+import nltk.sem.logic as nll
 import nltk
 
 from context import montesniere
@@ -91,7 +92,6 @@ def main():
     fracas = ET.fromstring(open(args.fracasFile).read())
 
     results = []
-    answerDict = defaultdict(lambda: False, {'yes': True, 'no': False})
 
     # Test each problem
     for prob in fracas.iter('problem'):
@@ -106,7 +106,6 @@ def main():
             p.getExpr(assigner)
         hypothesis.getExpr(assigner)
 
-        # Check if hypothesis follows from premises.
         if None in [p.expr for p in premises]:
             result = None
             failReasonPat1 = 'For one or more premise of problem {}, no '
@@ -118,10 +117,15 @@ def main():
             failReason2 = 'representation could be constructed.'
             failReason = (failReason1 + failReason2).format(id)
         else:
+            # Check if hypothesis follows from premises.
             try:
-                result = prover.prove(
+                implied = prover.prove(
                         hypothesis.expr,
                         [p.expr for p in premises])
+                contradicted = prover.prove(
+                        nll.NegatedExpression(hypothesis.expr),
+                        [p.expr for p in premises])
+                result = True
             except nltk.inference.prover9.Prover9FatalException as e:
                 result = None
                 failReasonPat1 = 'Prover9 failed at problem {0} with the '
@@ -131,24 +135,38 @@ def main():
         if result is None:
             successful = False
         else:
-            successful = answerDict[answer] == result
+            if answer == 'yes' and implied:
+                successful = True
+            elif answer == 'no' and contradicted:
+                successful = True
+            elif answer == 'unknown' and not (implied or contradicted):
+                successful = True
+            else:
+                successful = False
         results.append((id, successful))
 
         # Print verbose info.
         if args.verbose:
 
             if result:
-                resultString = 'is said to follow' if result\
-                        else 'is said not to follow'
+                if implied:
+                    resultString = 'is said to be implied by'
+                if contradicted:
+                    resultString = 'is said to be contradicted by'
+                if not (implied or contradicted):
+                    resultString =\
+                            'is said to neither be implied nor contradicted by'
 
                 hypothesisString = '"{}"'.format(hypothesis.sentence)
                 premisesString = formatPremises(premises)
+                problemString = '(Problem {})'.format(id)
 
-                msgPat = 'The hypothesis {0} {1} from the premises {2}.'
+                msgPat = 'The hypothesis {0} {1} the premise(s) {2}. {3}'
                 msg = msgPat.format(
                     hypothesisString,
                     resultString,
-                    premisesString)
+                    premisesString,
+                    problemString)
             else:
                 msg = failReason
 

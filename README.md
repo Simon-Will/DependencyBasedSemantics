@@ -133,10 +133,11 @@ monotransitive verbs.
 
 Moreover, a key can be prepended with a path to another node like. An element
 of the path can either be the caret character (`^`) to ascend to the parent node
-or a dependency tag to descend along the specified tag to a child node. The path
-can split, if more than one children have the specified dependency tag. From
-then on, all the resulting nodes are checked. The following rule checks if the
-dative object of its parent is a noun.
+or a dependency tag to descend along the specified tag to a child node. The
+path elements are separated by a dot (without whitespace!) and are not limited
+to a fixed number. The path can split, if more than one child has the specified
+dependency tag. From then on, all the resulting nodes are checked. The following
+rule checks if the dative object of its parent is a noun.
 
     ^.DA.tag element {NN,NE}
 

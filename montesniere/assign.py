@@ -206,9 +206,23 @@ class SemRepAssigner:
             pass
 
 def _toASCII(s):
-    """Replace ß,ä,ö,ü to make a string ascii-compatible."""
+    """Replace non-ascii characters to make a string ascii-compatible."""
     # XXX: This is an ugly hack. There has to be a proper way to do this.
-    t = str.maketrans({'ß':'ss', 'ä': 'ae', 'ö': 'oe', 'ü': 'ue'})
+
+    transDict = {chr(n):chr(n) for n in range(0,128)}
+    germanLower = {'ß':'ss', 'ä': 'ae', 'ö': 'oe', 'ü': 'ue'}
+    germanUpper = {'ẞ':'SS', 'Ä': 'AE', 'Ö': 'OE', 'Ü': 'UE'}
+    transDict.update(germanLower)
+    transDict.update(germanUpper)
+
+    # Replace all characters that are not in the transDict with '?'.
+    sList = list(s)
+    for i in range(0, len(sList)):
+        if sList[i] not in transDict:
+            sList[i] = '?'
+
+    s = ''.join(sList)
+    t = str.maketrans(transDict)
     return s.translate(t)
 
 def demo():

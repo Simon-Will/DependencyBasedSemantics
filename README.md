@@ -65,12 +65,85 @@ our testsentence.morph.conll as input yields:
     12	.	--	.	$.	_	3	--	_	_
 
 
+#### condition.py
+
+The condition module provides functionality to check for features of a node in
+a dependency graph. Examples for basic conditions are:
+
+    tag element {ART, PIAT}
+
+    rel element {MO}
+
+    deps superset {SB, OA, DA}
+
+A condition contains at least three vital parts:
+
+  * A key in the dict corresponding to a node in the DependencyGraph. Common
+    keys are:
+    - `tag`: The POS tag of this node.
+    - `lemma`: The lemma of this node.
+    - `deps`: The dependency tags of this node's dependents.
+    - `rel`: The dependency tag of this node.
+
+  * A relation defined in the condition-module. The available relations are:
+    - `element`: True if the the value of the node under the given key is an
+      element of the following set.
+    - `notElement`: True if the value of the node under the given key is not
+      an element of the following set.
+    - `subset`: True if the value of the node under the given key is a
+      subset of the following set.
+    - `notSubset`: True if the value of the node under the given key is not
+      a subset of the following set.
+    - `superset`: True if the value of the node under the given key is a
+      superset of the following set.
+    - `notSuperset`: True if the value of the node under the given key is
+      not a superset of the following set.
+    - `cardinality`: True if the value of the node under the given key
+      has a number of elements that is specified in the following set.
+    - `notCardinality`: True if the value of the node under the given key 
+      has a number of elements that is not specified in the following set.
+
+  * A set of strings. They should be POS tags, when the key `tag` is used,
+    words if the key `lemma` is used and so on. They should be numbers if the
+    relation `cardinality` (or its opposite) is used.
+
+It can additionally contain two other parts:
+
+  * A set of transeunda, i. e. a set of dependency tags. If a node's dependency
+    tag is one of the given transeunda, the relation is not only applied to
+    this node, but also to its parent node. If the parent node's dependency tag
+    is one of the given transeunda, the relation is applied to its parent node,
+    as well. And so on. The condition yields True, if it was satisfied by any
+    one of the traversed nodes.
+
+  * An exclamation mark (`!`) at the front of the condition may be used to
+    negate the result of the condition. Note that this is only needed, when
+    the set of transeunda or a complex key (see below) is used. Without
+    transeunda, the same effect can be achieved by using one of the negated
+    relations. Note that the exclamation mark has to be separated from the
+    key by whitespace.
+
+The following is an example for an advanced condition that is satisfied, iff
+neither the node itself nor any of its parent nodes that are reached via an
+`NK` or `OA` tag has a dependent that is a dative object (`DA`). This
+condition is used for quantifiers in NPs that are accusative objects of
+monotransitive verbs.
+
+    ! deps superset^{NK, OA} {DA}
+
+Moreover, a key can be prepended with a path to another node like. An element
+of the path can either be the caret character (`^`) to ascend to the parent node
+or a dependency tag to descend along the specified tag to a child node. The path
+can split, if more than one children have the specified dependency tag. From
+then on, all the resulting nodes are checked. The following rule checks if the
+dative object of its parent is a noun.
+
+    ^.DA.tag element {NN,NE}
 
 
 #### `assign.py`
 
-The SemRepAssigner relies on the Condition module to work properly, 
-therefore you have to import it first.
+The SemRepAssigner relies on the Condition module to work properly. 
 Use the heuristic rules in the rules directory as a parameter to create a
 SemRepAssigner object. Then read a conll06-formated sentence from a file
 and use nltk's parse module to create a DependencyGraph object.
@@ -111,7 +184,7 @@ Example, using the same sentence as before (Leading `>` marks the shell):
 
 The `SemRepAssigner` from the `montesniere.assign` is best created from a `json`
 file containing the rules that are to be used. We wrote some heuristic rules
-(`rules/heuristic_rules.json`) for dependencyGraphs that contain POS tags
+(`rules/heuristic_rules.json`) for DependencyGraphs that contain POS tags
 conforming to the
 [Stuttgart-Tübingen-Tagset](http://homepage.ruhr-uni-bochum.de/stephen.berman/Korpuslinguistik/Tagsets-STTS.html)
 (the ones used in [DWDS](http://dwds.de/))
@@ -133,6 +206,10 @@ A rules objects has to include three keys:
   * The key `semSig` has to map to a signature object each key of which should
     be an expression used in the `semRepPat`. The keys have to map to strings
     specifying the types of the respective expressions.
+
+If all the conditions of a rule are met, the SemRepAssigner assigns a
+logical expression to the node by using the given semRepPat with the given
+semSig and proceeds with the next node in the DependencyGraph
 
 It is recommended to add an explanation to each rule to describe what phenomena
 it is concerned with. Otherwise you will quickly get overwhelmed when you add
@@ -179,3 +256,11 @@ Follow these steps to add new data:
 * Use `normalize.py` to normalize your sentences in order to avoid unfortunate coordinations of phrases
 * Check your data for mistakes manually.
 * Add it to our test data.
+
+### Name of the package
+
+By naming our package `montesniere` we pay our due respect to 
+[Richard Montague](https://en.wikipedia.org/wiki/Richard_Montague)
+and [Lucien Tesnière](https://en.wikipedia.org/wiki/Lucien_Tesnière)
+for their invaluable work in the fields of Dependency Grammar and 
+Formal Semantics, respectively.
